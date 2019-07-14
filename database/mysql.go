@@ -19,44 +19,25 @@ package database
 
 import (
 	"fmt"
-	"sync"
 
 	// MySQL driver
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
-	"github.com/spf13/viper"
 
 	"github.com/terakoya76/populator/config"
 )
 
-var instance *sqlx.DB
+// MySQLConnector is an implementation of DBConnector for MySQL
+type MySQLConnector struct{}
 
-// onceMySQL is used for Mutex Lock when initialize instanceMySQL
-var onceDB sync.Once
-
-// DB provides instance of DB client
-func DB() *sqlx.DB {
-	onceDB.Do(func() {
-		initialize()
-	})
-	return instance
+// NewMySQLConnector constructs MySQLConnector instance
+func NewMySQLConnector() *MySQLConnector {
+	return &MySQLConnector{}
 }
 
-func initialize() {
-	cfg := viper.Sub("database")
-	dbCfg := config.NewDatabaseConfig(cfg)
-	fmt.Printf("Database config file: %+v\n", dbCfg)
-
-	var err error
-	// TODO: adopt more kind of db
-	instance, err = connectMySQL(dbCfg)
-	if err != nil {
-		fmt.Println("Failed to connect database: ", err)
-	}
-}
-
-func connectMySQL(cfg *config.DatabaseConfig) (*sqlx.DB, error) {
-	ci := connectInfo(cfg)
+// Connect find_or_create database w/ given database name, then connect it
+func (c *MySQLConnector) Connect(cfg *config.DatabaseConfig) (*sqlx.DB, error) {
+	ci := c.connectInfo(cfg)
 	db, err := sqlx.Open("mysql", ci)
 	if err != nil {
 		fmt.Println("Failed to open mysql: ", err)
@@ -72,6 +53,6 @@ func connectMySQL(cfg *config.DatabaseConfig) (*sqlx.DB, error) {
 	return sqlx.Connect("mysql", ci+cfg.Name)
 }
 
-func connectInfo(cfg *config.DatabaseConfig) string {
+func (c *MySQLConnector) connectInfo(cfg *config.DatabaseConfig) string {
 	return cfg.User + ":" + cfg.Password + "@tcp(" + cfg.Host + ":" + fmt.Sprint(cfg.Port) + ")/"
 }

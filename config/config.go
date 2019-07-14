@@ -23,6 +23,7 @@ import (
 
 // DatabaseConfig represents the information for accessing database
 type DatabaseConfig struct {
+	Driver   string
 	Host     string
 	User     string
 	Password string
@@ -33,6 +34,7 @@ type DatabaseConfig struct {
 // NewDatabaseConfig constructs a new instance from viper config
 func NewDatabaseConfig(cfg *viper.Viper) *DatabaseConfig {
 	return &DatabaseConfig{
+		Driver:   cfg.GetString("driver"),
 		Host:     cfg.GetString("host"),
 		User:     cfg.GetString("user"),
 		Password: cfg.GetString("password"),
