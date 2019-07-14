@@ -27,6 +27,26 @@ import (
 	"github.com/terakoya76/populator/config"
 )
 
+// MySQLClient is an implementation of DBClient for MySQL
+type MySQLClient struct {
+	*sqlx.DB
+}
+
+// CreateTable does CreateTable statement for MySQL
+func (db *MySQLClient) CreateTable(cfg []*config.Table) {
+	fmt.Println("need to be implemented")
+}
+
+// CreateIndex does CreateIndex statement for MySQL
+func (db *MySQLClient) CreateIndex(cfg []*config.Table) {
+	fmt.Println("need to be implemented")
+}
+
+// Insert does Insert statement for MySQL
+func (db *MySQLClient) Insert(cfg []*config.Table) {
+	fmt.Println("need to be implemented")
+}
+
 // MySQLConnector is an implementation of DBConnector for MySQL
 type MySQLConnector struct{}
 
@@ -36,23 +56,28 @@ func NewMySQLConnector() *MySQLConnector {
 }
 
 // Connect find_or_create database w/ given database name, then connect it
-func (c *MySQLConnector) Connect(cfg *config.DatabaseConfig) (*sqlx.DB, error) {
+func (c *MySQLConnector) Connect(cfg *config.Database) (DBClient, error) {
 	ci := c.connectInfo(cfg)
 	db, err := sqlx.Open("mysql", ci)
 	if err != nil {
-		fmt.Println("Failed to open mysql: ", err)
+		return nil, fmt.Errorf("failed to setup database %s on mysql: %+v", cfg.Name, err)
 	}
 	defer db.Close()
 
 	_, err = db.Exec("CREATE DATABASE IF NOT EXISTS " + cfg.Name)
 	if err != nil {
-		fmt.Printf("Failed to setup database %s on mysql: %+v\n", cfg.Name, err)
+		return nil, fmt.Errorf("failed to setup database %s on mysql: %+v", cfg.Name, err)
 	}
 	db.Close()
 
-	return sqlx.Connect("mysql", ci+cfg.Name)
+	db, err = sqlx.Connect("mysql", ci+cfg.Name)
+	if err != nil {
+		return nil, fmt.Errorf("failed to setup database %s on mysql: %+v", cfg.Name, err)
+	}
+
+	return &MySQLClient{db}, nil
 }
 
-func (c *MySQLConnector) connectInfo(cfg *config.DatabaseConfig) string {
+func (c *MySQLConnector) connectInfo(cfg *config.Database) string {
 	return cfg.User + ":" + cfg.Password + "@tcp(" + cfg.Host + ":" + fmt.Sprint(cfg.Port) + ")/"
 }

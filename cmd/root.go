@@ -24,6 +24,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
+	"github.com/terakoya76/populator/config"
 	"github.com/terakoya76/populator/database"
 )
 
@@ -104,11 +105,28 @@ func initConfig() {
 		fmt.Println("Using config file:", viper.ConfigFileUsed())
 	}
 
-	db := database.DB()
-	result, err := db.Queryx("Select 1;")
+	err := viper.Unmarshal(&config.Instance)
 	if err != nil {
 		fmt.Println(err)
-	} else {
-		fmt.Printf("result: %+v\n", result)
+		os.Exit(1)
 	}
+	if !config.Instance.Driver.IsValid() {
+		os.Exit(1)
+	}
+
+	cfg := config.Instance
+	for _, table := range cfg.Tables {
+		for _, column := range table.Columns {
+			fmt.Printf("cfg: %+v\n", column)
+		}
+		for _, index := range table.Indexes {
+			fmt.Printf("cfg: %+v\n", index)
+		}
+	}
+
+	fmt.Printf("cfg: %+v\n", cfg.Database)
+	db := database.DB()
+	db.CreateTable(cfg.Tables)
+	db.CreateIndex(cfg.Tables)
+	db.Insert(cfg.Tables)
 }

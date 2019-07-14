@@ -21,46 +21,47 @@ import (
 	"fmt"
 	"sync"
 
-	// MySQL driver
-	_ "github.com/go-sql-driver/mysql"
-	"github.com/jmoiron/sqlx"
 	"github.com/spf13/viper"
 
 	"github.com/terakoya76/populator/config"
 )
 
-// DBConnector is adapter interface for connecting DB
-type DBConnector interface {
-	Connect(cfg *config.DatabaseConfig) (*sqlx.DB, error)
-	connectInfo(cfg *config.DatabaseConfig) string
+// DBClient is an interface for DB Querying
+type DBClient interface {
+	CreateTable(cfg []*config.Table)
+	CreateIndex(cfg []*config.Table)
+	Insert(cfg []*config.Table)
 }
 
-var instance *sqlx.DB
+// DBConnector is an interface for DB adapter
+type DBConnector interface {
+	Connect(cfg *config.Database) (DBClient, error)
+	connectInfo(cfg *config.Database) string
+}
 
-// onceMySQL is used for Mutex Lock when initialize instanceMySQL
+var client DBClient
+
+// onceDB is used for Mutex Lock when initializing an instance
 var onceDB sync.Once
 
 // DB provides instance of DB client
-func DB() *sqlx.DB {
+func DB() DBClient {
 	onceDB.Do(func() {
 		initialize()
 	})
-	return instance
+	return client
 }
 
 func initialize() {
-	cfg := viper.Sub("database")
-	dbCfg := config.NewDatabaseConfig(cfg)
-	fmt.Printf("Database config file: %+v\n", dbCfg)
-
 	var c DBConnector
-	if dbCfg.Driver == "mysql" {
+	if viper.GetString("driver") == "mysql" {
 		c = NewMySQLConnector()
 	}
 
 	var err error
-	instance, err = c.Connect(dbCfg)
+	cfg := config.Instance
+	client, err = c.Connect(cfg.Database)
 	if err != nil {
-		fmt.Println("Failed to connect database: ", err)
+		fmt.Println(err)
 	}
 }
