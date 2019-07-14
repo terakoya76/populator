@@ -57,6 +57,7 @@ type Table struct {
 	Name    string
 	Columns []*Column
 	Indexes []*Index
+	Charset string
 	Record  int
 }
 
@@ -64,9 +65,9 @@ type Table struct {
 type Column struct {
 	Name    string
 	Type    string
-	Primary bool
+	Order   int
 	Null    bool
-	Charset string
+	Primary bool
 }
 
 // Index represents a single index schema

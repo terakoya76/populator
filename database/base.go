@@ -28,9 +28,10 @@ import (
 
 // DBClient is an interface for DB Querying
 type DBClient interface {
-	CreateTable(cfg []*config.Table)
-	CreateIndex(cfg []*config.Table)
-	Insert(cfg []*config.Table)
+	CreateTable(cfg *config.Table) error
+	AddColumn(cfg *config.Column) error
+	AddIndex(cfg *config.Index) error
+	Insert(cfg *config.Table) error
 }
 
 // DBConnector is an interface for DB adapter

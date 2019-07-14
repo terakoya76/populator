@@ -27,26 +27,6 @@ import (
 	"github.com/terakoya76/populator/config"
 )
 
-// MySQLClient is an implementation of DBClient for MySQL
-type MySQLClient struct {
-	*sqlx.DB
-}
-
-// CreateTable does CreateTable statement for MySQL
-func (db *MySQLClient) CreateTable(cfg []*config.Table) {
-	fmt.Println("need to be implemented")
-}
-
-// CreateIndex does CreateIndex statement for MySQL
-func (db *MySQLClient) CreateIndex(cfg []*config.Table) {
-	fmt.Println("need to be implemented")
-}
-
-// Insert does Insert statement for MySQL
-func (db *MySQLClient) Insert(cfg []*config.Table) {
-	fmt.Println("need to be implemented")
-}
-
 // MySQLConnector is an implementation of DBConnector for MySQL
 type MySQLConnector struct{}
 
