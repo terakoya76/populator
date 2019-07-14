@@ -1,4 +1,6 @@
 /*
+Package cmd ...
+
 Copyright © 2019 hajime-terasawa <terako.studio@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,10 +19,10 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/spf13/cobra"
 	"os"
 
 	homedir "github.com/mitchellh/go-homedir"
+	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
 

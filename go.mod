@@ -2,6 +2,8 @@ module github.com/terakoya76/populator
 
 go 1.12
 
+replace github.com/go-resty/resty => gopkg.in/resty.v1 v1.12.0
+
 require (
 	github.com/magiconair/properties v1.8.1 // indirect
 	github.com/mitchellh/go-homedir v1.1.0
