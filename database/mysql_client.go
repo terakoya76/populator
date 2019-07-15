@@ -36,7 +36,6 @@ type MySQLClient struct {
 // CreateTable does CreateTable statement for MySQL
 func (db *MySQLClient) CreateTable(cfg *config.Table) error {
 	sql := db.table2sql(cfg)
-	fmt.Printf("sql: %+v\n", sql)
 	if _, err := db.Exec(sql); err != nil {
 		return err
 	}

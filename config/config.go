@@ -18,29 +18,54 @@ limitations under the License.
 package config
 
 import (
-	"fmt"
+	"errors"
 )
 
 // Instance represents the both information of the connecting database and the tables schema to be populated w/ seed data
 var Instance *config
 
 type config struct {
-	Driver   *Driver
+	Driver   Driver
 	Database *Database
 	Tables   []*Table
+}
+
+func (c *config) IsValid() error {
+	if c.Driver == "" && c.Database == nil && c.Tables == nil {
+		return errors.New("yaml syntax error")
+	}
+
+	if err := c.Driver.isValid(); err != nil {
+		return err
+	}
+
+	if err := c.Database.isValid(); err != nil {
+		return err
+	}
+
+	if c.Tables == nil {
+		return errors.New("tables definition is required")
+	}
+	for _, table := range c.Tables {
+		if err := table.isValid(); err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
 
 // Driver represents database driver
 type Driver string
 
-// IsValid validates given database driver is acceptable or not
-func (d *Driver) IsValid() bool {
+func (d Driver) isValid() error {
 	// TODO: adopt more
-	if *d != "mysql" {
-		fmt.Println("supported database driver is only mysql")
-		return false
+	switch d {
+	case "mysql":
+		return nil
+	default:
+		return errors.New("database driver is invalid or non-supported")
 	}
-	return true
 }
 
 // Database represents information for connecting DB
@@ -52,6 +77,28 @@ type Database struct {
 	Name     string
 }
 
+func (db *Database) isValid() error {
+	if db == nil {
+		return errors.New("database connection information is required")
+	}
+	if db.Host == "" {
+		db.Host = "127.0.0.1"
+	}
+	if db.Port == 0 {
+		db.Port = 3306
+	}
+	if db.User == "" {
+		return errors.New("database user is required")
+	}
+	if db.Password == "" {
+		return errors.New("database password is required")
+	}
+	if db.Name == "" {
+		return errors.New("database name is required")
+	}
+	return nil
+}
+
 // Table represents a single table schema
 type Table struct {
 	Name    string
@@ -59,6 +106,16 @@ type Table struct {
 	Indexes []*Index
 	Charset string
 	Record  int
+}
+
+func (t *Table) isValid() error {
+	if t == nil {
+		return errors.New("table definition is invalid")
+	}
+	if t.Name == "" {
+		return errors.New("table name is required")
+	}
+	return nil
 }
 
 // Column represents a single column schema
