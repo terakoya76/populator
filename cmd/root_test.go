@@ -54,6 +54,7 @@ func Test_LoadConfig_Driver(t *testing.T) {
                     - name: col_1
                       type: int
                       order: 11
+                      unsigned: false
                       null: false
                       primary: true
                   indexes:
@@ -84,6 +85,7 @@ func Test_LoadConfig_Driver(t *testing.T) {
                     - name: col_1
                       type: int
                       order: 11
+                      unsigned: false
                       null: false
                       primary: true
                   indexes:
@@ -113,6 +115,7 @@ func Test_LoadConfig_Driver(t *testing.T) {
                     - name: col_1
                       type: int
                       order: 11
+                      unsigned: false
                       null: false
                       primary: true
                   indexes:
@@ -174,6 +177,7 @@ func Test_LoadConfig_Database(t *testing.T) {
                     - name: col_1
                       type: int
                       order: 11
+                      unsigned: false
                       null: false
                       primary: true
                   indexes:
@@ -204,6 +208,7 @@ func Test_LoadConfig_Database(t *testing.T) {
                     - name: col_1
                       type: int
                       order: 11
+                      unsigned: false
                       null: false
                       primary: true
                   indexes:
@@ -233,6 +238,7 @@ func Test_LoadConfig_Database(t *testing.T) {
                     - name: col_1
                       type: int
                       order: 11
+                      unsigned: false
                       null: false
                       primary: true
                   indexes:
@@ -268,6 +274,7 @@ func Test_LoadConfig_Database(t *testing.T) {
                     - name: col_1
                       type: int
                       order: 11
+                      unsigned: false
                       null: false
                       primary: true
                   indexes:
@@ -303,6 +310,7 @@ func Test_LoadConfig_Database(t *testing.T) {
                     - name: col_1
                       type: int
                       order: 11
+                      unsigned: false
                       null: false
                       primary: true
                   indexes:
@@ -338,6 +346,7 @@ func Test_LoadConfig_Database(t *testing.T) {
                     - name: col_1
                       type: int
                       order: 11
+                      unsigned: false
                       null: false
                       primary: true
                   indexes:
@@ -373,6 +382,7 @@ func Test_LoadConfig_Database(t *testing.T) {
                     - name: col_1
                       type: int
                       order: 11
+                      unsigned: false
                       null: false
                       primary: true
                   indexes:
@@ -442,6 +452,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
                     - name: col_1
                       type: int
                       order: 11
+                      unsigned: false
                       null: false
                       primary: true
                   indexes:
@@ -457,11 +468,12 @@ func Test_LoadConfig_Tables(t *testing.T) {
 					Name: "table_a",
 					Columns: []*config.Column{
 						{
-							Name:    "col_1",
-							Type:    "int",
-							Order:   11,
-							Null:    false,
-							Primary: true,
+							Name:     "col_1",
+							Type:     "int",
+							Order:    11,
+							Unsigned: false,
+							Null:     false,
+							Primary:  true,
 						},
 					},
 					Indexes: []*config.Index{
@@ -510,6 +522,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
                     - name: col_1
                       type: int
                       order: 11
+                      unsigned: false
                       null: false
                       primary: true
                   indexes:
@@ -525,11 +538,12 @@ func Test_LoadConfig_Tables(t *testing.T) {
 					Name: "",
 					Columns: []*config.Column{
 						{
-							Name:    "col_1",
-							Type:    "int",
-							Order:   11,
-							Null:    false,
-							Primary: true,
+							Name:     "col_1",
+							Type:     "int",
+							Order:    11,
+							Unsigned: false,
+							Null:     false,
+							Primary:  true,
 						},
 					},
 					Indexes: []*config.Index{
@@ -604,6 +618,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
                     - name: col_1
                       type: int
                       order: 11
+                      unsigned: false
                       null: false
                       primary: true
                   charset: utf8mb4
@@ -614,11 +629,12 @@ func Test_LoadConfig_Tables(t *testing.T) {
 					Name: "table_a",
 					Columns: []*config.Column{
 						{
-							Name:    "col_1",
-							Type:    "int",
-							Order:   11,
-							Null:    false,
-							Primary: true,
+							Name:     "col_1",
+							Type:     "int",
+							Order:    11,
+							Unsigned: false,
+							Null:     false,
+							Primary:  true,
 						},
 					},
 					Indexes: nilIndexes,
@@ -645,6 +661,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
                     - name: col_1
                       type: int
                       order: 11
+                      unsigned: false
                       null: false
                       primary: true
                   indexes:
@@ -659,11 +676,12 @@ func Test_LoadConfig_Tables(t *testing.T) {
 					Name: "table_a",
 					Columns: []*config.Column{
 						{
-							Name:    "col_1",
-							Type:    "int",
-							Order:   11,
-							Null:    false,
-							Primary: true,
+							Name:     "col_1",
+							Type:     "int",
+							Order:    11,
+							Unsigned: false,
+							Null:     false,
+							Primary:  true,
 						},
 					},
 					Indexes: []*config.Index{
@@ -698,6 +716,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
                     - name: col_1
                       type: int
                       order: 11
+                      unsigned: false
                       null: false
                       primary: true
                   indexes:
@@ -712,11 +731,12 @@ func Test_LoadConfig_Tables(t *testing.T) {
 					Name: "table_a",
 					Columns: []*config.Column{
 						{
-							Name:    "col_1",
-							Type:    "int",
-							Order:   11,
-							Null:    false,
-							Primary: true,
+							Name:     "col_1",
+							Type:     "int",
+							Order:    11,
+							Unsigned: false,
+							Null:     false,
+							Primary:  true,
 						},
 					},
 					Indexes: []*config.Index{
@@ -780,6 +800,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
                   columns:
                     - type: int
                       order: 11
+                      unsigned: false
                       null: false
                       primary: true
                   indexes:
@@ -795,11 +816,12 @@ func Test_LoadConfig_Columns(t *testing.T) {
 					Name: "table_a",
 					Columns: []*config.Column{
 						{
-							Name:    "",
-							Type:    "int",
-							Order:   11,
-							Null:    false,
-							Primary: true,
+							Name:     "",
+							Type:     "int",
+							Order:    11,
+							Unsigned: false,
+							Null:     false,
+							Primary:  true,
 						},
 					},
 					Indexes: []*config.Index{
@@ -833,6 +855,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
                   columns:
                     - name: col_1
                       order: 11
+                      unsigned: false
                       null: false
                       primary: true
                   indexes:
@@ -848,11 +871,12 @@ func Test_LoadConfig_Columns(t *testing.T) {
 					Name: "table_a",
 					Columns: []*config.Column{
 						{
-							Name:    "col_1",
-							Type:    "",
-							Order:   11,
-							Null:    false,
-							Primary: true,
+							Name:     "col_1",
+							Type:     "",
+							Order:    11,
+							Unsigned: false,
+							Null:     false,
+							Primary:  true,
 						},
 					},
 					Indexes: []*config.Index{
@@ -886,6 +910,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
                   columns:
                     - name: col_1
                       type: int
+                      unsigned: false
                       null: false
                       primary: true
                   indexes:
@@ -901,11 +926,67 @@ func Test_LoadConfig_Columns(t *testing.T) {
 					Name: "table_a",
 					Columns: []*config.Column{
 						{
-							Name:    "col_1",
-							Type:    "int",
-							Order:   0,
-							Null:    false,
-							Primary: true,
+							Name:     "col_1",
+							Type:     "int",
+							Order:    0,
+							Unsigned: false,
+							Null:     false,
+							Primary:  true,
+						},
+					},
+					Indexes: []*config.Index{
+						{
+							Name: "index_1_on_table_a",
+							Uniq: true,
+							Columns: []string{
+								"col_1",
+							},
+						},
+					},
+					Charset: "utf8mb4",
+					Record:  100000,
+				},
+			},
+			err: nil,
+		},
+
+		{
+			name: "missing a unsigned of column in columns part",
+			yaml: []byte(`
+                driver: mysql
+                database:
+                  host: 127.0.0.1
+                  port: 3306
+                  user: root
+                  password: root
+                  name: testdb
+                tables:
+                - name: table_a
+                  columns:
+                    - name: col_1
+                      type: int
+                      order: 11
+                      null: false
+                      primary: true
+                  indexes:
+                    - name: index_1_on_table_a
+                      uniq: true
+                      columns:
+                        - col_1
+                  charset: utf8mb4
+                  record: 100000
+            `),
+			config: []*config.Table{
+				{
+					Name: "table_a",
+					Columns: []*config.Column{
+						{
+							Name:     "col_1",
+							Type:     "int",
+							Order:    11,
+							Unsigned: false,
+							Null:     false,
+							Primary:  true,
 						},
 					},
 					Indexes: []*config.Index{
@@ -940,6 +1021,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
                     - name: col_1
                       type: int
                       order: 11
+                      unsigned: false
                       primary: true
                   indexes:
                     - name: index_1_on_table_a
@@ -954,11 +1036,12 @@ func Test_LoadConfig_Columns(t *testing.T) {
 					Name: "table_a",
 					Columns: []*config.Column{
 						{
-							Name:    "col_1",
-							Type:    "int",
-							Order:   11,
-							Null:    false,
-							Primary: true,
+							Name:     "col_1",
+							Type:     "int",
+							Order:    11,
+							Unsigned: false,
+							Null:     false,
+							Primary:  true,
 						},
 					},
 					Indexes: []*config.Index{
@@ -993,6 +1076,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
                     - name: col_1
                       type: int
                       order: 11
+                      unsigned: false
                       null: false
                   indexes:
                     - name: index_1_on_table_a
@@ -1007,11 +1091,12 @@ func Test_LoadConfig_Columns(t *testing.T) {
 					Name: "table_a",
 					Columns: []*config.Column{
 						{
-							Name:    "col_1",
-							Type:    "int",
-							Order:   11,
-							Null:    false,
-							Primary: false,
+							Name:     "col_1",
+							Type:     "int",
+							Order:    11,
+							Unsigned: false,
+							Null:     false,
+							Primary:  false,
 						},
 					},
 					Indexes: []*config.Index{
@@ -1077,6 +1162,7 @@ func Test_LoadConfig_Indexes(t *testing.T) {
                     - name: col_1
                       type: int
                       order: 11
+                      unsigned: false
                       null: false
                       primary: true
                   indexes:
@@ -1091,11 +1177,12 @@ func Test_LoadConfig_Indexes(t *testing.T) {
 					Name: "table_a",
 					Columns: []*config.Column{
 						{
-							Name:    "col_1",
-							Type:    "int",
-							Order:   11,
-							Null:    false,
-							Primary: true,
+							Name:     "col_1",
+							Type:     "int",
+							Order:    11,
+							Unsigned: false,
+							Null:     false,
+							Primary:  true,
 						},
 					},
 					Indexes: []*config.Index{
@@ -1130,6 +1217,7 @@ func Test_LoadConfig_Indexes(t *testing.T) {
                     - name: col_1
                       type: int
                       order: 11
+                      unsigned: false
                       null: false
                       primary: true
                   indexes:
@@ -1144,11 +1232,12 @@ func Test_LoadConfig_Indexes(t *testing.T) {
 					Name: "table_a",
 					Columns: []*config.Column{
 						{
-							Name:    "col_1",
-							Type:    "int",
-							Order:   11,
-							Null:    false,
-							Primary: true,
+							Name:     "col_1",
+							Type:     "int",
+							Order:    11,
+							Unsigned: false,
+							Null:     false,
+							Primary:  true,
 						},
 					},
 					Indexes: []*config.Index{
@@ -1183,6 +1272,7 @@ func Test_LoadConfig_Indexes(t *testing.T) {
                     - name: col_1
                       type: int
                       order: 11
+                      unsigned: false
                       null: false
                       primary: true
                   indexes:
@@ -1196,11 +1286,12 @@ func Test_LoadConfig_Indexes(t *testing.T) {
 					Name: "table_a",
 					Columns: []*config.Column{
 						{
-							Name:    "col_1",
-							Type:    "int",
-							Order:   11,
-							Null:    false,
-							Primary: true,
+							Name:     "col_1",
+							Type:     "int",
+							Order:    11,
+							Unsigned: false,
+							Null:     false,
+							Primary:  true,
 						},
 					},
 					Indexes: []*config.Index{

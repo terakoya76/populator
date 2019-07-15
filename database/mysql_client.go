@@ -35,7 +35,7 @@ type MySQLClient struct {
 
 // CreateTable does CreateTable statement for MySQL
 func (db *MySQLClient) CreateTable(cfg *config.Table) error {
-	sql := db.buildCreateTableStmt(cfg)
+	sql := db.BuildCreateTableStmt(cfg)
 	fmt.Println(sql)
 	if _, err := db.Exec(sql); err != nil {
 		return err
@@ -44,8 +44,8 @@ func (db *MySQLClient) CreateTable(cfg *config.Table) error {
 	return nil
 }
 
-// TODO: might be better to impl as method in config.go
-func (db *MySQLClient) buildCreateTableStmt(cfg *config.Table) string {
+// BuildCreateTableStmt generate create_table_stmt sql for MySQL
+func (db *MySQLClient) BuildCreateTableStmt(cfg *config.Table) string {
 	var sb strings.Builder
 	sb.WriteString(
 		fmt.Sprintf(
@@ -71,7 +71,10 @@ func (db *MySQLClient) buildCreateTableStmt(cfg *config.Table) string {
 		regIdx = append(regIdx, db.buildCreateTableStmtIndex(index))
 	}
 	sb.WriteString(strings.Join(regIdx, ",\n"))
-	sb.WriteString("\n")
+
+	if len(cfg.Indexes) > 0 {
+		sb.WriteString("\n")
+	}
 
 	sb.WriteString(
 		fmt.Sprintf(
@@ -94,6 +97,9 @@ func (db *MySQLClient) buildCreateTableStmtColumn(cfg *config.Column) string {
 		sb.WriteString(
 			fmt.Sprintf("(%d)", cfg.Order),
 		)
+	}
+	if cfg.Unsigned {
+		sb.WriteString(" UNSIGNED")
 	}
 	if !cfg.Null {
 		sb.WriteString(" NOT NULL")
