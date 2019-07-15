@@ -101,7 +101,7 @@ func (db *MySQLClient) buildCreateTableStmtColumn(cfg *config.Column) string {
 	if cfg.Unsigned {
 		sb.WriteString(" UNSIGNED")
 	}
-	if !cfg.Null {
+	if !cfg.Nullable {
 		sb.WriteString(" NOT NULL")
 	}
 	if cfg.Primary {

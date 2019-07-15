@@ -55,7 +55,7 @@ func Test_LoadConfig_Driver(t *testing.T) {
                       type: int
                       order: 11
                       unsigned: false
-                      null: false
+                      nullable: false
                       primary: true
                   indexes:
                     - name: index_1_on_table_a
@@ -86,7 +86,7 @@ func Test_LoadConfig_Driver(t *testing.T) {
                       type: int
                       order: 11
                       unsigned: false
-                      null: false
+                      nullable: false
                       primary: true
                   indexes:
                     - name: index_1_on_table_a
@@ -116,7 +116,7 @@ func Test_LoadConfig_Driver(t *testing.T) {
                       type: int
                       order: 11
                       unsigned: false
-                      null: false
+                      nullable: false
                       primary: true
                   indexes:
                     - name: index_1_on_table_a
@@ -178,7 +178,7 @@ func Test_LoadConfig_Database(t *testing.T) {
                       type: int
                       order: 11
                       unsigned: false
-                      null: false
+                      nullable: false
                       primary: true
                   indexes:
                     - name: index_1_on_table_a
@@ -209,7 +209,7 @@ func Test_LoadConfig_Database(t *testing.T) {
                       type: int
                       order: 11
                       unsigned: false
-                      null: false
+                      nullable: false
                       primary: true
                   indexes:
                     - name: index_1_on_table_a
@@ -239,7 +239,7 @@ func Test_LoadConfig_Database(t *testing.T) {
                       type: int
                       order: 11
                       unsigned: false
-                      null: false
+                      nullable: false
                       primary: true
                   indexes:
                     - name: index_1_on_table_a
@@ -275,7 +275,7 @@ func Test_LoadConfig_Database(t *testing.T) {
                       type: int
                       order: 11
                       unsigned: false
-                      null: false
+                      nullable: false
                       primary: true
                   indexes:
                     - name: index_1_on_table_a
@@ -311,7 +311,7 @@ func Test_LoadConfig_Database(t *testing.T) {
                       type: int
                       order: 11
                       unsigned: false
-                      null: false
+                      nullable: false
                       primary: true
                   indexes:
                     - name: index_1_on_table_a
@@ -347,7 +347,7 @@ func Test_LoadConfig_Database(t *testing.T) {
                       type: int
                       order: 11
                       unsigned: false
-                      null: false
+                      nullable: false
                       primary: true
                   indexes:
                     - name: index_1_on_table_a
@@ -383,7 +383,7 @@ func Test_LoadConfig_Database(t *testing.T) {
                       type: int
                       order: 11
                       unsigned: false
-                      null: false
+                      nullable: false
                       primary: true
                   indexes:
                     - name: index_1_on_table_a
@@ -453,7 +453,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
                       type: int
                       order: 11
                       unsigned: false
-                      null: false
+                      nullable: false
                       primary: true
                   indexes:
                     - name: index_1_on_table_a
@@ -472,7 +472,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
 							Type:     "int",
 							Order:    11,
 							Unsigned: false,
-							Null:     false,
+							Nullable: false,
 							Primary:  true,
 						},
 					},
@@ -523,7 +523,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
                       type: int
                       order: 11
                       unsigned: false
-                      null: false
+                      nullable: false
                       primary: true
                   indexes:
                     - name: index_1_on_table_a
@@ -542,7 +542,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
 							Type:     "int",
 							Order:    11,
 							Unsigned: false,
-							Null:     false,
+							Nullable: false,
 							Primary:  true,
 						},
 					},
@@ -619,7 +619,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
                       type: int
                       order: 11
                       unsigned: false
-                      null: false
+                      nullable: false
                       primary: true
                   charset: utf8mb4
                   record: 100000
@@ -633,7 +633,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
 							Type:     "int",
 							Order:    11,
 							Unsigned: false,
-							Null:     false,
+							Nullable: false,
 							Primary:  true,
 						},
 					},
@@ -662,7 +662,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
                       type: int
                       order: 11
                       unsigned: false
-                      null: false
+                      nullable: false
                       primary: true
                   indexes:
                     - name: index_1_on_table_a
@@ -680,7 +680,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
 							Type:     "int",
 							Order:    11,
 							Unsigned: false,
-							Null:     false,
+							Nullable: false,
 							Primary:  true,
 						},
 					},
@@ -717,7 +717,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
                       type: int
                       order: 11
                       unsigned: false
-                      null: false
+                      nullable: false
                       primary: true
                   indexes:
                     - name: index_1_on_table_a
@@ -735,7 +735,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
 							Type:     "int",
 							Order:    11,
 							Unsigned: false,
-							Null:     false,
+							Nullable: false,
 							Primary:  true,
 						},
 					},
@@ -801,7 +801,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
                     - type: int
                       order: 11
                       unsigned: false
-                      null: false
+                      nullable: false
                       primary: true
                   indexes:
                     - name: index_1_on_table_a
@@ -820,7 +820,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
 							Type:     "int",
 							Order:    11,
 							Unsigned: false,
-							Null:     false,
+							Nullable: false,
 							Primary:  true,
 						},
 					},
@@ -856,7 +856,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
                     - name: col_1
                       order: 11
                       unsigned: false
-                      null: false
+                      nullable: false
                       primary: true
                   indexes:
                     - name: index_1_on_table_a
@@ -875,7 +875,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
 							Type:     "",
 							Order:    11,
 							Unsigned: false,
-							Null:     false,
+							Nullable: false,
 							Primary:  true,
 						},
 					},
@@ -911,7 +911,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
                     - name: col_1
                       type: int
                       unsigned: false
-                      null: false
+                      nullable: false
                       primary: true
                   indexes:
                     - name: index_1_on_table_a
@@ -930,7 +930,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
 							Type:     "int",
 							Order:    0,
 							Unsigned: false,
-							Null:     false,
+							Nullable: false,
 							Primary:  true,
 						},
 					},
@@ -966,7 +966,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
                     - name: col_1
                       type: int
                       order: 11
-                      null: false
+                      nullable: false
                       primary: true
                   indexes:
                     - name: index_1_on_table_a
@@ -985,7 +985,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
 							Type:     "int",
 							Order:    11,
 							Unsigned: false,
-							Null:     false,
+							Nullable: false,
 							Primary:  true,
 						},
 					},
@@ -1006,7 +1006,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
 		},
 
 		{
-			name: "missing a null of column in columns part",
+			name: "missing a nullable of column in columns part",
 			yaml: []byte(`
                 driver: mysql
                 database:
@@ -1040,7 +1040,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
 							Type:     "int",
 							Order:    11,
 							Unsigned: false,
-							Null:     false,
+							Nullable: false,
 							Primary:  true,
 						},
 					},
@@ -1077,7 +1077,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
                       type: int
                       order: 11
                       unsigned: false
-                      null: false
+                      nullable: false
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -1095,7 +1095,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
 							Type:     "int",
 							Order:    11,
 							Unsigned: false,
-							Null:     false,
+							Nullable: false,
 							Primary:  false,
 						},
 					},
@@ -1163,7 +1163,7 @@ func Test_LoadConfig_Indexes(t *testing.T) {
                       type: int
                       order: 11
                       unsigned: false
-                      null: false
+                      nullable: false
                       primary: true
                   indexes:
                     - uniq: true
@@ -1181,7 +1181,7 @@ func Test_LoadConfig_Indexes(t *testing.T) {
 							Type:     "int",
 							Order:    11,
 							Unsigned: false,
-							Null:     false,
+							Nullable: false,
 							Primary:  true,
 						},
 					},
@@ -1218,7 +1218,7 @@ func Test_LoadConfig_Indexes(t *testing.T) {
                       type: int
                       order: 11
                       unsigned: false
-                      null: false
+                      nullable: false
                       primary: true
                   indexes:
                     - name: index_1_on_table_a
@@ -1236,7 +1236,7 @@ func Test_LoadConfig_Indexes(t *testing.T) {
 							Type:     "int",
 							Order:    11,
 							Unsigned: false,
-							Null:     false,
+							Nullable: false,
 							Primary:  true,
 						},
 					},
@@ -1273,7 +1273,7 @@ func Test_LoadConfig_Indexes(t *testing.T) {
                       type: int
                       order: 11
                       unsigned: false
-                      null: false
+                      nullable: false
                       primary: true
                   indexes:
                     - name: index_1_on_table_a
@@ -1290,7 +1290,7 @@ func Test_LoadConfig_Indexes(t *testing.T) {
 							Type:     "int",
 							Order:    11,
 							Unsigned: false,
-							Null:     false,
+							Nullable: false,
 							Primary:  true,
 						},
 					},

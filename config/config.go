@@ -128,7 +128,7 @@ type Column struct {
 	Type     string
 	Order    int
 	Unsigned bool
-	Null     bool
+	Nullable bool
 	Primary  bool
 }
 
