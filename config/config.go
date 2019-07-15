@@ -51,6 +51,11 @@ func (c *config) IsValid() error {
 	return nil
 }
 
+// CompleteWithDefault complete config value which is not required but configurable
+func (c *config) CompleteWithDefault() {
+	c.Database.completeWithDefault()
+}
+
 // Driver represents database driver
 type Driver string
 
@@ -77,12 +82,6 @@ func (db *Database) isValid() error {
 	if db == nil {
 		return errors.New("database connection information is required")
 	}
-	if db.Host == "" {
-		db.Host = "127.0.0.1"
-	}
-	if db.Port == 0 {
-		db.Port = 3306
-	}
 	if db.User == "" {
 		return errors.New("database user is required")
 	}
@@ -93,6 +92,15 @@ func (db *Database) isValid() error {
 		return errors.New("database name is required")
 	}
 	return nil
+}
+
+func (db *Database) completeWithDefault() {
+	if db.Host == "" {
+		db.Host = "127.0.0.1"
+	}
+	if db.Port == 0 {
+		db.Port = 3306
+	}
 }
 
 // Table represents a single table schema

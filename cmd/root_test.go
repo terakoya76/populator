@@ -219,10 +219,46 @@ func Test_LoadConfig_Database(t *testing.T) {
 		},
 
 		{
-			name: "missing a host and port of database part in yaml",
+			name: "missing a host of database part in yaml",
 			yaml: []byte(`
                 driver: mysql
                 database:
+                  port: 3306
+                  user: root
+                  password: root
+                  name: testdb
+                tables:
+                - name: table_a
+                  columns:
+                    - name: col_1
+                      type: int
+                      order: 11
+                      null: false
+                      primary: true
+                  indexes:
+                    - name: index_1_on_table_a
+                      uniq: true
+                      columns:
+                        - col_1
+                  charset: utf8mb4
+                  record: 100000
+            `),
+			config: &config.Database{
+				Host:     "",
+				Port:     3306,
+				User:     "root",
+				Password: "root",
+				Name:     "testdb",
+			},
+			err: nil,
+		},
+
+		{
+			name: "missing a port of database part in yaml",
+			yaml: []byte(`
+                driver: mysql
+                database:
+                  host: "127.0.0.1"
                   user: root
                   password: root
                   name: testdb
@@ -244,7 +280,7 @@ func Test_LoadConfig_Database(t *testing.T) {
             `),
 			config: &config.Database{
 				Host:     "127.0.0.1",
-				Port:     3306,
+				Port:     0,
 				User:     "root",
 				Password: "root",
 				Name:     "testdb",

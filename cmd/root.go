@@ -91,6 +91,8 @@ func initConfig() {
 	if err := LoadConfig(); err != nil {
 		os.Exit(1)
 	}
+
+	config.Instance.CompleteWithDefault()
 }
 
 // LoadConfig assigns the configuration input to config.Instance

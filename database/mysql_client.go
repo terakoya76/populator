@@ -44,16 +44,6 @@ func (db *MySQLClient) CreateTable(cfg *config.Table) error {
 	return nil
 }
 
-// Insert does Insert statement for MySQL
-func (db *MySQLClient) Insert(cfg *config.Table) error {
-	fmt.Printf("name: %+v\n", cfg.Name)
-	fmt.Printf("columns: %+v\n", cfg.Columns)
-	fmt.Printf("indexes: %+v\n", cfg.Indexes)
-	fmt.Printf("record: %+v\n", cfg.Record)
-
-	return nil
-}
-
 // TODO: might be better to impl as method in config.go
 func (db *MySQLClient) buildCreateTableStmt(cfg *config.Table) string {
 	var sb strings.Builder
@@ -130,4 +120,14 @@ func (db *MySQLClient) buildCreateTableStmtIndex(cfg *config.Index) string {
 	sb.WriteString(")")
 
 	return sb.String()
+}
+
+// Populate does Insert statement for MySQL
+func (db *MySQLClient) Populate(cfg *config.Table) error {
+	fmt.Printf("name: %+v\n", cfg.Name)
+	fmt.Printf("columns: %+v\n", cfg.Columns)
+	fmt.Printf("indexes: %+v\n", cfg.Indexes)
+	fmt.Printf("record: %+v\n", cfg.Record)
+
+	return nil
 }
