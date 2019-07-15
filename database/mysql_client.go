@@ -101,6 +101,9 @@ func (db *MySQLClient) buildCreateTableStmtColumn(cfg *config.Column) string {
 	if cfg.Unsigned {
 		sb.WriteString(" UNSIGNED")
 	}
+	if cfg.Increment {
+		sb.WriteString(" AUTO_INCREMENT")
+	}
 	if !cfg.Nullable {
 		sb.WriteString(" NOT NULL")
 	}

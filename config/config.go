@@ -124,12 +124,13 @@ func (t *Table) isValid() error {
 
 // Column represents a single column schema
 type Column struct {
-	Name     string
-	Type     string
-	Order    int
-	Unsigned bool
-	Nullable bool
-	Primary  bool
+	Name      string
+	Type      string
+	Order     int
+	Unsigned  bool
+	Nullable  bool
+	Primary   bool
+	Increment bool
 }
 
 // Index represents a single index schema
