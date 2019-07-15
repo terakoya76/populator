@@ -26,7 +26,46 @@ import (
 	"github.com/jmoiron/sqlx"
 
 	"github.com/terakoya76/populator/config"
+	"github.com/terakoya76/populator/utils"
 )
+
+// NaturalNumberDataType accepts unsigned/increment options
+var NaturalNumberDataType = []string{
+	"tinyint",
+	"smallint",
+	"mediumint",
+	"int",
+	"bigint",
+}
+
+// OrderRequiredDataTypes require DataType(Order) like sql
+var OrderRequiredDataTypes = []string{
+	"tinyint",
+	"smallint",
+	"mediumint",
+	"int",
+	"bigint",
+	"bit",
+	"year",
+	"char",
+	"varchar",
+	"binary",
+	"varbinary",
+}
+
+// PrecisionRequiredDataTypes require DataType(Order, Precision) like sql
+var PrecisionRequiredDataTypes = []string{
+	"decimal",
+	"float",
+	"real",
+	"double",
+}
+
+// MustNullableDataTypes must allow null value
+var MustNullableDataTypes = []string{
+	"blob",
+	"text",
+}
 
 // MySQLClient is an implementation of DBClient for MySQL
 type MySQLClient struct {
@@ -36,7 +75,6 @@ type MySQLClient struct {
 // CreateTable does CreateTable statement for MySQL
 func (db *MySQLClient) CreateTable(cfg *config.Table) error {
 	sql := db.BuildCreateTableStmt(cfg)
-	fmt.Println(sql)
 	if _, err := db.Exec(sql); err != nil {
 		return err
 	}
@@ -93,18 +131,25 @@ func (db *MySQLClient) buildCreateTableStmtColumn(cfg *config.Column) string {
 	sb.WriteString(" ")
 	sb.WriteString(cfg.Type)
 
-	if cfg.Order > 0 {
+	if utils.Contains(OrderRequiredDataTypes, cfg.Type) {
 		sb.WriteString(
 			fmt.Sprintf("(%d)", cfg.Order),
 		)
 	}
-	if cfg.Unsigned {
+	if utils.Contains(PrecisionRequiredDataTypes, cfg.Type) {
+		sb.WriteString(
+			fmt.Sprintf("(%d, %d)", cfg.Order, cfg.Precision),
+		)
+	}
+
+	if utils.Contains(NaturalNumberDataType, cfg.Type) && cfg.Unsigned {
 		sb.WriteString(" UNSIGNED")
 	}
-	if cfg.Increment {
+	if utils.Contains(NaturalNumberDataType, cfg.Type) && cfg.Increment {
 		sb.WriteString(" AUTO_INCREMENT")
 	}
-	if !cfg.Nullable {
+
+	if !utils.Contains(MustNullableDataTypes, cfg.Type) && !cfg.Nullable {
 		sb.WriteString(" NOT NULL")
 	}
 	if cfg.Primary {
