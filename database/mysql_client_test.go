@@ -53,6 +53,7 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                       precision: 0
                       unsigned: false
                       nullable: true
+                      default:
                       primary: false
                       increment: false
                   charset: utf8mb4
@@ -81,6 +82,7 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                       precision: 0
                       unsigned: false
                       nullable: true
+                      default:
                       primary: false
                       increment: false
                   charset: utf8mb4
@@ -109,6 +111,7 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                       precision: 0
                       unsigned: false
                       nullable: true
+                      default:
                       primary: false
                       increment: false
                   charset: utf8mb4
@@ -137,6 +140,7 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                       precision: 0
                       unsigned: false
                       nullable: true
+                      default:
                       primary: false
                       increment: false
                   charset: utf8mb4
@@ -165,6 +169,7 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                       precision: 0
                       unsigned: false
                       nullable: true
+                      default:
                       primary: false
                       increment: false
                   charset: utf8mb4
@@ -193,12 +198,13 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                       precision: 0
                       unsigned: true
                       nullable: false
+                      default: 1000
                       primary: true
                       increment: true
                   charset: utf8mb4
                   record: 100000
             `),
-			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 bigint(20) UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY\n) DEFAULT CHARSET=utf8mb4",
+			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 bigint(20) UNSIGNED AUTO_INCREMENT NOT NULL DEFAULT(1000) PRIMARY KEY\n) DEFAULT CHARSET=utf8mb4",
 			err: nil,
 		},
 
@@ -221,6 +227,7 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                       precision: 2
                       unsigned: false
                       nullable: true
+                      default:
                       primary: false
                       increment: false
                   charset: utf8mb4
@@ -249,6 +256,7 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                       precision: 2
                       unsigned: false
                       nullable: true
+                      default:
                       primary: false
                       increment: false
                   charset: utf8mb4
@@ -277,6 +285,7 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                       precision: 2
                       unsigned: false
                       nullable: true
+                      default:
                       primary: false
                       increment: false
                   charset: utf8mb4
@@ -305,6 +314,7 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                       precision: 2
                       unsigned: false
                       nullable: true
+                      default:
                       primary: false
                       increment: false
                   charset: utf8mb4
@@ -333,12 +343,13 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                       precision: 2
                       unsigned: true
                       nullable: false
+                      default: 123.45
                       primary: true
                       increment: true
                   charset: utf8mb4
                   record: 100000
             `),
-			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 float(5, 2) NOT NULL PRIMARY KEY\n) DEFAULT CHARSET=utf8mb4",
+			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 float(5, 2) NOT NULL DEFAULT(123.45) PRIMARY KEY\n) DEFAULT CHARSET=utf8mb4",
 			err: nil,
 		},
 
@@ -361,6 +372,7 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                       precision: 0
                       unsigned: false
                       nullable: true
+                      default:
                       primary: false
                       increment: false
                   charset: utf8mb4
@@ -389,6 +401,7 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                       precision: 0
                       unsigned: true
                       nullable: false
+                      default:
                       primary: true
                       increment: true
                   charset: utf8mb4
@@ -417,6 +430,7 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                       precision: 0
                       unsigned: false
                       nullable: true
+                      default:
                       primary: false
                       increment: false
                   charset: utf8mb4
@@ -445,6 +459,7 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                       precision: 0
                       unsigned: false
                       nullable: true
+                      default:
                       primary: false
                       increment: false
                   charset: utf8mb4
@@ -473,6 +488,7 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                       precision: 0
                       unsigned: false
                       nullable: true
+                      default:
                       primary: false
                       increment: false
                   charset: utf8mb4
@@ -501,6 +517,7 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                       precision: 0
                       unsigned: false
                       nullable: true
+                      default:
                       primary: false
                       increment: false
                   charset: utf8mb4
@@ -529,6 +546,7 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                       precision: 0
                       unsigned: false
                       nullable: true
+                      default:
                       primary: false
                       increment: false
                   charset: utf8mb4
@@ -557,12 +575,13 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                       precision: 0
                       unsigned: true
                       nullable: false
+                      default: 2000-12-01
                       primary: true
                       increment: true
                   charset: utf8mb4
                   record: 100000
             `),
-			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 date NOT NULL PRIMARY KEY\n) DEFAULT CHARSET=utf8mb4",
+			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 date NOT NULL DEFAULT(2000-12-01) PRIMARY KEY\n) DEFAULT CHARSET=utf8mb4",
 			err: nil,
 		},
 
@@ -585,6 +604,7 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                       precision: 0
                       unsigned: false
                       nullable: true
+                      default:
                       primary: false
                       increment: false
                   charset: utf8mb4
@@ -613,6 +633,7 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                       precision: 0
                       unsigned: false
                       nullable: true
+                      default:
                       primary: false
                       increment: false
                   charset: utf8mb4
@@ -641,6 +662,7 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                       precision: 0
                       unsigned: false
                       nullable: true
+                      default:
                       primary: false
                       increment: false
                   charset: utf8mb4
@@ -669,6 +691,7 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                       precision: 0
                       unsigned: false
                       nullable: true
+                      default:
                       primary: false
                       increment: false
                   charset: utf8mb4
@@ -697,6 +720,7 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                       precision: 0
                       unsigned: false
                       nullable: true
+                      default:
                       primary: false
                       increment: false
                   charset: utf8mb4
@@ -725,6 +749,7 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                       precision: 0
                       unsigned: false
                       nullable: true
+                      default:
                       primary: false
                       increment: false
                   charset: utf8mb4
@@ -753,12 +778,13 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                       precision: 0
                       unsigned: true
                       nullable: false
+                      default: "hoge"
                       primary: true
                       increment: true
                   charset: utf8mb4
                   record: 100000
             `),
-			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 text PRIMARY KEY\n) DEFAULT CHARSET=utf8mb4",
+			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 text NOT NULL PRIMARY KEY\n) DEFAULT CHARSET=utf8mb4",
 			err: nil,
 		},
 	}

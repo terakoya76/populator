@@ -61,8 +61,8 @@ var PrecisionRequiredDataTypes = []string{
 	"double",
 }
 
-// MustNullableDataTypes must allow null value
-var MustNullableDataTypes = []string{
+// ProhibitDefaultDataTypes must allow null value
+var ProhibitDefaultDataTypes = []string{
 	"blob",
 	"text",
 }
@@ -149,8 +149,11 @@ func (db *MySQLClient) buildCreateTableStmtColumn(cfg *config.Column) string {
 		sb.WriteString(" AUTO_INCREMENT")
 	}
 
-	if !utils.Contains(MustNullableDataTypes, cfg.Type) && !cfg.Nullable {
+	if !cfg.Nullable {
 		sb.WriteString(" NOT NULL")
+	}
+	if !utils.Contains(ProhibitDefaultDataTypes, cfg.Type) && cfg.Default != nil {
+		sb.WriteString(fmt.Sprintf(" DEFAULT(%v)", cfg.Default))
 	}
 	if cfg.Primary {
 		sb.WriteString(" PRIMARY KEY")

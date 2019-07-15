@@ -130,6 +130,7 @@ type Column struct {
 	Precision int
 	Unsigned  bool
 	Nullable  bool
+	Default   interface{}
 	Primary   bool
 	Increment bool
 }
