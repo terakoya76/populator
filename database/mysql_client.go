@@ -178,10 +178,50 @@ func (db *MySQLClient) buildCreateTableStmtIndex(cfg *config.Index) string {
 
 // Populate does Insert statement for MySQL
 func (db *MySQLClient) Populate(cfg *config.Table) error {
-	fmt.Printf("name: %+v\n", cfg.Name)
-	fmt.Printf("columns: %+v\n", cfg.Columns)
-	fmt.Printf("indexes: %+v\n", cfg.Indexes)
-	fmt.Printf("record: %+v\n", cfg.Record)
+	sql := db.BuildInsertStmt(cfg)
+	fmt.Println(sql)
+	if _, err := db.Exec(sql); err != nil {
+		return err
+	}
 
 	return nil
+}
+
+// BuildInsertStmt generate insert_stmt sql for MySQL
+func (db *MySQLClient) BuildInsertStmt(cfg *config.Table) string {
+	var sb strings.Builder
+	sb.WriteString(
+		fmt.Sprintf(
+			"INSERT INTO %s (\n",
+			cfg.Name,
+		),
+	)
+
+	var regCol []string
+	for _, column := range cfg.Columns {
+		regCol = append(regCol, fmt.Sprintf("   %s", column.Name))
+	}
+	sb.WriteString(strings.Join(regCol, ",\n"))
+	sb.WriteString("\n")
+
+	sb.WriteString(") VALUES (\n")
+
+	var regVal []string
+	for i := 0; i < cfg.Record; i++ {
+		// generate insert values
+		var reg []string
+		for _, column := range cfg.Columns {
+			value := db.generateValue(column)
+			reg = append(reg, fmt.Sprintf("   %s,\n", value))
+		}
+		regVal = append(regVal, strings.Join(reg, ") (\n"))
+	}
+	sb.WriteString(strings.Join(regVal, ") (\n"))
+	sb.WriteString(")")
+
+	return sb.String()
+}
+
+func (db *MySQLClient) generateValue(cfg *config.Column) interface{} {
+	return "hoge"
 }
