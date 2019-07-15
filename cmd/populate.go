@@ -49,7 +49,9 @@ func populate() error {
 			return err
 		}
 
-		db.Insert(table)
+		if err := db.Insert(table); err != nil {
+			return err
+		}
 	}
 
 	return nil

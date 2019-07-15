@@ -31,10 +31,6 @@ type config struct {
 }
 
 func (c *config) IsValid() error {
-	if c.Driver == "" && c.Database == nil && c.Tables == nil {
-		return errors.New("yaml syntax error")
-	}
-
 	if err := c.Driver.isValid(); err != nil {
 		return err
 	}

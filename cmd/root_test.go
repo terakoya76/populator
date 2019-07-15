@@ -126,40 +126,13 @@ func Test_LoadConfig_Driver(t *testing.T) {
 			config: config.Driver(""),
 			err:    errors.New("database driver is invalid or non-supported"),
 		},
-
-		{
-			name: "yaml syntax error",
-			yaml: []byte(`
-                driver: mysql
-                database:
-                  host: 127.0.0.1
-                  port: 3306
-                  user: root
-                  password root
-                  name: testdb
-                tables:
-                - name: table_a
-                  columns:
-                    - name: col_1
-                      type: int
-                      order: 11
-                      null: false
-                      primary: true
-                  indexes:
-                    - name: index_1_on_table_a
-                      uniq: true
-                      columns:
-                        - col_1
-                  charset: utf8mb4
-                  record: 100000
-            `),
-			config: config.Driver(""),
-			err:    errors.New("yaml syntax error"),
-		},
 	}
 
 	for _, c := range cases {
-		viper.ReadConfig(bytes.NewBuffer(c.yaml))
+		if err := viper.ReadConfig(bytes.NewBuffer(c.yaml)); err != nil {
+			t.Errorf("case: %s is failed, err: %s\n", c.name, err)
+		}
+
 		err := cmd.LoadConfig()
 		if !assert.Equal(t, c.err, err) {
 			t.Errorf("case: %s is failed, expected: %s, actual: %s\n", c.name, c.err, err)
@@ -383,40 +356,13 @@ func Test_LoadConfig_Database(t *testing.T) {
 			},
 			err: errors.New("database name is required"),
 		},
-
-		{
-			name: "yaml syntax error",
-			yaml: []byte(`
-                driver: mysql
-                database:
-                  host: 127.0.0.1
-                  port: 3306
-                  user root
-                  password: root
-                  name: testdb
-                tables:
-                - name: table_a
-                  columns:
-                    - name: col_1
-                      type: int
-                      order: 11
-                      null: false
-                      primary: true
-                  indexes:
-                    - name: index_1_on_table_a
-                      uniq: true
-                      columns:
-                        - col_1
-                  charset: utf8mb4
-                  record: 100000
-            `),
-			config: nilDatabase,
-			err:    errors.New("yaml syntax error"),
-		},
 	}
 
 	for _, c := range cases {
-		viper.ReadConfig(bytes.NewBuffer(c.yaml))
+		if err := viper.ReadConfig(bytes.NewBuffer(c.yaml)); err != nil {
+			t.Errorf("case: %s is failed, err: %s\n", c.name, err)
+		}
+
 		err := cmd.LoadConfig()
 		if !assert.Equal(t, c.err, err) {
 			t.Errorf("case: %s is failed, expected: %s, actual: %s\n", c.name, c.err, err)
@@ -471,10 +417,10 @@ func Test_LoadConfig_Tables(t *testing.T) {
                   record: 100000
             `),
 			config: []*config.Table{
-				&config.Table{
+				{
 					Name: "table_a",
 					Columns: []*config.Column{
-						&config.Column{
+						{
 							Name:    "col_1",
 							Type:    "int",
 							Order:   11,
@@ -483,7 +429,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
 						},
 					},
 					Indexes: []*config.Index{
-						&config.Index{
+						{
 							Name: "index_1_on_table_a",
 							Uniq: true,
 							Columns: []string{
@@ -539,10 +485,10 @@ func Test_LoadConfig_Tables(t *testing.T) {
                   record: 100000
             `),
 			config: []*config.Table{
-				&config.Table{
+				{
 					Name: "",
 					Columns: []*config.Column{
-						&config.Column{
+						{
 							Name:    "col_1",
 							Type:    "int",
 							Order:   11,
@@ -551,7 +497,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
 						},
 					},
 					Indexes: []*config.Index{
-						&config.Index{
+						{
 							Name: "index_1_on_table_a",
 							Uniq: true,
 							Columns: []string{
@@ -587,11 +533,11 @@ func Test_LoadConfig_Tables(t *testing.T) {
                   record: 100000
             `),
 			config: []*config.Table{
-				&config.Table{
+				{
 					Name:    "table_a",
 					Columns: nilColumns,
 					Indexes: []*config.Index{
-						&config.Index{
+						{
 							Name: "index_1_on_table_a",
 							Uniq: true,
 							Columns: []string{
@@ -628,10 +574,10 @@ func Test_LoadConfig_Tables(t *testing.T) {
                   record: 100000
             `),
 			config: []*config.Table{
-				&config.Table{
+				{
 					Name: "table_a",
 					Columns: []*config.Column{
-						&config.Column{
+						{
 							Name:    "col_1",
 							Type:    "int",
 							Order:   11,
@@ -673,10 +619,10 @@ func Test_LoadConfig_Tables(t *testing.T) {
                   record: 100000
             `),
 			config: []*config.Table{
-				&config.Table{
+				{
 					Name: "table_a",
 					Columns: []*config.Column{
-						&config.Column{
+						{
 							Name:    "col_1",
 							Type:    "int",
 							Order:   11,
@@ -685,7 +631,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
 						},
 					},
 					Indexes: []*config.Index{
-						&config.Index{
+						{
 							Name: "index_1_on_table_a",
 							Uniq: true,
 							Columns: []string{
@@ -726,10 +672,10 @@ func Test_LoadConfig_Tables(t *testing.T) {
                   charset: utf8mb4
             `),
 			config: []*config.Table{
-				&config.Table{
+				{
 					Name: "table_a",
 					Columns: []*config.Column{
-						&config.Column{
+						{
 							Name:    "col_1",
 							Type:    "int",
 							Order:   11,
@@ -738,7 +684,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
 						},
 					},
 					Indexes: []*config.Index{
-						&config.Index{
+						{
 							Name: "index_1_on_table_a",
 							Uniq: true,
 							Columns: []string{
@@ -752,40 +698,13 @@ func Test_LoadConfig_Tables(t *testing.T) {
 			},
 			err: nil,
 		},
-
-		{
-			name: "yaml syntax error",
-			yaml: []byte(`
-                driver: mysql
-                database:
-                  host: 127.0.0.1
-                  port: 3306
-                  user: root
-                  password: root
-                  name: testdb
-                tables:
-                - name: table_a
-                  columns:
-                    - name: col_1
-                      type: int
-                      order: 11
-                      null: false
-                      primary: true
-                  indexes:
-                    - name: index_1_on_table_a
-                      uniq: true
-                      columns:
-                        - col_1
-                  charset utf8mb4
-                  record: 100000
-            `),
-			config: nilTables,
-			err:    errors.New("yaml syntax error"),
-		},
 	}
 
 	for _, c := range cases {
-		viper.ReadConfig(bytes.NewBuffer(c.yaml))
+		if err := viper.ReadConfig(bytes.NewBuffer(c.yaml)); err != nil {
+			t.Errorf("case: %s is failed, err: %s\n", c.name, err)
+		}
+
 		err := cmd.LoadConfig()
 		if !assert.Equal(t, c.err, err) {
 			t.Errorf("case: %s is failed, expected: %s, actual: %s\n", c.name, c.err, err)
@@ -804,7 +723,6 @@ func Test_LoadConfig_Tables(t *testing.T) {
 func Test_LoadConfig_Columns(t *testing.T) {
 	viper.SetConfigType("yaml")
 
-	var nilTables []*config.Table
 	cases := []struct {
 		name   string
 		yaml   []byte
@@ -837,10 +755,10 @@ func Test_LoadConfig_Columns(t *testing.T) {
                   record: 100000
             `),
 			config: []*config.Table{
-				&config.Table{
+				{
 					Name: "table_a",
 					Columns: []*config.Column{
-						&config.Column{
+						{
 							Name:    "",
 							Type:    "int",
 							Order:   11,
@@ -849,7 +767,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
 						},
 					},
 					Indexes: []*config.Index{
-						&config.Index{
+						{
 							Name: "index_1_on_table_a",
 							Uniq: true,
 							Columns: []string{
@@ -890,10 +808,10 @@ func Test_LoadConfig_Columns(t *testing.T) {
                   record: 100000
             `),
 			config: []*config.Table{
-				&config.Table{
+				{
 					Name: "table_a",
 					Columns: []*config.Column{
-						&config.Column{
+						{
 							Name:    "col_1",
 							Type:    "",
 							Order:   11,
@@ -902,7 +820,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
 						},
 					},
 					Indexes: []*config.Index{
-						&config.Index{
+						{
 							Name: "index_1_on_table_a",
 							Uniq: true,
 							Columns: []string{
@@ -943,10 +861,10 @@ func Test_LoadConfig_Columns(t *testing.T) {
                   record: 100000
             `),
 			config: []*config.Table{
-				&config.Table{
+				{
 					Name: "table_a",
 					Columns: []*config.Column{
-						&config.Column{
+						{
 							Name:    "col_1",
 							Type:    "int",
 							Order:   0,
@@ -955,7 +873,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
 						},
 					},
 					Indexes: []*config.Index{
-						&config.Index{
+						{
 							Name: "index_1_on_table_a",
 							Uniq: true,
 							Columns: []string{
@@ -996,10 +914,10 @@ func Test_LoadConfig_Columns(t *testing.T) {
                   record: 100000
             `),
 			config: []*config.Table{
-				&config.Table{
+				{
 					Name: "table_a",
 					Columns: []*config.Column{
-						&config.Column{
+						{
 							Name:    "col_1",
 							Type:    "int",
 							Order:   11,
@@ -1008,7 +926,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
 						},
 					},
 					Indexes: []*config.Index{
-						&config.Index{
+						{
 							Name: "index_1_on_table_a",
 							Uniq: true,
 							Columns: []string{
@@ -1049,10 +967,10 @@ func Test_LoadConfig_Columns(t *testing.T) {
                   record: 100000
             `),
 			config: []*config.Table{
-				&config.Table{
+				{
 					Name: "table_a",
 					Columns: []*config.Column{
-						&config.Column{
+						{
 							Name:    "col_1",
 							Type:    "int",
 							Order:   11,
@@ -1061,7 +979,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
 						},
 					},
 					Indexes: []*config.Index{
-						&config.Index{
+						{
 							Name: "index_1_on_table_a",
 							Uniq: true,
 							Columns: []string{
@@ -1075,40 +993,13 @@ func Test_LoadConfig_Columns(t *testing.T) {
 			},
 			err: nil,
 		},
-
-		{
-			name: "yaml syntax error",
-			yaml: []byte(`
-                driver: mysql
-                database:
-                  host: 127.0.0.1
-                  port: 3306
-                  user: root
-                  password: root
-                  name: testdb
-                tables:
-                - name: table_a
-                  columns:
-                    - name: col_1
-                      type int
-                      order: 11
-                      null: false
-                      primary: true
-                  indexes:
-                    - name: index_1_on_table_a
-                      uniq: true
-                      columns:
-                        - col_1
-                  charset: utf8mb4
-                  record: 100000
-            `),
-			config: nilTables,
-			err:    errors.New("yaml syntax error"),
-		},
 	}
 
 	for _, c := range cases {
-		viper.ReadConfig(bytes.NewBuffer(c.yaml))
+		if err := viper.ReadConfig(bytes.NewBuffer(c.yaml)); err != nil {
+			t.Errorf("case: %s is failed, err: %s\n", c.name, err)
+		}
+
 		err := cmd.LoadConfig()
 		if !assert.Equal(t, c.err, err) {
 			t.Errorf("case: %s is failed, expected: %s, actual: %s\n", c.name, c.err, err)
@@ -1127,7 +1018,6 @@ func Test_LoadConfig_Columns(t *testing.T) {
 func Test_LoadConfig_Indexes(t *testing.T) {
 	viper.SetConfigType("yaml")
 
-	var nilTables []*config.Table
 	var nilColumns []string
 	cases := []struct {
 		name   string
@@ -1161,10 +1051,10 @@ func Test_LoadConfig_Indexes(t *testing.T) {
                   record: 100000
             `),
 			config: []*config.Table{
-				&config.Table{
+				{
 					Name: "table_a",
 					Columns: []*config.Column{
-						&config.Column{
+						{
 							Name:    "col_1",
 							Type:    "int",
 							Order:   11,
@@ -1173,7 +1063,7 @@ func Test_LoadConfig_Indexes(t *testing.T) {
 						},
 					},
 					Indexes: []*config.Index{
-						&config.Index{
+						{
 							Name: "",
 							Uniq: true,
 							Columns: []string{
@@ -1214,10 +1104,10 @@ func Test_LoadConfig_Indexes(t *testing.T) {
                   record: 100000
             `),
 			config: []*config.Table{
-				&config.Table{
+				{
 					Name: "table_a",
 					Columns: []*config.Column{
-						&config.Column{
+						{
 							Name:    "col_1",
 							Type:    "int",
 							Order:   11,
@@ -1226,7 +1116,7 @@ func Test_LoadConfig_Indexes(t *testing.T) {
 						},
 					},
 					Indexes: []*config.Index{
-						&config.Index{
+						{
 							Name: "index_1_on_table_a",
 							Uniq: false,
 							Columns: []string{
@@ -1266,10 +1156,10 @@ func Test_LoadConfig_Indexes(t *testing.T) {
                   record: 100000
             `),
 			config: []*config.Table{
-				&config.Table{
+				{
 					Name: "table_a",
 					Columns: []*config.Column{
-						&config.Column{
+						{
 							Name:    "col_1",
 							Type:    "int",
 							Order:   11,
@@ -1278,7 +1168,7 @@ func Test_LoadConfig_Indexes(t *testing.T) {
 						},
 					},
 					Indexes: []*config.Index{
-						&config.Index{
+						{
 							Name:    "index_1_on_table_a",
 							Uniq:    true,
 							Columns: nilColumns,
@@ -1290,40 +1180,13 @@ func Test_LoadConfig_Indexes(t *testing.T) {
 			},
 			err: nil,
 		},
-
-		{
-			name: "yaml syntax error",
-			yaml: []byte(`
-                driver: mysql
-                database:
-                  host: 127.0.0.1
-                  port: 3306
-                  user: root
-                  password: root
-                  name: testdb
-                tables:
-                - name: table_a
-                  columns:
-                    - name: col_1
-                      type: int
-                      order: 11
-                      null: false
-                      primary: true
-                  indexes:
-                    - name: index_1_on_table_a
-                      uniq true
-                      columns:
-                        - col_1
-                  charset: utf8mb4
-                  record: 100000
-            `),
-			config: nilTables,
-			err:    errors.New("yaml syntax error"),
-		},
 	}
 
 	for _, c := range cases {
-		viper.ReadConfig(bytes.NewBuffer(c.yaml))
+		if err := viper.ReadConfig(bytes.NewBuffer(c.yaml)); err != nil {
+			t.Errorf("case: %s is failed, err: %s\n", c.name, err)
+		}
+
 		err := cmd.LoadConfig()
 		if !assert.Equal(t, c.err, err) {
 			t.Errorf("case: %s is failed, expected: %s, actual: %s\n", c.name, c.err, err)

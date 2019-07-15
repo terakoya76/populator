@@ -82,6 +82,10 @@ func initConfig() {
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
 		fmt.Println("Using config file:", viper.ConfigFileUsed())
+	} else {
+		// yaml parsing error
+		fmt.Println(err)
+		os.Exit(1)
 	}
 
 	if err := LoadConfig(); err != nil {

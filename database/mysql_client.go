@@ -35,7 +35,7 @@ type MySQLClient struct {
 
 // CreateTable does CreateTable statement for MySQL
 func (db *MySQLClient) CreateTable(cfg *config.Table) error {
-	sql := db.table2sql(cfg)
+	sql := db.buildCreateTableStmt(cfg)
 	fmt.Println(sql)
 	if _, err := db.Exec(sql); err != nil {
 		return err
@@ -55,7 +55,7 @@ func (db *MySQLClient) Insert(cfg *config.Table) error {
 }
 
 // TODO: might be better to impl as method in config.go
-func (db *MySQLClient) table2sql(cfg *config.Table) string {
+func (db *MySQLClient) buildCreateTableStmt(cfg *config.Table) string {
 	var sb strings.Builder
 	sb.WriteString(
 		fmt.Sprintf(
@@ -66,7 +66,7 @@ func (db *MySQLClient) table2sql(cfg *config.Table) string {
 
 	var regCol []string
 	for _, column := range cfg.Columns {
-		regCol = append(regCol, db.column2sql(column))
+		regCol = append(regCol, db.buildCreateTableStmtColumn(column))
 	}
 	sb.WriteString(strings.Join(regCol, ",\n"))
 
@@ -78,7 +78,7 @@ func (db *MySQLClient) table2sql(cfg *config.Table) string {
 
 	var regIdx []string
 	for _, index := range cfg.Indexes {
-		regIdx = append(regIdx, db.index2sql(index))
+		regIdx = append(regIdx, db.buildCreateTableStmtIndex(index))
 	}
 	sb.WriteString(strings.Join(regIdx, ",\n"))
 	sb.WriteString("\n")
@@ -93,7 +93,7 @@ func (db *MySQLClient) table2sql(cfg *config.Table) string {
 	return sb.String()
 }
 
-func (db *MySQLClient) column2sql(cfg *config.Column) string {
+func (db *MySQLClient) buildCreateTableStmtColumn(cfg *config.Column) string {
 	var sb strings.Builder
 	sb.WriteString("    ")
 	sb.WriteString(cfg.Name)
@@ -115,7 +115,7 @@ func (db *MySQLClient) column2sql(cfg *config.Column) string {
 	return sb.String()
 }
 
-func (db *MySQLClient) index2sql(cfg *config.Index) string {
+func (db *MySQLClient) buildCreateTableStmtIndex(cfg *config.Index) string {
 	var sb strings.Builder
 	sb.WriteString("    ")
 	sb.WriteString("INDEX ")
@@ -124,7 +124,7 @@ func (db *MySQLClient) index2sql(cfg *config.Index) string {
 
 	var reg []string
 	for _, column := range cfg.Columns {
-		reg = append(reg, fmt.Sprintf(column))
+		reg = append(reg, fmt.Sprint(column))
 	}
 	sb.WriteString(strings.Join(reg, ", "))
 	sb.WriteString(")")
