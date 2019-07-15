@@ -127,6 +127,7 @@ type Column struct {
 	Name      string
 	Type      string
 	Order     int
+	Precision int
 	Unsigned  bool
 	Nullable  bool
 	Primary   bool
