@@ -29,8 +29,6 @@ import (
 // DBClient is an interface for DB Querying
 type DBClient interface {
 	CreateTable(cfg *config.Table) error
-	AddColumn(cfg *config.Column) error
-	AddIndex(cfg *config.Index) error
 	Insert(cfg *config.Table) error
 }
 

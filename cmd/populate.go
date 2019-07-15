@@ -49,14 +49,6 @@ func populate() error {
 			return err
 		}
 
-		for _, column := range table.Columns {
-			db.AddColumn(column)
-		}
-
-		for _, index := range table.Indexes {
-			db.AddIndex(index)
-		}
-
 		db.Insert(table)
 	}
 

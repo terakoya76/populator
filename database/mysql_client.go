@@ -36,23 +36,10 @@ type MySQLClient struct {
 // CreateTable does CreateTable statement for MySQL
 func (db *MySQLClient) CreateTable(cfg *config.Table) error {
 	sql := db.table2sql(cfg)
+	fmt.Println(sql)
 	if _, err := db.Exec(sql); err != nil {
 		return err
 	}
-
-	return nil
-}
-
-// AddColumn does AddColumn statement for MySQL
-func (db *MySQLClient) AddColumn(cfg *config.Column) error {
-	fmt.Printf("column: %+v\n", cfg)
-
-	return nil
-}
-
-// AddIndex does AddIndex statement for MySQL
-func (db *MySQLClient) AddIndex(cfg *config.Index) error {
-	fmt.Printf("index: %+v\n", cfg)
 
 	return nil
 }
