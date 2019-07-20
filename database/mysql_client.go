@@ -30,7 +30,7 @@ import (
 )
 
 // UnsignedableDataType accepts unsigned options
-var UnsignedableDataType = []string{
+var UnsignedableDataType = []interface{}{
 	"tinyint",
 	"smallint",
 	"mediumint",
@@ -43,7 +43,7 @@ var UnsignedableDataType = []string{
 }
 
 // IncrementableDataType accepts increment options
-var IncrementableDataType = []string{
+var IncrementableDataType = []interface{}{
 	"tinyint",
 	"smallint",
 	"mediumint",
@@ -52,7 +52,7 @@ var IncrementableDataType = []string{
 }
 
 // OrderRequiredDataTypes require DataType(Order) like sql
-var OrderRequiredDataTypes = []string{
+var OrderRequiredDataTypes = []interface{}{
 	"tinyint",
 	"smallint",
 	"mediumint",
@@ -67,7 +67,7 @@ var OrderRequiredDataTypes = []string{
 }
 
 // PrecisionRequiredDataTypes require DataType(Order, Precision) like sql
-var PrecisionRequiredDataTypes = []string{
+var PrecisionRequiredDataTypes = []interface{}{
 	"decimal",
 	"float",
 	"real",
@@ -75,7 +75,7 @@ var PrecisionRequiredDataTypes = []string{
 }
 
 // ProhibitDefaultDataTypes must allow null value
-var ProhibitDefaultDataTypes = []string{
+var ProhibitDefaultDataTypes = []interface{}{
 	"blob",
 	"text",
 }

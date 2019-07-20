@@ -18,7 +18,7 @@ limitations under the License.
 package utils
 
 // Contains assert an array includes an element or not
-func Contains(s []string, e string) bool {
+func Contains(s []interface{}, e interface{}) bool {
 	for _, v := range s {
 		if e == v {
 			return true
