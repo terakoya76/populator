@@ -349,7 +349,7 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                   charset: utf8mb4
                   record: 100000
             `),
-			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 float(5, 2) NOT NULL DEFAULT(123.45) PRIMARY KEY\n) DEFAULT CHARSET=utf8mb4",
+			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 float(5, 2) UNSIGNED NOT NULL DEFAULT(123.45) PRIMARY KEY\n) DEFAULT CHARSET=utf8mb4",
 			err: nil,
 		},
 

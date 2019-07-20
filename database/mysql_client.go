@@ -29,8 +29,21 @@ import (
 	"github.com/terakoya76/populator/utils"
 )
 
-// NaturalNumberDataType accepts unsigned/increment options
-var NaturalNumberDataType = []string{
+// UnsignedableDataType accepts unsigned options
+var UnsignedableDataType = []string{
+	"tinyint",
+	"smallint",
+	"mediumint",
+	"int",
+	"bigint",
+	"decimal",
+	"float",
+	"real",
+	"double",
+}
+
+// IncrementableDataType accepts increment options
+var IncrementableDataType = []string{
 	"tinyint",
 	"smallint",
 	"mediumint",
@@ -142,10 +155,10 @@ func (db *MySQLClient) buildCreateTableStmtColumn(cfg *config.Column) string {
 		)
 	}
 
-	if utils.Contains(NaturalNumberDataType, cfg.Type) && cfg.Unsigned {
+	if utils.Contains(UnsignedableDataType, cfg.Type) && cfg.Unsigned {
 		sb.WriteString(" UNSIGNED")
 	}
-	if utils.Contains(NaturalNumberDataType, cfg.Type) && cfg.Increment {
+	if utils.Contains(IncrementableDataType, cfg.Type) && cfg.Increment {
 		sb.WriteString(" AUTO_INCREMENT")
 	}
 
@@ -202,7 +215,9 @@ func (db *MySQLClient) BuildInsertStmt(cfg *config.Table) string {
 
 	var regCol []string
 	for _, column := range cfg.Columns {
-		regCol = append(regCol, fmt.Sprintf("   %s", column.Name))
+		if !column.Increment {
+			regCol = append(regCol, fmt.Sprintf("   %s", column.Name))
+		}
 	}
 	sb.WriteString(strings.Join(regCol, ",\n"))
 	sb.WriteString("\n")
@@ -214,10 +229,13 @@ func (db *MySQLClient) BuildInsertStmt(cfg *config.Table) string {
 		// generate insert values
 		var reg []string
 		for _, column := range cfg.Columns {
-			value := db.generateValue(column)
-			reg = append(reg, fmt.Sprintf("   %s,\n", value))
+			if !column.Increment {
+				value := db.generateValue(column)
+				// last element's comma must be extracted
+				reg = append(reg, fmt.Sprintf("   %v,\n", value))
+			}
 		}
-		regVal = append(regVal, strings.Join(reg, ") (\n"))
+		regVal = append(regVal, strings.Join(reg, ""))
 	}
 	sb.WriteString(strings.Join(regVal, ") (\n"))
 	sb.WriteString(")")
