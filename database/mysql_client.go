@@ -76,8 +76,14 @@ var PrecisionRequiredDataTypes = []interface{}{
 
 // ProhibitDefaultDataTypes must allow null value
 var ProhibitDefaultDataTypes = []interface{}{
+	"tinyblob",
+	"tinytext",
 	"blob",
 	"text",
+	"mediumblob",
+	"mediumtext",
+	"longblob",
+	"longtext",
 }
 
 // MySQLClient is an implementation of DBClient for MySQL

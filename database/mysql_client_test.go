@@ -702,6 +702,64 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
 		},
 
 		{
+			name: "tinyblob",
+			yaml: []byte(`
+                driver: mysql
+                database:
+                  host: 127.0.0.1
+                  port: 3306
+                  user: root
+                  password: root
+                  name: testdb
+                tables:
+                - name: table_a
+                  columns:
+                    - name: col_1
+                      type: tinyblob
+                      order: 0
+                      precision: 0
+                      unsigned: false
+                      nullable: true
+                      default:
+                      primary: false
+                      increment: false
+                  charset: utf8mb4
+                  record: 100000
+            `),
+			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 tinyblob\n) DEFAULT CHARSET=utf8mb4",
+			err: nil,
+		},
+
+		{
+			name: "tinytext",
+			yaml: []byte(`
+                driver: mysql
+                database:
+                  host: 127.0.0.1
+                  port: 3306
+                  user: root
+                  password: root
+                  name: testdb
+                tables:
+                - name: table_a
+                  columns:
+                    - name: col_1
+                      type: tinytext
+                      order: 0
+                      precision: 0
+                      unsigned: false
+                      nullable: true
+                      default:
+                      primary: false
+                      increment: false
+                  charset: utf8mb4
+                  record: 100000
+            `),
+			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 tinytext\n) DEFAULT CHARSET=utf8mb4",
+			err: nil,
+		},
+
+		{
 			name: "blob",
 			yaml: []byte(`
                 driver: mysql
@@ -716,7 +774,7 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                   columns:
                     - name: col_1
                       type: blob
-                      order: 20
+                      order: 0
                       precision: 0
                       unsigned: false
                       nullable: true
@@ -745,7 +803,7 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                   columns:
                     - name: col_1
                       type: text
-                      order: 20
+                      order: 0
                       precision: 0
                       unsigned: false
                       nullable: true
@@ -756,6 +814,122 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                   record: 100000
             `),
 			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 text\n) DEFAULT CHARSET=utf8mb4",
+			err: nil,
+		},
+
+		{
+			name: "mediumblob",
+			yaml: []byte(`
+                driver: mysql
+                database:
+                  host: 127.0.0.1
+                  port: 3306
+                  user: root
+                  password: root
+                  name: testdb
+                tables:
+                - name: table_a
+                  columns:
+                    - name: col_1
+                      type: mediumblob
+                      order: 0
+                      precision: 0
+                      unsigned: false
+                      nullable: true
+                      default:
+                      primary: false
+                      increment: false
+                  charset: utf8mb4
+                  record: 100000
+            `),
+			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 mediumblob\n) DEFAULT CHARSET=utf8mb4",
+			err: nil,
+		},
+
+		{
+			name: "mediumtext",
+			yaml: []byte(`
+                driver: mysql
+                database:
+                  host: 127.0.0.1
+                  port: 3306
+                  user: root
+                  password: root
+                  name: testdb
+                tables:
+                - name: table_a
+                  columns:
+                    - name: col_1
+                      type: mediumtext
+                      order: 0
+                      precision: 0
+                      unsigned: false
+                      nullable: true
+                      default:
+                      primary: false
+                      increment: false
+                  charset: utf8mb4
+                  record: 100000
+            `),
+			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 mediumtext\n) DEFAULT CHARSET=utf8mb4",
+			err: nil,
+		},
+
+		{
+			name: "longblob",
+			yaml: []byte(`
+                driver: mysql
+                database:
+                  host: 127.0.0.1
+                  port: 3306
+                  user: root
+                  password: root
+                  name: testdb
+                tables:
+                - name: table_a
+                  columns:
+                    - name: col_1
+                      type: longblob
+                      order: 0
+                      precision: 0
+                      unsigned: false
+                      nullable: true
+                      default:
+                      primary: false
+                      increment: false
+                  charset: utf8mb4
+                  record: 100000
+            `),
+			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 longblob\n) DEFAULT CHARSET=utf8mb4",
+			err: nil,
+		},
+
+		{
+			name: "longtext",
+			yaml: []byte(`
+                driver: mysql
+                database:
+                  host: 127.0.0.1
+                  port: 3306
+                  user: root
+                  password: root
+                  name: testdb
+                tables:
+                - name: table_a
+                  columns:
+                    - name: col_1
+                      type: longtext
+                      order: 0
+                      precision: 0
+                      unsigned: false
+                      nullable: true
+                      default:
+                      primary: false
+                      increment: false
+                  charset: utf8mb4
+                  record: 100000
+            `),
+			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 longtext\n) DEFAULT CHARSET=utf8mb4",
 			err: nil,
 		},
 
