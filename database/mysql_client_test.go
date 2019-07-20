@@ -354,7 +354,7 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
 		},
 
 		{
-			name: "bit(32)",
+			name: "bit(8)",
 			yaml: []byte(`
                 driver: mysql
                 database:
@@ -368,7 +368,7 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                   columns:
                     - name: col_1
                       type: bit
-                      order: 32
+                      order: 8
                       precision: 0
                       unsigned: false
                       nullable: true
@@ -378,7 +378,7 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                   charset: utf8mb4
                   record: 100000
             `),
-			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 bit(32)\n) DEFAULT CHARSET=utf8mb4",
+			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 bit(8)\n) DEFAULT CHARSET=utf8mb4",
 			err: nil,
 		},
 
@@ -397,17 +397,17 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                   columns:
                     - name: col_1
                       type: bit
-                      order: 32
+                      order: 8
                       precision: 0
                       unsigned: true
                       nullable: false
-                      default:
+                      default: b'01010101'
                       primary: true
                       increment: true
                   charset: utf8mb4
                   record: 100000
             `),
-			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 bit(32) NOT NULL PRIMARY KEY\n) DEFAULT CHARSET=utf8mb4",
+			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 bit(8) NOT NULL DEFAULT(b'01010101') PRIMARY KEY\n) DEFAULT CHARSET=utf8mb4",
 			err: nil,
 		},
 
