@@ -35,6 +35,64 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
 		err  error
 	}{
 		{
+			name: "boolean",
+			yaml: []byte(`
+                driver: mysql
+                database:
+                  host: 127.0.0.1
+                  port: 3306
+                  user: root
+                  password: root
+                  name: testdb
+                tables:
+                - name: table_a
+                  columns:
+                    - name: col_1
+                      type: boolean
+                      order: 0
+                      precision: 0
+                      unsigned: false
+                      nullable: true
+                      default:
+                      primary: false
+                      increment: false
+                  charset: utf8mb4
+                  record: 100000
+            `),
+			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 boolean\n) DEFAULT CHARSET=utf8mb4",
+			err: nil,
+		},
+
+		{
+			name: "boolean w/ all option",
+			yaml: []byte(`
+                driver: mysql
+                database:
+                  host: 127.0.0.1
+                  port: 3306
+                  user: root
+                  password: root
+                  name: testdb
+                tables:
+                - name: table_a
+                  columns:
+                    - name: col_1
+                      type: boolean
+                      order: 0
+                      precision: 0
+                      unsigned: true
+                      nullable: false
+                      default: true
+                      primary: true
+                      increment: true
+                  charset: utf8mb4
+                  record: 100000
+            `),
+			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 boolean NOT NULL DEFAULT(true) PRIMARY KEY\n) DEFAULT CHARSET=utf8mb4",
+			err: nil,
+		},
+
+		{
 			name: "tinyint",
 			yaml: []byte(`
                 driver: mysql

@@ -178,26 +178,6 @@ func UnsignedReal(order int) float64 {
 	return UnsignedDouble(order)
 }
 
-// Char returns random char with the given length
-func Char(length int) string {
-	return genString(length)
-}
-
-// VarChar returns random varchar with the given length
-func VarChar(length int) string {
-	return genString(length)
-}
-
-// Binary returns random binary with the given length
-func Binary(length int) string {
-	return genString(length)
-}
-
-// VarBinary returns random varbinary with the given length
-func VarBinary(length int) string {
-	return genString(length)
-}
-
 // Bit returns random bit
 func Bit(order int) string {
 	var sb strings.Builder
@@ -266,6 +246,26 @@ func Year4() string {
 // Year2 returns random year(2)
 func Year2() string {
 	return fmt.Sprint(genInt(0, 99))
+}
+
+// Char returns random char with the given length
+func Char(length int) string {
+	return genString(length)
+}
+
+// VarChar returns random varchar with the given length
+func VarChar(length int) string {
+	return genString(length)
+}
+
+// Binary returns random binary with the given length
+func Binary(length int) string {
+	return genString(length)
+}
+
+// VarBinary returns random varbinary with the given length
+func VarBinary(length int) string {
+	return genString(length)
 }
 
 // TinyBlob returns random tiny blob with the given length

@@ -26,6 +26,7 @@ import (
 	"github.com/jmoiron/sqlx"
 
 	"github.com/terakoya76/populator/config"
+	"github.com/terakoya76/populator/rand"
 	"github.com/terakoya76/populator/utils"
 )
 
@@ -97,7 +98,6 @@ func (db *MySQLClient) CreateTable(cfg *config.Table) error {
 	if _, err := db.Exec(sql); err != nil {
 		return err
 	}
-
 	return nil
 }
 
@@ -200,55 +200,193 @@ func (db *MySQLClient) buildCreateTableStmtIndex(cfg *config.Index) string {
 
 // Populate does Insert statement for MySQL
 func (db *MySQLClient) Populate(cfg *config.Table) error {
-	sql := db.BuildInsertStmt(cfg)
-	fmt.Println(sql)
-	if _, err := db.Exec(sql); err != nil {
+	err := utils.BatchTimes(
+		db.buildInsertStmt(cfg),
+		db.generateInsertRow(cfg),
+		cfg.Record,
+		100,
+	)
+	if err != nil {
 		return err
 	}
 
 	return nil
 }
 
+func (db *MySQLClient) buildInsertStmt(cfg *config.Table) func([]string) error {
+	return func(values []string) error {
+		sql := db.BuildInsertStmt(cfg, values)
+		fmt.Println(sql)
+
+		if _, err := db.Exec(sql); err != nil {
+			return err
+		}
+		return nil
+	}
+}
+
 // BuildInsertStmt generate insert_stmt sql for MySQL
-func (db *MySQLClient) BuildInsertStmt(cfg *config.Table) string {
+func (db *MySQLClient) BuildInsertStmt(cfg *config.Table, values []string) string {
 	var sb strings.Builder
+
+	var reg []string
+	for _, column := range cfg.Columns {
+		reg = append(reg, column.Name)
+	}
+
 	sb.WriteString(
 		fmt.Sprintf(
-			"INSERT INTO %s (\n",
+			"INSERT INTO %s (%s) VALUES (\n",
 			cfg.Name,
+			strings.Join(reg, ", "),
 		),
 	)
 
-	var regCol []string
-	for _, column := range cfg.Columns {
-		if !column.Increment {
-			regCol = append(regCol, fmt.Sprintf("   %s", column.Name))
-		}
-	}
-	sb.WriteString(strings.Join(regCol, ",\n"))
-	sb.WriteString("\n")
-
-	sb.WriteString(") VALUES (\n")
-
-	var regVal []string
-	for i := 0; i < cfg.Record; i++ {
-		// generate insert values
-		var reg []string
-		for _, column := range cfg.Columns {
-			if !column.Increment {
-				value := db.generateValue(column)
-				// last element's comma must be extracted
-				reg = append(reg, fmt.Sprintf("   %v,\n", value))
-			}
-		}
-		regVal = append(regVal, strings.Join(reg, ""))
-	}
-	sb.WriteString(strings.Join(regVal, ") (\n"))
-	sb.WriteString(")")
+	sb.WriteString(strings.Join(values, "\n), (\n"))
+	sb.WriteString("\n)")
 
 	return sb.String()
 }
 
+func (db *MySQLClient) generateInsertRow(cfg *config.Table) func() string {
+	return func() string {
+		// generate insert values
+		var reg []string
+		for _, column := range cfg.Columns {
+			value := db.generateValue(column)
+			switch value := value.(type) {
+			case string:
+				reg = append(reg, fmt.Sprintf("   '%v'", value))
+			default:
+				reg = append(reg, fmt.Sprintf("   %v", value))
+
+			}
+		}
+		return strings.Join(reg, ",\n")
+	}
+}
+
 func (db *MySQLClient) generateValue(cfg *config.Column) interface{} {
-	return "hoge"
+	if cfg.Increment {
+		return 0
+	}
+
+	switch cfg.Type {
+	case "boolean":
+		return rand.Boolean()
+
+	case "tinyint":
+		if cfg.Unsigned {
+			return rand.UnsignedTinyInt()
+		}
+		return rand.TinyInt()
+
+	case "smallint":
+		if cfg.Unsigned {
+			return rand.UnsignedSmallInt()
+		}
+		return rand.SmallInt()
+
+	case "mediumint":
+		if cfg.Unsigned {
+			return rand.UnsignedMediumInt()
+		}
+		return rand.MediumInt()
+
+	case "int":
+		if cfg.Unsigned {
+			return rand.UnsignedInt()
+		}
+		return rand.Int()
+
+	case "bigint":
+		if cfg.Unsigned {
+			return rand.UnsignedBigInt()
+		}
+		return rand.BigInt()
+
+	case "decimal":
+		if cfg.Unsigned {
+			return rand.UnsignedDecimal(cfg.Order)
+		}
+		return rand.Decimal(cfg.Order)
+
+	case "float":
+		if cfg.Unsigned {
+			return rand.UnsignedFloat(cfg.Order)
+		}
+		return rand.Float(cfg.Order)
+
+	case "real":
+		if cfg.Unsigned {
+			return rand.UnsignedReal(cfg.Order)
+		}
+		return rand.Real(cfg.Order)
+
+	case "double":
+		if cfg.Unsigned {
+			return rand.UnsignedDouble(cfg.Order)
+		}
+		return rand.Double(cfg.Order)
+
+	case "bit":
+		return rand.Bit(cfg.Order)
+
+	case "date":
+		return rand.Date()
+
+	case "datetime":
+		return rand.DateTime()
+
+	case "timestamp":
+		return rand.Timestamp()
+
+	case "time":
+		return rand.Time()
+
+	case "year":
+		if cfg.Order == 4 {
+			return rand.Year4()
+		}
+		return rand.Year2()
+
+	case "char":
+		return rand.Char(cfg.Order)
+
+	case "varchar":
+		return rand.VarChar(cfg.Order)
+
+	case "binary":
+		return rand.Binary(cfg.Order)
+
+	case "varbinary":
+		return rand.VarBinary(cfg.Order)
+
+	case "tinyblob":
+		return rand.TinyBlob(1000)
+
+	case "tinytext":
+		return rand.TinyText(1000)
+
+	case "blob":
+		return rand.Blob(3000)
+
+	case "text":
+		return rand.Text(3000)
+
+	case "mediumblob":
+		return rand.MediumBlob(7000)
+
+	case "mediumtext":
+		return rand.MediumText(7000)
+
+	case "longblob":
+		return rand.LongBlob(10000)
+
+	case "longtext":
+		return rand.LongText(10000)
+
+	default:
+		return rand.Boolean()
+	}
 }
