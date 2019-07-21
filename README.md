@@ -10,14 +10,19 @@ This is useful when you want to inspect SQL query itself. You don't need to writ
 
 On the other hand, this tool not enough for inspecting Application Servers' performance, cuz this tool doesn't care about application layer's validation at all.
 
+## Install
+```shell
+$ go get github.com/terakoya76/populator
+```
+
 ## How to use
 
 when you haven't setup the database or tables yet
 ```shell
-$ go run main.go populate --config ./examples/from_create_table.yaml
+$ populator populate --config ./examples/from_create_table.yaml
 ```
 
 when you've already setup the database and tables
 ```shell
-$ go run main.go populate --config ./examples/only_populate_seed.yaml
+$ populator populate --config ./examples/only_populate_seed.yaml
 ```
