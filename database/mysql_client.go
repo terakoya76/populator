@@ -151,15 +151,11 @@ func (db *MySQLClient) buildCreateTableStmtColumn(cfg *config.Column) string {
 	)
 
 	if utils.Contains(OrderRequiredDataTypes, cfg.Type) {
-		sb.WriteString(
-			fmt.Sprintf("(%d)", cfg.Order),
-		)
+		sb.WriteString(db.BuildOrderDesc(cfg))
 	}
 
 	if utils.Contains(PrecisionRequiredDataTypes, cfg.Type) {
-		sb.WriteString(
-			fmt.Sprintf("(%d, %d)", cfg.Order, cfg.Precision),
-		)
+		sb.WriteString(db.BuildPrecisionDesc(cfg))
 	}
 
 	if utils.Contains(UnsignedableDataType, cfg.Type) && cfg.Unsigned {
@@ -175,12 +171,7 @@ func (db *MySQLClient) buildCreateTableStmtColumn(cfg *config.Column) string {
 	}
 
 	if !utils.Contains(ProhibitDefaultDataTypes, cfg.Type) && cfg.Default != nil {
-		switch cfg.Default.(type) {
-		case string:
-			sb.WriteString(fmt.Sprintf(" DEFAULT %q", cfg.Default))
-		default:
-			sb.WriteString(fmt.Sprintf(" DEFAULT(%v)", cfg.Default))
-		}
+		sb.WriteString(db.BuildDefaultDesc(cfg))
 	}
 
 	if cfg.Primary {
@@ -188,6 +179,52 @@ func (db *MySQLClient) buildCreateTableStmtColumn(cfg *config.Column) string {
 	}
 
 	return sb.String()
+}
+
+// BuildOrderDesc generate a order desc part of sql for MySQL
+func (db *MySQLClient) BuildOrderDesc(cfg *config.Column) string {
+	if cfg.Order > 0 {
+		return fmt.Sprintf("(%d)", cfg.Order)
+	}
+	switch cfg.Type {
+	case "tinyint":
+		return fmt.Sprintf("(%d)", 4)
+	case "smallint":
+		return fmt.Sprintf("(%d)", 6)
+	case "mediumint":
+		return fmt.Sprintf("(%d)", 9)
+	case "int":
+		return fmt.Sprintf("(%d)", 11)
+	case "bigint":
+		return fmt.Sprintf("(%d)", 20)
+	case "bit":
+		return fmt.Sprintf("(%d)", 1)
+	default:
+		return fmt.Sprintf("(%d)", cfg.Order)
+	}
+}
+
+// BuildPrecisionDesc generate a order/precision desc part of sql for MySQL
+func (db *MySQLClient) BuildPrecisionDesc(cfg *config.Column) string {
+	if cfg.Order > 0 && cfg.Precision > 0 {
+		return fmt.Sprintf("(%d, %d)", cfg.Order, cfg.Precision)
+	}
+	switch cfg.Type {
+	case "decimal":
+		return fmt.Sprintf("(%d, %d)", 10, 0)
+	default:
+		return fmt.Sprintf("(%d, %d)", cfg.Order, cfg.Precision)
+	}
+}
+
+// BuildDefaultDesc generate a default desc part of sql for MySQL
+func (db *MySQLClient) BuildDefaultDesc(cfg *config.Column) string {
+	switch cfg.Default.(type) {
+	case string:
+		return fmt.Sprintf(" DEFAULT %q", cfg.Default)
+	default:
+		return fmt.Sprintf(" DEFAULT(%v)", cfg.Default)
+	}
 }
 
 func (db *MySQLClient) buildCreateTableStmtIndex(cfg *config.Index) string {
@@ -297,7 +334,6 @@ func (db *MySQLClient) generateInsertRow(cfg *config.Table) func() string {
 				reg = append(reg, fmt.Sprintf(sb.String(), value))
 			default:
 				reg = append(reg, fmt.Sprintf("   %v", value))
-
 			}
 		}
 		return strings.Join(reg, ",\n")

@@ -1045,6 +1045,694 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
 	}
 }
 
+func Test_BuildOrderDesc(t *testing.T) {
+	viper.SetConfigType("yaml")
+
+	cases := []struct {
+		name   string
+		yaml   []byte
+		result string
+		err    error
+	}{
+		{
+			name: "tinyint default",
+			yaml: []byte(`
+                driver: mysql
+                database:
+                  host: 127.0.0.1
+                  port: 3306
+                  user: root
+                  password: root
+                  name: testdb
+                tables:
+                - name: table_a
+                  columns:
+                    - name: col_1
+                      type: tinyint
+                      order:
+                      precision:
+                      unsigned: false
+                      nullable: true
+                      default:
+                      primary: false
+                      increment: false
+                  charset: utf8mb4
+                  record: 100000
+            `),
+			result: "(4)",
+			err:    nil,
+		},
+
+		{
+			name: "tinyint",
+			yaml: []byte(`
+                driver: mysql
+                database:
+                  host: 127.0.0.1
+                  port: 3306
+                  user: root
+                  password: root
+                  name: testdb
+                tables:
+                - name: table_a
+                  columns:
+                    - name: col_1
+                      type: tinyint
+                      order: 2
+                      precision:
+                      unsigned: false
+                      nullable: true
+                      default:
+                      primary: false
+                      increment: false
+                  charset: utf8mb4
+                  record: 100000
+            `),
+			result: "(2)",
+			err:    nil,
+		},
+
+		{
+			name: "smallint default",
+			yaml: []byte(`
+                driver: mysql
+                database:
+                  host: 127.0.0.1
+                  port: 3306
+                  user: root
+                  password: root
+                  name: testdb
+                tables:
+                - name: table_a
+                  columns:
+                    - name: col_1
+                      type: smallint
+                      order:
+                      precision:
+                      unsigned: false
+                      nullable: true
+                      default:
+                      primary: false
+                      increment: false
+                  charset: utf8mb4
+                  record: 100000
+            `),
+			result: "(6)",
+			err:    nil,
+		},
+
+		{
+			name: "smallint",
+			yaml: []byte(`
+                driver: mysql
+                database:
+                  host: 127.0.0.1
+                  port: 3306
+                  user: root
+                  password: root
+                  name: testdb
+                tables:
+                - name: table_a
+                  columns:
+                    - name: col_1
+                      type: smallint
+                      order: 4
+                      precision:
+                      unsigned: false
+                      nullable: true
+                      default:
+                      primary: false
+                      increment: false
+                  charset: utf8mb4
+                  record: 100000
+            `),
+			result: "(4)",
+			err:    nil,
+		},
+
+		{
+			name: "mediumint default",
+			yaml: []byte(`
+                driver: mysql
+                database:
+                  host: 127.0.0.1
+                  port: 3306
+                  user: root
+                  password: root
+                  name: testdb
+                tables:
+                - name: table_a
+                  columns:
+                    - name: col_1
+                      type: mediumint
+                      order:
+                      precision:
+                      unsigned: false
+                      nullable: true
+                      default:
+                      primary: false
+                      increment: false
+                  charset: utf8mb4
+                  record: 100000
+            `),
+			result: "(9)",
+			err:    nil,
+		},
+
+		{
+			name: "mediumint",
+			yaml: []byte(`
+                driver: mysql
+                database:
+                  host: 127.0.0.1
+                  port: 3306
+                  user: root
+                  password: root
+                  name: testdb
+                tables:
+                - name: table_a
+                  columns:
+                    - name: col_1
+                      type: mediumint
+                      order: 6
+                      precision:
+                      unsigned: false
+                      nullable: true
+                      default:
+                      primary: false
+                      increment: false
+                  charset: utf8mb4
+                  record: 100000
+            `),
+			result: "(6)",
+			err:    nil,
+		},
+
+		{
+			name: "int default",
+			yaml: []byte(`
+                driver: mysql
+                database:
+                  host: 127.0.0.1
+                  port: 3306
+                  user: root
+                  password: root
+                  name: testdb
+                tables:
+                - name: table_a
+                  columns:
+                    - name: col_1
+                      type: int
+                      order:
+                      precision:
+                      unsigned: false
+                      nullable: true
+                      default:
+                      primary: false
+                      increment: false
+                  charset: utf8mb4
+                  record: 100000
+            `),
+			result: "(11)",
+			err:    nil,
+		},
+
+		{
+			name: "int",
+			yaml: []byte(`
+                driver: mysql
+                database:
+                  host: 127.0.0.1
+                  port: 3306
+                  user: root
+                  password: root
+                  name: testdb
+                tables:
+                - name: table_a
+                  columns:
+                    - name: col_1
+                      type: int
+                      order: 9
+                      precision:
+                      unsigned: false
+                      nullable: true
+                      default:
+                      primary: false
+                      increment: false
+                  charset: utf8mb4
+                  record: 100000
+            `),
+			result: "(9)",
+			err:    nil,
+		},
+
+		{
+			name: "bigint default",
+			yaml: []byte(`
+                driver: mysql
+                database:
+                  host: 127.0.0.1
+                  port: 3306
+                  user: root
+                  password: root
+                  name: testdb
+                tables:
+                - name: table_a
+                  columns:
+                    - name: col_1
+                      type: bigint
+                      order:
+                      precision:
+                      unsigned: false
+                      nullable: true
+                      default:
+                      primary: false
+                      increment: false
+                  charset: utf8mb4
+                  record: 100000
+            `),
+			result: "(20)",
+			err:    nil,
+		},
+
+		{
+			name: "bigint",
+			yaml: []byte(`
+                driver: mysql
+                database:
+                  host: 127.0.0.1
+                  port: 3306
+                  user: root
+                  password: root
+                  name: testdb
+                tables:
+                - name: table_a
+                  columns:
+                    - name: col_1
+                      type: bigint
+                      order: 11
+                      precision:
+                      unsigned: false
+                      nullable: true
+                      default:
+                      primary: false
+                      increment: false
+                  charset: utf8mb4
+                  record: 100000
+            `),
+			result: "(11)",
+			err:    nil,
+		},
+
+		{
+			name: "bit default",
+			yaml: []byte(`
+                driver: mysql
+                database:
+                  host: 127.0.0.1
+                  port: 3306
+                  user: root
+                  password: root
+                  name: testdb
+                tables:
+                - name: table_a
+                  columns:
+                    - name: col_1
+                      type: bit
+                      order:
+                      precision:
+                      unsigned: false
+                      nullable: true
+                      default:
+                      primary: false
+                      increment: false
+                  charset: utf8mb4
+                  record: 100000
+            `),
+			result: "(1)",
+			err:    nil,
+		},
+
+		{
+			name: "bit",
+			yaml: []byte(`
+                driver: mysql
+                database:
+                  host: 127.0.0.1
+                  port: 3306
+                  user: root
+                  password: root
+                  name: testdb
+                tables:
+                - name: table_a
+                  columns:
+                    - name: col_1
+                      type: bit
+                      order: 8
+                      precision:
+                      unsigned: false
+                      nullable: true
+                      default:
+                      primary: false
+                      increment: false
+                  charset: utf8mb4
+                  record: 100000
+            `),
+			result: "(8)",
+			err:    nil,
+		},
+
+		{
+			name: "other default",
+			yaml: []byte(`
+                driver: mysql
+                database:
+                  host: 127.0.0.1
+                  port: 3306
+                  user: root
+                  password: root
+                  name: testdb
+                tables:
+                - name: table_a
+                  columns:
+                    - name: col_1
+                      type: varchar
+                      order:
+                      precision:
+                      unsigned: false
+                      nullable: true
+                      default:
+                      primary: false
+                      increment: false
+                  charset: utf8mb4
+                  record: 100000
+            `),
+			result: "(0)",
+			err:    nil,
+		},
+
+		{
+			name: "other",
+			yaml: []byte(`
+                driver: mysql
+                database:
+                  host: 127.0.0.1
+                  port: 3306
+                  user: root
+                  password: root
+                  name: testdb
+                tables:
+                - name: table_a
+                  columns:
+                    - name: col_1
+                      type: varchar
+                      order: 8
+                      precision:
+                      unsigned: false
+                      nullable: true
+                      default:
+                      primary: false
+                      increment: false
+                  charset: utf8mb4
+                  record: 100000
+            `),
+			result: "(8)",
+			err:    nil,
+		},
+	}
+
+	for _, c := range cases {
+		if err := viper.ReadConfig(bytes.NewBuffer(c.yaml)); err != nil {
+			t.Errorf("case: %s is failed, err: %s\n", c.name, err)
+		}
+
+		err := cmd.LoadConfig()
+		if !assert.Equal(t, c.err, err) {
+			t.Errorf("case: %s is failed, err: %s\n", c.name, err)
+		}
+		config.Instance.CompleteWithDefault()
+
+		for _, table := range config.Instance.Tables {
+			client := database.MySQLClient{}
+			for _, column := range table.Columns {
+				result := client.BuildOrderDesc(column)
+				if !assert.Equal(t, c.result, result) {
+					t.Errorf("case: %s is failed, expected: %+v, actual: %+v\n", c.name, c.result, result)
+				}
+			}
+		}
+
+		// reset global variable
+		config.Instance = nil
+	}
+}
+
+func Test_BuildPrecisionDesc(t *testing.T) {
+	viper.SetConfigType("yaml")
+
+	cases := []struct {
+		name   string
+		yaml   []byte
+		result string
+		err    error
+	}{
+		{
+			name: "decimal default",
+			yaml: []byte(`
+                driver: mysql
+                database:
+                  host: 127.0.0.1
+                  port: 3306
+                  user: root
+                  password: root
+                  name: testdb
+                tables:
+                - name: table_a
+                  columns:
+                    - name: col_1
+                      type: decimal
+                      order:
+                      precision:
+                      unsigned: false
+                      nullable: true
+                      default:
+                      primary: false
+                      increment: false
+                  charset: utf8mb4
+                  record: 100000
+            `),
+			result: "(10, 0)",
+			err:    nil,
+		},
+
+		{
+			name: "decimal",
+			yaml: []byte(`
+                driver: mysql
+                database:
+                  host: 127.0.0.1
+                  port: 3306
+                  user: root
+                  password: root
+                  name: testdb
+                tables:
+                - name: table_a
+                  columns:
+                    - name: col_1
+                      type: decimal
+                      order: 6
+                      precision: 3
+                      unsigned: false
+                      nullable: true
+                      default:
+                      primary: false
+                      increment: false
+                  charset: utf8mb4
+                  record: 100000
+            `),
+			result: "(6, 3)",
+			err:    nil,
+		},
+
+		{
+			name: "other default",
+			yaml: []byte(`
+                driver: mysql
+                database:
+                  host: 127.0.0.1
+                  port: 3306
+                  user: root
+                  password: root
+                  name: testdb
+                tables:
+                - name: table_a
+                  columns:
+                    - name: col_1
+                      type: float
+                      order:
+                      precision:
+                      unsigned: false
+                      nullable: true
+                      default:
+                      primary: false
+                      increment: false
+                  charset: utf8mb4
+                  record: 100000
+            `),
+			result: "(0, 0)",
+			err:    nil,
+		},
+
+		{
+			name: "other",
+			yaml: []byte(`
+                driver: mysql
+                database:
+                  host: 127.0.0.1
+                  port: 3306
+                  user: root
+                  password: root
+                  name: testdb
+                tables:
+                - name: table_a
+                  columns:
+                    - name: col_1
+                      type: float
+                      order: 6
+                      precision: 3
+                      unsigned: false
+                      nullable: true
+                      default:
+                      primary: false
+                      increment: false
+                  charset: utf8mb4
+                  record: 100000
+            `),
+			result: "(6, 3)",
+			err:    nil,
+		},
+	}
+
+	for _, c := range cases {
+		if err := viper.ReadConfig(bytes.NewBuffer(c.yaml)); err != nil {
+			t.Errorf("case: %s is failed, err: %s\n", c.name, err)
+		}
+
+		err := cmd.LoadConfig()
+		if !assert.Equal(t, c.err, err) {
+			t.Errorf("case: %s is failed, err: %s\n", c.name, err)
+		}
+		config.Instance.CompleteWithDefault()
+
+		for _, table := range config.Instance.Tables {
+			client := database.MySQLClient{}
+			for _, column := range table.Columns {
+				result := client.BuildPrecisionDesc(column)
+				if !assert.Equal(t, c.result, result) {
+					t.Errorf("case: %s is failed, expected: %+v, actual: %+v\n", c.name, c.result, result)
+				}
+			}
+		}
+
+		// reset global variable
+		config.Instance = nil
+	}
+}
+
+func Test_BuildDefaultDesc(t *testing.T) {
+	viper.SetConfigType("yaml")
+
+	cases := []struct {
+		name   string
+		yaml   []byte
+		result string
+		err    error
+	}{
+		{
+			name: "string",
+			yaml: []byte(`
+                driver: mysql
+                database:
+                  host: 127.0.0.1
+                  port: 3306
+                  user: root
+                  password: root
+                  name: testdb
+                tables:
+                - name: table_a
+                  columns:
+                    - name: col_1
+                      type: varchar
+                      order:
+                      precision:
+                      unsigned: false
+                      nullable: true
+                      default: hoge
+                      primary: false
+                      increment: false
+                  charset: utf8mb4
+                  record: 100000
+            `),
+			result: " DEFAULT \"hoge\"",
+			err:    nil,
+		},
+
+		{
+			name: "other",
+			yaml: []byte(`
+                driver: mysql
+                database:
+                  host: 127.0.0.1
+                  port: 3306
+                  user: root
+                  password: root
+                  name: testdb
+                tables:
+                - name: table_a
+                  columns:
+                    - name: col_1
+                      type: decimal
+                      order: 6
+                      precision: 3
+                      unsigned: false
+                      nullable: true
+                      default: 123.456
+                      primary: false
+                      increment: false
+                  charset: utf8mb4
+                  record: 100000
+            `),
+			result: " DEFAULT(123.456)",
+			err:    nil,
+		},
+	}
+
+	for _, c := range cases {
+		if err := viper.ReadConfig(bytes.NewBuffer(c.yaml)); err != nil {
+			t.Errorf("case: %s is failed, err: %s\n", c.name, err)
+		}
+
+		err := cmd.LoadConfig()
+		if !assert.Equal(t, c.err, err) {
+			t.Errorf("case: %s is failed, err: %s\n", c.name, err)
+		}
+		config.Instance.CompleteWithDefault()
+
+		for _, table := range config.Instance.Tables {
+			client := database.MySQLClient{}
+			for _, column := range table.Columns {
+				result := client.BuildDefaultDesc(column)
+				if !assert.Equal(t, c.result, result) {
+					t.Errorf("case: %s is failed, expected: %+v, actual: %+v\n", c.name, c.result, result)
+				}
+			}
+		}
+
+		// reset global variable
+		config.Instance = nil
+	}
+}
+
 func Test_BuildDropTableStmt(t *testing.T) {
 	viper.SetConfigType("yaml")
 

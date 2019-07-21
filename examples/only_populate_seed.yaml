@@ -26,6 +26,10 @@ tables:
       type: float
       order: 5
       precision: 3
+    - name: col_5
+      type: decimal
+      order: 5
+      precision: 3
   charset: utf8mb4
   record: 100000
 - name: table_b
