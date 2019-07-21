@@ -25,20 +25,44 @@ import (
 	"github.com/spf13/viper"
 
 	"github.com/terakoya76/populator/config"
+	"github.com/terakoya76/populator/database"
 )
 
 var cfgFile string
+var reCreate bool
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "populator",
-	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
+	Short: "Populate given tables' w/ seed data",
+	Long:  "Populate given tables' w/ seed data",
+	Run: func(cmd *cobra.Command, args []string) {
+		if err := populate(); err != nil {
+			fmt.Println(err)
+		}
+	},
+}
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+func populate() error {
+	db := database.DB()
+	cfg := config.Instance
+	for _, table := range cfg.Tables {
+		if reCreate {
+			if err := db.DropTable(table); err != nil {
+				return err
+			}
+		}
+
+		if err := db.CreateTable(table); err != nil {
+			return err
+		}
+
+		if err := db.Populate(table); err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -56,7 +80,9 @@ func init() {
 	// Here you will define your flags and configuration settings.
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is ./populator.yaml)")
+	rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "c", "", "config file (default is ./populator.yaml)")
+
+	rootCmd.PersistentFlags().BoolVarP(&reCreate, "recreate", "r", false, "drop tables then create them from scratch")
 
 	rootCmd.DisableSuggestions = true
 }
@@ -89,6 +115,7 @@ func initConfig() {
 	}
 
 	if err := LoadConfig(); err != nil {
+		fmt.Printf("config file is invalid: %s", err)
 		os.Exit(1)
 	}
 

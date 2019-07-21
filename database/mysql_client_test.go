@@ -25,7 +25,7 @@ import (
 	"github.com/terakoya76/populator/database"
 )
 
-func Test_buildCreateTableStmt_Columns(t *testing.T) {
+func Test_BuildCreateTableStmt_Columns(t *testing.T) {
 	viper.SetConfigType("yaml")
 
 	cases := []struct {
@@ -1035,6 +1035,69 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
 		for _, table := range config.Instance.Tables {
 			client := database.MySQLClient{}
 			sql := client.BuildCreateTableStmt(table)
+			if !assert.Equal(t, c.sql, sql) {
+				t.Errorf("case: %s is failed, expected: %+v, actual: %+v\n", c.name, c.sql, sql)
+			}
+		}
+
+		// reset global variable
+		config.Instance = nil
+	}
+}
+
+func Test_BuildDropTableStmt(t *testing.T) {
+	viper.SetConfigType("yaml")
+
+	cases := []struct {
+		name string
+		yaml []byte
+		sql  string
+		err  error
+	}{
+		{
+			name: "boolean",
+			yaml: []byte(`
+                driver: mysql
+                database:
+                  host: 127.0.0.1
+                  port: 3306
+                  user: root
+                  password: root
+                  name: testdb
+                tables:
+                - name: table_a
+                  columns:
+                    - name: col_1
+                      type: boolean
+                      order: 0
+                      precision: 0
+                      unsigned: false
+                      nullable: true
+                      default:
+                      primary: false
+                      increment: false
+                  charset: utf8mb4
+                  record: 100000
+            `),
+			sql: "DROP TABLE IF EXISTS table_a",
+			err: nil,
+		},
+	}
+
+	for _, c := range cases {
+		if err := viper.ReadConfig(bytes.NewBuffer(c.yaml)); err != nil {
+			t.Errorf("case: %s is failed, err: %s\n", c.name, err)
+		}
+
+		err := cmd.LoadConfig()
+		if !assert.Equal(t, c.err, err) {
+			t.Errorf("case: %s is failed, err: %s\n", c.name, err)
+		}
+		config.Instance.CompleteWithDefault()
+
+		for _, table := range config.Instance.Tables {
+			client := database.MySQLClient{}
+			sql := client.BuildDropTableStmt(table)
 			if !assert.Equal(t, c.sql, sql) {
 				t.Errorf("case: %s is failed, expected: %+v, actual: %+v\n", c.name, c.sql, sql)
 			}

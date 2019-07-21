@@ -211,6 +211,25 @@ func (db *MySQLClient) buildCreateTableStmtIndex(cfg *config.Index) string {
 	return sb.String()
 }
 
+// DropTable does DropTable statement for MySQL
+func (db *MySQLClient) DropTable(cfg *config.Table) error {
+	sql := db.BuildDropTableStmt(cfg)
+	fmt.Println(sql)
+
+	if _, err := db.Exec(sql); err != nil {
+		return err
+	}
+	return nil
+}
+
+// BuildDropTableStmt generate drop_table_stmt sql for MySQL
+func (db *MySQLClient) BuildDropTableStmt(cfg *config.Table) string {
+	return fmt.Sprintf(
+		"DROP TABLE IF EXISTS %s",
+		cfg.Name,
+	)
+}
+
 // Populate does Insert statement for MySQL
 func (db *MySQLClient) Populate(cfg *config.Table) error {
 	err := utils.BatchTimes(
