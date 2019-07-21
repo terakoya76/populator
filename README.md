@@ -32,3 +32,8 @@ when you want to re-create table schema w/ given declarations
 ```shell
 $ populator -rc ./examples/from_create_table.yaml
 ```
+
+## Support RDBMS
+Currently only supports below RDBMS
+
+- MySQL
