@@ -16,19 +16,19 @@ tables:
     - name: col_2
       type: varchar
       order: 50
-      nullable: true
+      notNull: true
     - name: col_3
       type: boolean
       precision: true
-      nullable: true
+      notNull: true
     - name: col_4
       type: float
       order: 5
       precision: 3
-      nullable: true
+      notNull: true
     - name: col_5
       type: decimal
-      nullable: true
+      notNull: true
   indexes:
     - uniq: true
       columns:
@@ -47,7 +47,7 @@ tables:
       increment: true
     - name: col_2
       type: datetime
-      nullable: true
+      notNull: true
     - name: col_3
       type: varchar
       order: 20
@@ -57,7 +57,7 @@ tables:
     - name: col_4
       type: blob
       order: 65535
-      nullable: true
+      notNull: true
   indexes:
     - uniq: true
       columns:

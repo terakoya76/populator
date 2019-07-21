@@ -51,11 +51,6 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       type: boolean
                       order: 0
                       precision: 0
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -81,7 +76,7 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       order: 0
                       precision: 0
                       unsigned: true
-                      nullable: false
+                      notNull: true
                       default: true
                       primary: true
                       increment: true
@@ -109,11 +104,6 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       type: tinyint
                       order: 4
                       precision: 0
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -138,11 +128,6 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       type: smallint
                       order: 6
                       precision: 0
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -167,11 +152,6 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       type: mediumint
                       order: 9
                       precision: 0
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -196,11 +176,6 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       type: int
                       order: 11
                       precision: 0
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -225,11 +200,6 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       type: bigint
                       order: 20
                       precision: 0
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -255,7 +225,7 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       order: 20
                       precision: 0
                       unsigned: true
-                      nullable: false
+                      notNull: true
                       default: 1000
                       primary: true
                       increment: true
@@ -283,11 +253,6 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       type: decimal
                       order: 5
                       precision: 2
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -312,11 +277,6 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       type: float
                       order: 5
                       precision: 2
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -341,11 +301,6 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       type: real
                       order: 5
                       precision: 2
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -370,11 +325,6 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       type: double
                       order: 5
                       precision: 2
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -400,7 +350,7 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       order: 5
                       precision: 2
                       unsigned: true
-                      nullable: false
+                      notNull: true
                       default: 123.45
                       primary: true
                       increment: true
@@ -428,11 +378,6 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       type: bit
                       order: 8
                       precision: 0
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -458,7 +403,7 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       order: 8
                       precision: 0
                       unsigned: true
-                      nullable: false
+                      notNull: true
                       default: b'01010101'
                       primary: true
                       increment: true
@@ -486,11 +431,6 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       type: date
                       order: 0
                       precision: 0
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -515,11 +455,6 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       type: datetime
                       order: 0
                       precision: 0
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -544,11 +479,6 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       type: timestamp
                       order: 0
                       precision: 0
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -573,11 +503,6 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       type: time
                       order: 0
                       precision: 0
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -602,11 +527,6 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       type: year
                       order: 4
                       precision: 0
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -632,7 +552,7 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       order: 0
                       precision: 0
                       unsigned: true
-                      nullable: false
+                      notNull: true
                       default: 2000-12-01
                       primary: true
                       increment: true
@@ -660,11 +580,6 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       type: char
                       order: 20
                       precision: 0
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -689,11 +604,6 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       type: varchar
                       order: 20
                       precision: 0
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -718,11 +628,6 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       type: binary
                       order: 20
                       precision: 0
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -747,11 +652,6 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       type: varbinary
                       order: 20
                       precision: 0
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -776,11 +676,6 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       type: tinyblob
                       order: 0
                       precision: 0
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -805,11 +700,6 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       type: tinytext
                       order: 0
                       precision: 0
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -834,11 +724,6 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       type: blob
                       order: 65535
                       precision: 0
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -863,11 +748,6 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       type: text
                       order: 65535
                       precision: 0
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -892,11 +772,6 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       type: mediumblob
                       order: 0
                       precision: 0
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -921,11 +796,6 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       type: mediumtext
                       order: 0
                       precision: 0
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -950,11 +820,6 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       type: longblob
                       order: 0
                       precision: 0
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -979,11 +844,6 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       type: longtext
                       order: 0
                       precision: 0
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -1009,7 +869,7 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       order: 65535
                       precision: 0
                       unsigned: true
-                      nullable: false
+                      notNull: true
                       default: "hoge"
                       primary: true
                       increment: true
@@ -1071,11 +931,6 @@ func Test_BuildOrderDesc(t *testing.T) {
                       type: tinyint
                       order:
                       precision:
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -1100,11 +955,6 @@ func Test_BuildOrderDesc(t *testing.T) {
                       type: tinyint
                       order: 2
                       precision:
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -1129,11 +979,6 @@ func Test_BuildOrderDesc(t *testing.T) {
                       type: smallint
                       order:
                       precision:
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -1158,11 +1003,6 @@ func Test_BuildOrderDesc(t *testing.T) {
                       type: smallint
                       order: 4
                       precision:
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -1187,11 +1027,6 @@ func Test_BuildOrderDesc(t *testing.T) {
                       type: mediumint
                       order:
                       precision:
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -1216,11 +1051,6 @@ func Test_BuildOrderDesc(t *testing.T) {
                       type: mediumint
                       order: 6
                       precision:
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -1245,11 +1075,6 @@ func Test_BuildOrderDesc(t *testing.T) {
                       type: int
                       order:
                       precision:
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -1274,11 +1099,6 @@ func Test_BuildOrderDesc(t *testing.T) {
                       type: int
                       order: 9
                       precision:
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -1303,11 +1123,6 @@ func Test_BuildOrderDesc(t *testing.T) {
                       type: bigint
                       order:
                       precision:
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -1332,11 +1147,6 @@ func Test_BuildOrderDesc(t *testing.T) {
                       type: bigint
                       order: 11
                       precision:
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -1361,11 +1171,6 @@ func Test_BuildOrderDesc(t *testing.T) {
                       type: bit
                       order:
                       precision:
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -1390,11 +1195,6 @@ func Test_BuildOrderDesc(t *testing.T) {
                       type: bit
                       order: 8
                       precision:
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -1419,11 +1219,6 @@ func Test_BuildOrderDesc(t *testing.T) {
                       type: varchar
                       order:
                       precision:
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -1448,11 +1243,6 @@ func Test_BuildOrderDesc(t *testing.T) {
                       type: varchar
                       order: 8
                       precision:
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -1513,11 +1303,6 @@ func Test_BuildPrecisionDesc(t *testing.T) {
                       type: decimal
                       order:
                       precision:
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -1542,11 +1327,6 @@ func Test_BuildPrecisionDesc(t *testing.T) {
                       type: decimal
                       order: 6
                       precision: 3
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -1571,11 +1351,6 @@ func Test_BuildPrecisionDesc(t *testing.T) {
                       type: float
                       order:
                       precision:
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -1600,11 +1375,6 @@ func Test_BuildPrecisionDesc(t *testing.T) {
                       type: float
                       order: 6
                       precision: 3
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -1665,11 +1435,7 @@ func Test_BuildDefaultDesc(t *testing.T) {
                       type: varchar
                       order:
                       precision:
-                      unsigned: false
-                      nullable: true
                       default: hoge
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -1694,11 +1460,7 @@ func Test_BuildDefaultDesc(t *testing.T) {
                       type: decimal
                       order: 6
                       precision: 3
-                      unsigned: false
-                      nullable: true
                       default: 123.456
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
@@ -1759,11 +1521,6 @@ func Test_BuildDropTableStmt(t *testing.T) {
                       type: boolean
                       order: 0
                       precision: 0
-                      unsigned: false
-                      nullable: true
-                      default:
-                      primary: false
-                      increment: false
                   charset: utf8mb4
                   record: 100000
             `),
