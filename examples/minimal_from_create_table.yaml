@@ -30,12 +30,10 @@ tables:
       type: decimal
       nullable: true
   indexes:
-    - name: index_1_on_table_a
-      uniq: true
+    - uniq: true
       columns:
         - col_2
-    - name: index_2_on_table_a
-      columns:
+    - columns:
         - col_3
         - col_4
   charset: utf8mb4
@@ -61,12 +59,10 @@ tables:
       order: 65535
       nullable: true
   indexes:
-    - name: index_1_on_table_b
-      uniq: true
+    - uniq: true
       columns:
         - col_2
-    - name: index_2_on_table_b
-      uniq: true
+    - uniq: true
       columns:
         - col_3
   charset: utf8mb4

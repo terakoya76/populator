@@ -235,7 +235,10 @@ func (db *MySQLClient) buildCreateTableStmtIndex(cfg *config.Index) string {
 		sb.WriteString("    INDEX ")
 	}
 
-	sb.WriteString(cfg.Name)
+	if cfg.Name != "" {
+		sb.WriteString(cfg.Name)
+	}
+
 	sb.WriteString(" (")
 
 	var reg []string
