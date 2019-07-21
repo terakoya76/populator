@@ -38,8 +38,8 @@ func init() {
 	}
 }
 
-func genInt(min, max int) int {
-	return rand.Intn(max-min) + min
+func genInt(min, max int64) int64 {
+	return rand.Int63n(max-min) + min
 }
 
 func genString(n int) string {
@@ -105,7 +105,10 @@ func UnsignedInt() uint32 {
 
 // BigInt returns random bigint
 func BigInt() int64 {
-	return int64(genInt(-9223372036854775808, 9223372036854775807))
+	if Boolean() {
+		return genInt(0, 9223372036854775807)
+	}
+	return genInt(-9223372036854775808, -1)
 }
 
 // UnsignedBigInt returns random unsigned bigint
