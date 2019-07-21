@@ -60,8 +60,7 @@ func genTime(min time.Time, max time.Time) time.Time {
 
 // Boolean returns random boolean
 func Boolean() bool {
-	tinyint := genInt(0, 1)
-	return tinyint == 1
+	return rand.Float32() < 0.5
 }
 
 // TinyInt returns random tinyint
@@ -115,8 +114,8 @@ func UnsignedBigInt() uint64 {
 }
 
 // Decimal returns random decimal within the given range
-func Decimal(order int) string {
-	double := Double(order)
+func Decimal(order int, precision int) string {
+	double := Double(order, precision)
 	if double == 0 {
 		return "0"
 	}
@@ -124,8 +123,8 @@ func Decimal(order int) string {
 }
 
 // UnsignedDecimal returns random decimal within the given range
-func UnsignedDecimal(order int) string {
-	double := UnsignedDouble(order)
+func UnsignedDecimal(order int, precision int) string {
+	double := UnsignedDouble(order, precision)
 	if double == 0 {
 		return "0"
 	}
@@ -133,49 +132,66 @@ func UnsignedDecimal(order int) string {
 }
 
 // Float returns random float within the given range
-func Float(order int) float32 {
+func Float(order int, precision int) float32 {
+	unsigned := Boolean()
 	min := float32(0.0)
-	max := float32(math.Pow(10, float64(order)) - 1)
+	var max float32
+
+	if unsigned {
+		max = float32(math.Pow(10, float64(order-precision)) - 1)
+	} else {
+		max = float32(math.Pow(10, float64(order-precision-1)) - 1)
+	}
+
 	float := min + rand.Float32()*(max-min)
-	if Boolean() {
+	if unsigned {
 		return float
 	}
 	return float * -1
 }
 
 // UnsignedFloat returns random unsigned float within the given range
-func UnsignedFloat(order int) float32 {
+func UnsignedFloat(order int, precision int) float32 {
 	min := float32(0.0)
-	max := float32(math.Pow(10, float64(order)) - 1)
+	max := float32(math.Pow(10, float64(order-precision)) - 1)
 	return min + rand.Float32()*(max-min)
 }
 
 // Double returns random double within the given range
-func Double(order int) float64 {
+func Double(order int, precision int) float64 {
+	unsigned := Boolean()
+
 	min := 0.0
-	max := math.Pow(10, float64(order)) - 1
+	var max float64
+
+	if unsigned {
+		max = math.Pow(10, float64(order-precision)) - 1
+	} else {
+		max = math.Pow(10, float64(order-precision-1)) - 1
+	}
+
 	double := min + rand.Float64()*(max-min)
-	if Boolean() {
+	if unsigned {
 		return double
 	}
 	return double * -1
 }
 
 // UnsignedDouble returns random unsigned double within the given range
-func UnsignedDouble(order int) float64 {
+func UnsignedDouble(order int, precision int) float64 {
 	min := 0.0
-	max := math.Pow(10, float64(order)) - 1
+	max := math.Pow(10, float64(order-precision)) - 1
 	return min + rand.Float64()*(max-min)
 }
 
 // Real returns random double within the given range
-func Real(order int) float64 {
-	return Double(order)
+func Real(order int, precision int) float64 {
+	return Double(order, precision)
 }
 
 // UnsignedReal returns random unsigned double within the given range
-func UnsignedReal(order int) float64 {
-	return UnsignedDouble(order)
+func UnsignedReal(order int, precision int) float64 {
+	return UnsignedDouble(order, precision)
 }
 
 // Bit returns random bit

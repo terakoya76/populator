@@ -263,6 +263,12 @@ func (db *MySQLClient) generateInsertRow(cfg *config.Table) func() string {
 			switch value := value.(type) {
 			case string:
 				reg = append(reg, fmt.Sprintf("   '%v'", value))
+			case float32, float64:
+				var sb strings.Builder
+				sb.WriteString("   %.")
+				sb.WriteString(fmt.Sprintf("%d", column.Precision))
+				sb.WriteString("f")
+				reg = append(reg, fmt.Sprintf(sb.String(), value))
 			default:
 				reg = append(reg, fmt.Sprintf("   %v", value))
 
@@ -313,27 +319,27 @@ func (db *MySQLClient) generateValue(cfg *config.Column) interface{} {
 
 	case "decimal":
 		if cfg.Unsigned {
-			return rand.UnsignedDecimal(cfg.Order)
+			return rand.UnsignedDecimal(cfg.Order, cfg.Precision)
 		}
-		return rand.Decimal(cfg.Order)
+		return rand.Decimal(cfg.Order, cfg.Precision)
 
 	case "float":
 		if cfg.Unsigned {
-			return rand.UnsignedFloat(cfg.Order)
+			return rand.UnsignedFloat(cfg.Order, cfg.Precision)
 		}
-		return rand.Float(cfg.Order)
+		return rand.Float(cfg.Order, cfg.Precision)
 
 	case "real":
 		if cfg.Unsigned {
-			return rand.UnsignedReal(cfg.Order)
+			return rand.UnsignedReal(cfg.Order, cfg.Precision)
 		}
-		return rand.Real(cfg.Order)
+		return rand.Real(cfg.Order, cfg.Precision)
 
 	case "double":
 		if cfg.Unsigned {
-			return rand.UnsignedDouble(cfg.Order)
+			return rand.UnsignedDouble(cfg.Order, cfg.Precision)
 		}
-		return rand.Double(cfg.Order)
+		return rand.Double(cfg.Order, cfg.Precision)
 
 	case "bit":
 		return rand.Bit(cfg.Order)
