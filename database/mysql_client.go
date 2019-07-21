@@ -382,28 +382,28 @@ func (db *MySQLClient) generateValue(cfg *config.Column) interface{} {
 		return rand.VarBinary(cfg.Order)
 
 	case "tinyblob":
-		return rand.TinyBlob(1000)
+		return rand.TinyBlob(255)
 
 	case "tinytext":
-		return rand.TinyText(1000)
+		return rand.TinyText(255)
 
 	case "blob":
-		return rand.Blob(3000)
+		return rand.Blob(1000)
 
 	case "text":
-		return rand.Text(3000)
+		return rand.Text(1000)
 
 	case "mediumblob":
-		return rand.MediumBlob(7000)
+		return rand.MediumBlob(3000)
 
 	case "mediumtext":
-		return rand.MediumText(7000)
+		return rand.MediumText(3000)
 
 	case "longblob":
-		return rand.LongBlob(10000)
+		return rand.LongBlob(5000)
 
 	case "longtext":
-		return rand.LongText(10000)
+		return rand.LongText(5000)
 
 	default:
 		return rand.Boolean()
