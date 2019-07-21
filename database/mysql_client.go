@@ -60,6 +60,8 @@ var OrderRequiredDataTypes = []interface{}{
 	"int",
 	"bigint",
 	"bit",
+	"blob",
+	"text",
 	"year",
 	"char",
 	"varchar",
@@ -119,8 +121,6 @@ func (db *MySQLClient) BuildCreateTableStmt(cfg *config.Table) string {
 
 	if len(cfg.Indexes) > 0 {
 		sb.WriteString(",\n")
-	} else {
-		sb.WriteString("\n")
 	}
 
 	var regIdx []string
@@ -129,32 +129,33 @@ func (db *MySQLClient) BuildCreateTableStmt(cfg *config.Table) string {
 	}
 	sb.WriteString(strings.Join(regIdx, ",\n"))
 
-	if len(cfg.Indexes) > 0 {
-		sb.WriteString("\n")
-	}
-
 	sb.WriteString(
 		fmt.Sprintf(
-			") DEFAULT CHARSET=%s",
+			"\n) DEFAULT CHARSET=%s",
 			cfg.Charset,
 		),
 	)
 
+	fmt.Println(sb.String())
 	return sb.String()
 }
 
 func (db *MySQLClient) buildCreateTableStmtColumn(cfg *config.Column) string {
 	var sb strings.Builder
-	sb.WriteString("    ")
-	sb.WriteString(cfg.Name)
-	sb.WriteString(" ")
-	sb.WriteString(cfg.Type)
+	sb.WriteString(
+		fmt.Sprintf(
+			"    %s %s",
+			cfg.Name,
+			cfg.Type,
+		),
+	)
 
 	if utils.Contains(OrderRequiredDataTypes, cfg.Type) {
 		sb.WriteString(
 			fmt.Sprintf("(%d)", cfg.Order),
 		)
 	}
+
 	if utils.Contains(PrecisionRequiredDataTypes, cfg.Type) {
 		sb.WriteString(
 			fmt.Sprintf("(%d, %d)", cfg.Order, cfg.Precision),
@@ -164,6 +165,7 @@ func (db *MySQLClient) buildCreateTableStmtColumn(cfg *config.Column) string {
 	if utils.Contains(UnsignedableDataType, cfg.Type) && cfg.Unsigned {
 		sb.WriteString(" UNSIGNED")
 	}
+
 	if utils.Contains(IncrementableDataType, cfg.Type) && cfg.Increment {
 		sb.WriteString(" AUTO_INCREMENT")
 	}
@@ -171,9 +173,16 @@ func (db *MySQLClient) buildCreateTableStmtColumn(cfg *config.Column) string {
 	if !cfg.Nullable {
 		sb.WriteString(" NOT NULL")
 	}
+
 	if !utils.Contains(ProhibitDefaultDataTypes, cfg.Type) && cfg.Default != nil {
-		sb.WriteString(fmt.Sprintf(" DEFAULT(%v)", cfg.Default))
+		switch cfg.Default.(type) {
+		case string:
+			sb.WriteString(fmt.Sprintf(" DEFAULT %q", cfg.Default))
+		default:
+			sb.WriteString(fmt.Sprintf(" DEFAULT(%v)", cfg.Default))
+		}
 	}
+
 	if cfg.Primary {
 		sb.WriteString(" PRIMARY KEY")
 	}
@@ -183,12 +192,10 @@ func (db *MySQLClient) buildCreateTableStmtColumn(cfg *config.Column) string {
 
 func (db *MySQLClient) buildCreateTableStmtIndex(cfg *config.Index) string {
 	var sb strings.Builder
-	sb.WriteString("    ")
-
 	if cfg.Uniq {
-		sb.WriteString("UNIQUE ")
+		sb.WriteString("    UNIQUE ")
 	} else {
-		sb.WriteString("INDEX ")
+		sb.WriteString("    INDEX ")
 	}
 
 	sb.WriteString(cfg.Name)
