@@ -16,13 +16,19 @@ $ go get github.com/terakoya76/populator
 ```
 
 ## How to use
+There're sample config files, you can try it.
 
 when you haven't setup the database or tables yet
 ```shell
-$ populator populate --config ./examples/from_create_table.yaml
+$ populator -c ./examples/from_create_table.yaml
 ```
 
 when you've already setup the database and tables
 ```shell
-$ populator populate --config ./examples/only_populate_seed.yaml
+$ populator -c ./examples/only_populate_seed.yaml
+```
+
+when you want to re-create table schema w/ given declarations
+```shell
+$ populator -rc ./examples/from_create_table.yaml
 ```
