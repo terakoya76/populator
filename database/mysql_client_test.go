@@ -465,7 +465,7 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                   charset: utf8mb4
                   record: 100000
             `),
-			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 bit(8) NOT NULL DEFAULT(b'01010101') PRIMARY KEY\n) DEFAULT CHARSET=utf8mb4",
+			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 bit(8) NOT NULL DEFAULT \"b'01010101'\" PRIMARY KEY\n) DEFAULT CHARSET=utf8mb4",
 			err: nil,
 		},
 
@@ -639,7 +639,7 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                   charset: utf8mb4
                   record: 100000
             `),
-			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 date NOT NULL DEFAULT(2000-12-01) PRIMARY KEY\n) DEFAULT CHARSET=utf8mb4",
+			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 date NOT NULL DEFAULT \"2000-12-01\" PRIMARY KEY\n) DEFAULT CHARSET=utf8mb4",
 			err: nil,
 		},
 
@@ -832,7 +832,7 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                   columns:
                     - name: col_1
                       type: blob
-                      order: 0
+                      order: 65535
                       precision: 0
                       unsigned: false
                       nullable: true
@@ -842,7 +842,7 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                   charset: utf8mb4
                   record: 100000
             `),
-			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 blob\n) DEFAULT CHARSET=utf8mb4",
+			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 blob(65535)\n) DEFAULT CHARSET=utf8mb4",
 			err: nil,
 		},
 
@@ -861,7 +861,7 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                   columns:
                     - name: col_1
                       type: text
-                      order: 0
+                      order: 65535
                       precision: 0
                       unsigned: false
                       nullable: true
@@ -871,7 +871,7 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                   charset: utf8mb4
                   record: 100000
             `),
-			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 text\n) DEFAULT CHARSET=utf8mb4",
+			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 text(65535)\n) DEFAULT CHARSET=utf8mb4",
 			err: nil,
 		},
 
@@ -1006,7 +1006,7 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                   columns:
                     - name: col_1
                       type: text
-                      order: 20
+                      order: 65535
                       precision: 0
                       unsigned: true
                       nullable: false
@@ -1016,7 +1016,7 @@ func Test_buildCreateTableStmt_Columns(t *testing.T) {
                   charset: utf8mb4
                   record: 100000
             `),
-			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 text NOT NULL PRIMARY KEY\n) DEFAULT CHARSET=utf8mb4",
+			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 text(65535) NOT NULL PRIMARY KEY\n) DEFAULT CHARSET=utf8mb4",
 			err: nil,
 		},
 	}
