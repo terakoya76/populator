@@ -10,56 +10,31 @@ tables:
   columns:
     - name: col_1
       type: bigint
-      order: 20
-      precision:
       unsigned: true
-      nullable: false
-      default:
       primary: true
       increment: true
     - name: col_2
       type: varchar
       order: 50
-      precision:
-      unsigned: false
       nullable: true
-      default:
-      primary: false
-      increment: false
     - name: col_3
       type: boolean
-      order:
       precision: true
-      unsigned: false
       nullable: true
-      default:
-      primary: false
-      increment: false
     - name: col_4
       type: float
       order: 5
       precision: 3
-      unsigned: false
       nullable: true
-      default:
-      primary: false
-      increment: false
     - name: col_5
       type: decimal
-      order: 5
-      precision: 3
-      unsigned: false
       nullable: true
-      default:
-      primary: false
-      increment: false
   indexes:
     - name: index_1_on_table_a
       uniq: true
       columns:
         - col_2
     - name: index_2_on_table_a
-      uniq: false
       columns:
         - col_3
         - col_4
@@ -69,40 +44,22 @@ tables:
   columns:
     - name: col_1
       type: int
-      order: 11
-      precision:
       unsigned: true
-      nullable: false
-      default:
       primary: true
       increment: true
     - name: col_2
       type: datetime
-      order:
-      precision:
-      unsigned: false
       nullable: true
-      default:
-      primary: false
-      increment: false
     - name: col_3
       type: varchar
       order: 20
-      precision:
-      unsigned: false
-      nullable: false
       default: ""
       primary: false
       increment: false
     - name: col_4
       type: blob
       order: 65535
-      precision:
-      unsigned: false
       nullable: true
-      default:
-      primary: false
-      increment: false
   indexes:
     - name: index_1_on_table_b
       uniq: true
