@@ -13,7 +13,7 @@ tables:
       order: 20
       precision:
       unsigned: true
-      nullable: false
+      notNUll: true
       default:
       primary: true
       increment: true
@@ -22,7 +22,7 @@ tables:
       order: 50
       precision:
       unsigned: false
-      nullable: true
+      notNUll: false
       default:
       primary: false
       increment: false
@@ -31,7 +31,7 @@ tables:
       order:
       precision: true
       unsigned: false
-      nullable: true
+      notNUll: false
       default:
       primary: false
       increment: false
@@ -40,7 +40,7 @@ tables:
       order: 5
       precision: 3
       unsigned: false
-      nullable: true
+      notNUll: true
       default:
       primary: false
       increment: false
@@ -49,7 +49,7 @@ tables:
       order: 5
       precision: 3
       unsigned: false
-      nullable: true
+      notNUll: true
       default:
       primary: false
       increment: false
@@ -72,7 +72,7 @@ tables:
       order: 11
       precision:
       unsigned: true
-      nullable: false
+      notNUll: true
       default:
       primary: true
       increment: true
@@ -81,7 +81,7 @@ tables:
       order:
       precision:
       unsigned: false
-      nullable: true
+      notNUll: false
       default:
       primary: false
       increment: false
@@ -90,7 +90,7 @@ tables:
       order: 20
       precision:
       unsigned: false
-      nullable: false
+      notNUll: true
       default: ""
       primary: false
       increment: false
@@ -99,7 +99,7 @@ tables:
       order: 65535
       precision:
       unsigned: false
-      nullable: true
+      notNUll: false
       default:
       primary: false
       increment: false

@@ -55,10 +55,6 @@ func Test_LoadConfig_Driver(t *testing.T) {
                       type: float
                       order: 5
                       precision: 2
-                      unsigned: true
-                      nullable: true
-                      default: 123.45
-                      primary: true
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -88,10 +84,6 @@ func Test_LoadConfig_Driver(t *testing.T) {
                       type: float
                       order: 5
                       precision: 2
-                      unsigned: true
-                      nullable: true
-                      default: 123.45
-                      primary: true
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -120,10 +112,6 @@ func Test_LoadConfig_Driver(t *testing.T) {
                       type: float
                       order: 5
                       precision: 2
-                      unsigned: true
-                      nullable: true
-                      default: 123.45
-                      primary: true
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -184,10 +172,6 @@ func Test_LoadConfig_Database(t *testing.T) {
                       type: float
                       order: 5
                       precision: 2
-                      unsigned: true
-                      nullable: true
-                      default: 123.45
-                      primary: true
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -217,10 +201,6 @@ func Test_LoadConfig_Database(t *testing.T) {
                       type: float
                       order: 5
                       precision: 2
-                      unsigned: true
-                      nullable: true
-                      default: 123.45
-                      primary: true
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -249,10 +229,6 @@ func Test_LoadConfig_Database(t *testing.T) {
                       type: float
                       order: 5
                       precision: 2
-                      unsigned: true
-                      nullable: true
-                      default: 123.45
-                      primary: true
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -287,10 +263,6 @@ func Test_LoadConfig_Database(t *testing.T) {
                       type: float
                       order: 5
                       precision: 2
-                      unsigned: true
-                      nullable: true
-                      default: 123.45
-                      primary: true
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -325,10 +297,6 @@ func Test_LoadConfig_Database(t *testing.T) {
                       type: float
                       order: 5
                       precision: 2
-                      unsigned: true
-                      nullable: true
-                      default: 123.45
-                      primary: true
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -363,10 +331,6 @@ func Test_LoadConfig_Database(t *testing.T) {
                       type: float
                       order: 5
                       precision: 2
-                      unsigned: true
-                      nullable: true
-                      default: 123.45
-                      primary: true
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -401,10 +365,6 @@ func Test_LoadConfig_Database(t *testing.T) {
                       type: float
                       order: 5
                       precision: 2
-                      unsigned: true
-                      nullable: false
-                      default: 123.45
-                      primary: true
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -474,7 +434,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
                       order: 5
                       precision: 2
                       unsigned: true
-                      nullable: true
+                      notNull: true
                       default: 123.45
                       primary: true
                       increment: true
@@ -496,7 +456,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
 							Order:     5,
 							Precision: 2,
 							Unsigned:  true,
-							Nullable:  true,
+							NotNull:   true,
 							Default:   123.45,
 							Primary:   true,
 							Increment: true,
@@ -550,7 +510,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
                       order: 5
                       precision: 2
                       unsigned: true
-                      nullable: true
+                      notNull: true
                       default: 123.45
                       primary: true
                       increment: true
@@ -572,7 +532,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
 							Order:     5,
 							Precision: 2,
 							Unsigned:  true,
-							Nullable:  true,
+							NotNull:   true,
 							Default:   123.45,
 							Primary:   true,
 							Increment: true,
@@ -652,7 +612,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
                       order: 5
                       precision: 2
                       unsigned: true
-                      nullable: true
+                      notNull: true
                       default: 123.45
                       primary: true
                       increment: true
@@ -669,7 +629,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
 							Order:     5,
 							Precision: 2,
 							Unsigned:  true,
-							Nullable:  true,
+							NotNull:   true,
 							Default:   123.45,
 							Primary:   true,
 							Increment: true,
@@ -701,7 +661,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
                       order: 5
                       precision: 2
                       unsigned: true
-                      nullable: true
+                      notNull: true
                       default: 123.45
                       primary: true
                       increment: true
@@ -722,7 +682,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
 							Order:     5,
 							Precision: 2,
 							Unsigned:  true,
-							Nullable:  true,
+							NotNull:   true,
 							Default:   123.45,
 							Primary:   true,
 							Increment: true,
@@ -762,7 +722,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
                       order: 5
                       precision: 2
                       unsigned: true
-                      nullable: true
+                      notNull: true
                       default: 123.45
                       primary: true
                       increment: true
@@ -783,7 +743,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
 							Order:     5,
 							Precision: 2,
 							Unsigned:  true,
-							Nullable:  true,
+							NotNull:   true,
 							Default:   123.45,
 							Primary:   true,
 							Increment: true,
@@ -852,7 +812,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
                       order: 5
                       precision: 2
                       unsigned: true
-                      nullable: true
+                      notNull: true
                       default: 123.45
                       primary: true
                       increment: true
@@ -874,7 +834,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
 							Order:     5,
 							Precision: 2,
 							Unsigned:  true,
-							Nullable:  true,
+							NotNull:   true,
 							Default:   123.45,
 							Primary:   true,
 							Increment: true,
@@ -913,7 +873,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
                       order: 5
                       precision: 2
                       unsigned: true
-                      nullable: true
+                      notNull: true
                       default: 123.45
                       primary: true
                       increment: true
@@ -935,7 +895,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
 							Order:     5,
 							Precision: 2,
 							Unsigned:  true,
-							Nullable:  true,
+							NotNull:   true,
 							Default:   123.45,
 							Primary:   true,
 							Increment: true,
@@ -974,7 +934,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
                       type: float
                       precision: 2
                       unsigned: true
-                      nullable: true
+                      notNull: true
                       default: 123.45
                       primary: true
                       increment: true
@@ -996,7 +956,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
 							Order:     0,
 							Precision: 2,
 							Unsigned:  true,
-							Nullable:  true,
+							NotNull:   true,
 							Default:   123.45,
 							Primary:   true,
 							Increment: true,
@@ -1035,7 +995,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
                       type: float
                       order: 5
                       unsigned: true
-                      nullable: true
+                      notNull: true
                       default: 123.45
                       primary: true
                       increment: true
@@ -1057,7 +1017,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
 							Order:     5,
 							Precision: 0,
 							Unsigned:  true,
-							Nullable:  true,
+							NotNull:   true,
 							Default:   123.45,
 							Primary:   true,
 							Increment: true,
@@ -1096,7 +1056,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
                       type: float
                       order: 5
                       precision: 2
-                      nullable: true
+                      notNull: true
                       default: 123.45
                       primary: true
                       increment: true
@@ -1118,7 +1078,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
 							Order:     5,
 							Precision: 2,
 							Unsigned:  false,
-							Nullable:  true,
+							NotNull:   true,
 							Default:   123.45,
 							Primary:   true,
 							Increment: true,
@@ -1141,7 +1101,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
 		},
 
 		{
-			name: "missing a nullable of column in columns part",
+			name: "missing a notNull of column in columns part",
 			yaml: []byte(`
                 driver: mysql
                 database:
@@ -1179,7 +1139,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
 							Order:     5,
 							Precision: 2,
 							Unsigned:  true,
-							Nullable:  false,
+							NotNull:   false,
 							Default:   123.45,
 							Primary:   true,
 							Increment: true,
@@ -1219,7 +1179,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
                       order: 5
                       precision: 2
                       unsigned: true
-                      nullable: true
+                      notNull: true
                       primary: true
                       increment: true
                   indexes:
@@ -1240,7 +1200,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
 							Order:     5,
 							Precision: 2,
 							Unsigned:  true,
-							Nullable:  true,
+							NotNull:   true,
 							Default:   nil,
 							Primary:   true,
 							Increment: true,
@@ -1280,7 +1240,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
                       order: 5
                       precision: 2
                       unsigned: true
-                      nullable: true
+                      notNull: true
                       default: 123.45
                       increment: true
                   indexes:
@@ -1301,7 +1261,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
 							Order:     5,
 							Precision: 2,
 							Unsigned:  true,
-							Nullable:  true,
+							NotNull:   true,
 							Default:   123.45,
 							Primary:   false,
 							Increment: true,
@@ -1341,7 +1301,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
                       order: 5
                       precision: 2
                       unsigned: true
-                      nullable: true
+                      notNull: true
                       default: 123.45
                       primary: true
                   indexes:
@@ -1362,7 +1322,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
 							Order:     5,
 							Precision: 2,
 							Unsigned:  true,
-							Nullable:  true,
+							NotNull:   true,
 							Default:   123.45,
 							Primary:   true,
 							Increment: false,
@@ -1433,7 +1393,7 @@ func Test_LoadConfig_Indexes(t *testing.T) {
                       order: 5
                       precision: 2
                       unsigned: true
-                      nullable: true
+                      notNull: true
                       default: 123.45
                       primary: true
                       increment: true
@@ -1454,7 +1414,7 @@ func Test_LoadConfig_Indexes(t *testing.T) {
 							Order:     5,
 							Precision: 2,
 							Unsigned:  true,
-							Nullable:  true,
+							NotNull:   true,
 							Default:   123.45,
 							Primary:   true,
 							Increment: true,
@@ -1494,7 +1454,7 @@ func Test_LoadConfig_Indexes(t *testing.T) {
                       order: 5
                       precision: 2
                       unsigned: true
-                      nullable: true
+                      notNull: true
                       default: 123.45
                       primary: true
                       increment: true
@@ -1515,7 +1475,7 @@ func Test_LoadConfig_Indexes(t *testing.T) {
 							Order:     5,
 							Precision: 2,
 							Unsigned:  true,
-							Nullable:  true,
+							NotNull:   true,
 							Default:   123.45,
 							Primary:   true,
 							Increment: true,
@@ -1555,7 +1515,7 @@ func Test_LoadConfig_Indexes(t *testing.T) {
                       order: 5
                       precision: 2
                       unsigned: true
-                      nullable: true
+                      notNull: true
                       default: 123.45
                       primary: true
                       increment: true
@@ -1575,7 +1535,7 @@ func Test_LoadConfig_Indexes(t *testing.T) {
 							Order:     5,
 							Precision: 2,
 							Unsigned:  true,
-							Nullable:  true,
+							NotNull:   true,
 							Default:   123.45,
 							Primary:   true,
 							Increment: true,

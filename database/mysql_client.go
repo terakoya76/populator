@@ -166,7 +166,7 @@ func (db *MySQLClient) buildCreateTableStmtColumn(cfg *config.Column) string {
 		sb.WriteString(" AUTO_INCREMENT")
 	}
 
-	if !cfg.Nullable {
+	if cfg.NotNull {
 		sb.WriteString(" NOT NULL")
 	}
 

@@ -129,7 +129,7 @@ type Column struct {
 	Order     int
 	Precision int
 	Unsigned  bool
-	Nullable  bool
+	NotNull   bool
 	Default   interface{}
 	Primary   bool
 	Increment bool
