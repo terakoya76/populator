@@ -184,7 +184,13 @@ func (db *MySQLClient) buildCreateTableStmtColumn(cfg *config.Column) string {
 func (db *MySQLClient) buildCreateTableStmtIndex(cfg *config.Index) string {
 	var sb strings.Builder
 	sb.WriteString("    ")
-	sb.WriteString("INDEX ")
+
+	if cfg.Uniq {
+		sb.WriteString("UNIQUE ")
+	} else {
+		sb.WriteString("INDEX ")
+	}
+
 	sb.WriteString(cfg.Name)
 	sb.WriteString(" (")
 
