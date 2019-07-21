@@ -1,0 +1,52 @@
+driver: mysql
+database:
+  host: 127.0.0.1
+  user: root
+  password: root
+  name: testdb
+  port: 3306
+tables:
+- name: table_a
+  columns:
+    - name: col_1
+      type: bigint
+      order: 20
+      precision:
+      primary: true
+      increment: true
+    - name: col_2
+      type: varchar
+      order: 50
+      precision:
+    - name: col_3
+      type: boolean
+      order:
+      precision:
+    - name: col_4
+      type: float
+      order: 5
+      precision: 3
+  charset: utf8mb4
+  record: 100000
+- name: table_b
+  columns:
+    - name: col_1
+      type: bigint
+      order: 20
+      precision:
+      primary: true
+      increment: true
+    - name: col_2
+      type: datetime
+      order:
+      precision:
+    - name: col_3
+      type: varchar
+      order: 20
+      precision:
+    - name: col_4
+      type: blob
+      order: 65535
+      precision:
+  charset: utf8mb4
+  record: 50000
