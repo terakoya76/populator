@@ -28,6 +28,7 @@ import (
 )
 
 var cfgFile string
+var reCreate bool
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -57,6 +58,8 @@ func init() {
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is ./populator.yaml)")
+
+	rootCmd.PersistentFlags().BoolVarP(&reCreate, "recreate", "r", false, "drop tables then create them from scratch")
 
 	rootCmd.DisableSuggestions = true
 }

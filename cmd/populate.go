@@ -45,6 +45,12 @@ func populate() error {
 	db := database.DB()
 	cfg := config.Instance
 	for _, table := range cfg.Tables {
+		if reCreate {
+			if err := db.DropTable(table); err != nil {
+				return err
+			}
+		}
+
 		if err := db.CreateTable(table); err != nil {
 			return err
 		}
