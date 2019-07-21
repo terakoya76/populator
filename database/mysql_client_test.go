@@ -79,7 +79,7 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       notNull: true
                       default: true
                       primary: true
-                      increment: true
+                      autoIncrement: true
                   charset: utf8mb4
                   record: 100000
             `),
@@ -228,7 +228,7 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       notNull: true
                       default: 1000
                       primary: true
-                      increment: true
+                      autoIncrement: true
                   charset: utf8mb4
                   record: 100000
             `),
@@ -353,7 +353,7 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       notNull: true
                       default: 123.45
                       primary: true
-                      increment: true
+                      autoIncrement: true
                   charset: utf8mb4
                   record: 100000
             `),
@@ -406,7 +406,7 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       notNull: true
                       default: b'01010101'
                       primary: true
-                      increment: true
+                      autoIncrement: true
                   charset: utf8mb4
                   record: 100000
             `),
@@ -555,7 +555,7 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       notNull: true
                       default: 2000-12-01
                       primary: true
-                      increment: true
+                      autoIncrement: true
                   charset: utf8mb4
                   record: 100000
             `),
@@ -872,7 +872,7 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
                       notNull: true
                       default: "hoge"
                       primary: true
-                      increment: true
+                      autoIncrement: true
                   charset: utf8mb4
                   record: 100000
             `),

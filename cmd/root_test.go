@@ -437,7 +437,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
                       notNull: true
                       default: 123.45
                       primary: true
-                      increment: true
+                      autoIncrement: true
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -451,15 +451,15 @@ func Test_LoadConfig_Tables(t *testing.T) {
 					Name: "table_a",
 					Columns: []*config.Column{
 						{
-							Name:      "col_1",
-							Type:      "float",
-							Order:     5,
-							Precision: 2,
-							Unsigned:  true,
-							NotNull:   true,
-							Default:   123.45,
-							Primary:   true,
-							Increment: true,
+							Name:          "col_1",
+							Type:          "float",
+							Order:         5,
+							Precision:     2,
+							Unsigned:      true,
+							NotNull:       true,
+							Default:       123.45,
+							Primary:       true,
+							AutoIncrement: true,
 						},
 					},
 					Indexes: []*config.Index{
@@ -513,7 +513,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
                       notNull: true
                       default: 123.45
                       primary: true
-                      increment: true
+                      autoIncrement: true
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -527,15 +527,15 @@ func Test_LoadConfig_Tables(t *testing.T) {
 					Name: "",
 					Columns: []*config.Column{
 						{
-							Name:      "col_1",
-							Type:      "float",
-							Order:     5,
-							Precision: 2,
-							Unsigned:  true,
-							NotNull:   true,
-							Default:   123.45,
-							Primary:   true,
-							Increment: true,
+							Name:          "col_1",
+							Type:          "float",
+							Order:         5,
+							Precision:     2,
+							Unsigned:      true,
+							NotNull:       true,
+							Default:       123.45,
+							Primary:       true,
+							AutoIncrement: true,
 						},
 					},
 					Indexes: []*config.Index{
@@ -615,7 +615,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
                       notNull: true
                       default: 123.45
                       primary: true
-                      increment: true
+                      autoIncrement: true
                   charset: utf8mb4
                   record: 100000
             `),
@@ -624,15 +624,15 @@ func Test_LoadConfig_Tables(t *testing.T) {
 					Name: "table_a",
 					Columns: []*config.Column{
 						{
-							Name:      "col_1",
-							Type:      "float",
-							Order:     5,
-							Precision: 2,
-							Unsigned:  true,
-							NotNull:   true,
-							Default:   123.45,
-							Primary:   true,
-							Increment: true,
+							Name:          "col_1",
+							Type:          "float",
+							Order:         5,
+							Precision:     2,
+							Unsigned:      true,
+							NotNull:       true,
+							Default:       123.45,
+							Primary:       true,
+							AutoIncrement: true,
 						},
 					},
 					Indexes: nilIndexes,
@@ -664,7 +664,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
                       notNull: true
                       default: 123.45
                       primary: true
-                      increment: true
+                      autoIncrement: true
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -677,15 +677,15 @@ func Test_LoadConfig_Tables(t *testing.T) {
 					Name: "table_a",
 					Columns: []*config.Column{
 						{
-							Name:      "col_1",
-							Type:      "float",
-							Order:     5,
-							Precision: 2,
-							Unsigned:  true,
-							NotNull:   true,
-							Default:   123.45,
-							Primary:   true,
-							Increment: true,
+							Name:          "col_1",
+							Type:          "float",
+							Order:         5,
+							Precision:     2,
+							Unsigned:      true,
+							NotNull:       true,
+							Default:       123.45,
+							Primary:       true,
+							AutoIncrement: true,
 						},
 					},
 					Indexes: []*config.Index{
@@ -725,7 +725,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
                       notNull: true
                       default: 123.45
                       primary: true
-                      increment: true
+                      autoIncrement: true
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -738,15 +738,15 @@ func Test_LoadConfig_Tables(t *testing.T) {
 					Name: "table_a",
 					Columns: []*config.Column{
 						{
-							Name:      "col_1",
-							Type:      "float",
-							Order:     5,
-							Precision: 2,
-							Unsigned:  true,
-							NotNull:   true,
-							Default:   123.45,
-							Primary:   true,
-							Increment: true,
+							Name:          "col_1",
+							Type:          "float",
+							Order:         5,
+							Precision:     2,
+							Unsigned:      true,
+							NotNull:       true,
+							Default:       123.45,
+							Primary:       true,
+							AutoIncrement: true,
 						},
 					},
 					Indexes: []*config.Index{
@@ -815,7 +815,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
                       notNull: true
                       default: 123.45
                       primary: true
-                      increment: true
+                      autoIncrement: true
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -829,15 +829,15 @@ func Test_LoadConfig_Columns(t *testing.T) {
 					Name: "table_a",
 					Columns: []*config.Column{
 						{
-							Name:      "",
-							Type:      "float",
-							Order:     5,
-							Precision: 2,
-							Unsigned:  true,
-							NotNull:   true,
-							Default:   123.45,
-							Primary:   true,
-							Increment: true,
+							Name:          "",
+							Type:          "float",
+							Order:         5,
+							Precision:     2,
+							Unsigned:      true,
+							NotNull:       true,
+							Default:       123.45,
+							Primary:       true,
+							AutoIncrement: true,
 						},
 					},
 					Indexes: []*config.Index{
@@ -876,7 +876,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
                       notNull: true
                       default: 123.45
                       primary: true
-                      increment: true
+                      autoIncrement: true
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -890,15 +890,15 @@ func Test_LoadConfig_Columns(t *testing.T) {
 					Name: "table_a",
 					Columns: []*config.Column{
 						{
-							Name:      "col_1",
-							Type:      "",
-							Order:     5,
-							Precision: 2,
-							Unsigned:  true,
-							NotNull:   true,
-							Default:   123.45,
-							Primary:   true,
-							Increment: true,
+							Name:          "col_1",
+							Type:          "",
+							Order:         5,
+							Precision:     2,
+							Unsigned:      true,
+							NotNull:       true,
+							Default:       123.45,
+							Primary:       true,
+							AutoIncrement: true,
 						},
 					},
 					Indexes: []*config.Index{
@@ -937,7 +937,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
                       notNull: true
                       default: 123.45
                       primary: true
-                      increment: true
+                      autoIncrement: true
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -951,15 +951,15 @@ func Test_LoadConfig_Columns(t *testing.T) {
 					Name: "table_a",
 					Columns: []*config.Column{
 						{
-							Name:      "col_1",
-							Type:      "float",
-							Order:     0,
-							Precision: 2,
-							Unsigned:  true,
-							NotNull:   true,
-							Default:   123.45,
-							Primary:   true,
-							Increment: true,
+							Name:          "col_1",
+							Type:          "float",
+							Order:         0,
+							Precision:     2,
+							Unsigned:      true,
+							NotNull:       true,
+							Default:       123.45,
+							Primary:       true,
+							AutoIncrement: true,
 						},
 					},
 					Indexes: []*config.Index{
@@ -998,7 +998,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
                       notNull: true
                       default: 123.45
                       primary: true
-                      increment: true
+                      autoIncrement: true
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -1012,15 +1012,15 @@ func Test_LoadConfig_Columns(t *testing.T) {
 					Name: "table_a",
 					Columns: []*config.Column{
 						{
-							Name:      "col_1",
-							Type:      "float",
-							Order:     5,
-							Precision: 0,
-							Unsigned:  true,
-							NotNull:   true,
-							Default:   123.45,
-							Primary:   true,
-							Increment: true,
+							Name:          "col_1",
+							Type:          "float",
+							Order:         5,
+							Precision:     0,
+							Unsigned:      true,
+							NotNull:       true,
+							Default:       123.45,
+							Primary:       true,
+							AutoIncrement: true,
 						},
 					},
 					Indexes: []*config.Index{
@@ -1059,7 +1059,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
                       notNull: true
                       default: 123.45
                       primary: true
-                      increment: true
+                      autoIncrement: true
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -1073,15 +1073,15 @@ func Test_LoadConfig_Columns(t *testing.T) {
 					Name: "table_a",
 					Columns: []*config.Column{
 						{
-							Name:      "col_1",
-							Type:      "float",
-							Order:     5,
-							Precision: 2,
-							Unsigned:  false,
-							NotNull:   true,
-							Default:   123.45,
-							Primary:   true,
-							Increment: true,
+							Name:          "col_1",
+							Type:          "float",
+							Order:         5,
+							Precision:     2,
+							Unsigned:      false,
+							NotNull:       true,
+							Default:       123.45,
+							Primary:       true,
+							AutoIncrement: true,
 						},
 					},
 					Indexes: []*config.Index{
@@ -1120,7 +1120,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
                       unsigned: true
                       default: 123.45
                       primary: true
-                      increment: true
+                      autoIncrement: true
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -1134,15 +1134,15 @@ func Test_LoadConfig_Columns(t *testing.T) {
 					Name: "table_a",
 					Columns: []*config.Column{
 						{
-							Name:      "col_1",
-							Type:      "float",
-							Order:     5,
-							Precision: 2,
-							Unsigned:  true,
-							NotNull:   false,
-							Default:   123.45,
-							Primary:   true,
-							Increment: true,
+							Name:          "col_1",
+							Type:          "float",
+							Order:         5,
+							Precision:     2,
+							Unsigned:      true,
+							NotNull:       false,
+							Default:       123.45,
+							Primary:       true,
+							AutoIncrement: true,
 						},
 					},
 					Indexes: []*config.Index{
@@ -1181,7 +1181,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
                       unsigned: true
                       notNull: true
                       primary: true
-                      increment: true
+                      autoIncrement: true
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -1195,15 +1195,15 @@ func Test_LoadConfig_Columns(t *testing.T) {
 					Name: "table_a",
 					Columns: []*config.Column{
 						{
-							Name:      "col_1",
-							Type:      "float",
-							Order:     5,
-							Precision: 2,
-							Unsigned:  true,
-							NotNull:   true,
-							Default:   nil,
-							Primary:   true,
-							Increment: true,
+							Name:          "col_1",
+							Type:          "float",
+							Order:         5,
+							Precision:     2,
+							Unsigned:      true,
+							NotNull:       true,
+							Default:       nil,
+							Primary:       true,
+							AutoIncrement: true,
 						},
 					},
 					Indexes: []*config.Index{
@@ -1242,7 +1242,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
                       unsigned: true
                       notNull: true
                       default: 123.45
-                      increment: true
+                      autoIncrement: true
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -1256,15 +1256,15 @@ func Test_LoadConfig_Columns(t *testing.T) {
 					Name: "table_a",
 					Columns: []*config.Column{
 						{
-							Name:      "col_1",
-							Type:      "float",
-							Order:     5,
-							Precision: 2,
-							Unsigned:  true,
-							NotNull:   true,
-							Default:   123.45,
-							Primary:   false,
-							Increment: true,
+							Name:          "col_1",
+							Type:          "float",
+							Order:         5,
+							Precision:     2,
+							Unsigned:      true,
+							NotNull:       true,
+							Default:       123.45,
+							Primary:       false,
+							AutoIncrement: true,
 						},
 					},
 					Indexes: []*config.Index{
@@ -1284,7 +1284,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
 		},
 
 		{
-			name: "missing a increment of column in columns part",
+			name: "missing a autoIncrement of column in columns part",
 			yaml: []byte(`
                 driver: mysql
                 database:
@@ -1317,15 +1317,15 @@ func Test_LoadConfig_Columns(t *testing.T) {
 					Name: "table_a",
 					Columns: []*config.Column{
 						{
-							Name:      "col_1",
-							Type:      "float",
-							Order:     5,
-							Precision: 2,
-							Unsigned:  true,
-							NotNull:   true,
-							Default:   123.45,
-							Primary:   true,
-							Increment: false,
+							Name:          "col_1",
+							Type:          "float",
+							Order:         5,
+							Precision:     2,
+							Unsigned:      true,
+							NotNull:       true,
+							Default:       123.45,
+							Primary:       true,
+							AutoIncrement: false,
 						},
 					},
 					Indexes: []*config.Index{
@@ -1396,7 +1396,7 @@ func Test_LoadConfig_Indexes(t *testing.T) {
                       notNull: true
                       default: 123.45
                       primary: true
-                      increment: true
+                      autoIncrement: true
                   indexes:
                     - uniq: true
                       columns:
@@ -1409,15 +1409,15 @@ func Test_LoadConfig_Indexes(t *testing.T) {
 					Name: "table_a",
 					Columns: []*config.Column{
 						{
-							Name:      "col_1",
-							Type:      "float",
-							Order:     5,
-							Precision: 2,
-							Unsigned:  true,
-							NotNull:   true,
-							Default:   123.45,
-							Primary:   true,
-							Increment: true,
+							Name:          "col_1",
+							Type:          "float",
+							Order:         5,
+							Precision:     2,
+							Unsigned:      true,
+							NotNull:       true,
+							Default:       123.45,
+							Primary:       true,
+							AutoIncrement: true,
 						},
 					},
 					Indexes: []*config.Index{
@@ -1457,7 +1457,7 @@ func Test_LoadConfig_Indexes(t *testing.T) {
                       notNull: true
                       default: 123.45
                       primary: true
-                      increment: true
+                      autoIncrement: true
                   indexes:
                     - name: index_1_on_table_a
                       columns:
@@ -1470,15 +1470,15 @@ func Test_LoadConfig_Indexes(t *testing.T) {
 					Name: "table_a",
 					Columns: []*config.Column{
 						{
-							Name:      "col_1",
-							Type:      "float",
-							Order:     5,
-							Precision: 2,
-							Unsigned:  true,
-							NotNull:   true,
-							Default:   123.45,
-							Primary:   true,
-							Increment: true,
+							Name:          "col_1",
+							Type:          "float",
+							Order:         5,
+							Precision:     2,
+							Unsigned:      true,
+							NotNull:       true,
+							Default:       123.45,
+							Primary:       true,
+							AutoIncrement: true,
 						},
 					},
 					Indexes: []*config.Index{
@@ -1518,7 +1518,7 @@ func Test_LoadConfig_Indexes(t *testing.T) {
                       notNull: true
                       default: 123.45
                       primary: true
-                      increment: true
+                      autoIncrement: true
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -1530,15 +1530,15 @@ func Test_LoadConfig_Indexes(t *testing.T) {
 					Name: "table_a",
 					Columns: []*config.Column{
 						{
-							Name:      "col_1",
-							Type:      "float",
-							Order:     5,
-							Precision: 2,
-							Unsigned:  true,
-							NotNull:   true,
-							Default:   123.45,
-							Primary:   true,
-							Increment: true,
+							Name:          "col_1",
+							Type:          "float",
+							Order:         5,
+							Precision:     2,
+							Unsigned:      true,
+							NotNull:       true,
+							Default:       123.45,
+							Primary:       true,
+							AutoIncrement: true,
 						},
 					},
 					Indexes: []*config.Index{

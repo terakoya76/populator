@@ -162,7 +162,7 @@ func (db *MySQLClient) buildCreateTableStmtColumn(cfg *config.Column) string {
 		sb.WriteString(" UNSIGNED")
 	}
 
-	if utils.Contains(IncrementableDataType, cfg.Type) && cfg.Increment {
+	if utils.Contains(IncrementableDataType, cfg.Type) && cfg.AutoIncrement {
 		sb.WriteString(" AUTO_INCREMENT")
 	}
 
@@ -344,7 +344,7 @@ func (db *MySQLClient) generateInsertRow(cfg *config.Table) func() string {
 }
 
 func (db *MySQLClient) generateValue(cfg *config.Column) interface{} {
-	if cfg.Increment {
+	if cfg.AutoIncrement {
 		return 0
 	}
 
