@@ -11,7 +11,7 @@ tables:
     - name: col_1
       type: bigint
       primary: true
-      increment: true
+      autoIncrement: true
     - name: col_2
       type: varchar
       order: 50
@@ -30,12 +30,16 @@ tables:
     - name: col_1
       type: bigint
       primary: true
-      increment: true
+      autoIncrement: true
     - name: col_2
       type: datetime
     - name: col_3
       type: varchar
       order: 20
+      values:
+        - "NotYet"
+        - "Doing"
+        - "Complete"
     - name: col_4
       type: blob
       order: 65535

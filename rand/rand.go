@@ -38,7 +38,8 @@ func init() {
 	}
 }
 
-func genInt(min, max int64) int64 {
+// GenInt generates int64 between given range
+func GenInt(min, max int64) int64 {
 	return rand.Int63n(max-min) + min
 }
 
@@ -65,37 +66,37 @@ func Boolean() bool {
 
 // TinyInt returns random tinyint
 func TinyInt() int8 {
-	return int8(genInt(-128, 127))
+	return int8(GenInt(-128, 127))
 }
 
 // UnsignedTinyInt returns random unsigned tinyint
 func UnsignedTinyInt() uint8 {
-	return uint8(genInt(0, 255))
+	return uint8(GenInt(0, 255))
 }
 
 // SmallInt returns random smallint
 func SmallInt() int16 {
-	return int16(genInt(-32768, 32767))
+	return int16(GenInt(-32768, 32767))
 }
 
 // UnsignedSmallInt returns random unsigned smallint
 func UnsignedSmallInt() uint16 {
-	return uint16(genInt(0, 65535))
+	return uint16(GenInt(0, 65535))
 }
 
 // MediumInt returns random mediumint
 func MediumInt() int32 {
-	return int32(genInt(-8388608, 8388607))
+	return int32(GenInt(-8388608, 8388607))
 }
 
 // UnsignedMediumInt returns random unsigned mediumint
 func UnsignedMediumInt() uint32 {
-	return uint32(genInt(0, 16777215))
+	return uint32(GenInt(0, 16777215))
 }
 
 // Int returns random int
 func Int() int32 {
-	return int32(genInt(-2147483648, 2147483647))
+	return int32(GenInt(-2147483648, 2147483647))
 }
 
 // UnsignedInt returns random unsigned int
@@ -106,9 +107,9 @@ func UnsignedInt() uint32 {
 // BigInt returns random bigint
 func BigInt() int64 {
 	if Boolean() {
-		return genInt(0, 9223372036854775807)
+		return GenInt(0, 9223372036854775807)
 	}
-	return genInt(-9223372036854775808, -1)
+	return GenInt(-9223372036854775808, -1)
 }
 
 // UnsignedBigInt returns random unsigned bigint
@@ -202,7 +203,7 @@ func Bit(order int) string {
 	var sb strings.Builder
 	sb.WriteString("b'")
 	for i := 0; i < order; i++ {
-		sb.WriteString(fmt.Sprint(genInt(0, 1)))
+		sb.WriteString(fmt.Sprint(GenInt(0, 1)))
 	}
 	sb.WriteString("'")
 	return sb.String()
@@ -259,12 +260,12 @@ func Time() string {
 
 // Year4 returns random year(4)
 func Year4() string {
-	return fmt.Sprint(genInt(1901, 2155))
+	return fmt.Sprint(GenInt(1901, 2155))
 }
 
 // Year2 returns random year(2)
 func Year2() string {
-	return fmt.Sprint(genInt(0, 99))
+	return fmt.Sprint(GenInt(0, 99))
 }
 
 // Char returns random char with the given length

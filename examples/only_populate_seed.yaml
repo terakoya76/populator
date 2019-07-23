@@ -13,7 +13,7 @@ tables:
       order: 20
       precision:
       primary: true
-      increment: true
+      autoIncrement: true
     - name: col_2
       type: varchar
       order: 50
@@ -39,7 +39,7 @@ tables:
       order: 20
       precision:
       primary: true
-      increment: true
+      autoIncrement: true
     - name: col_2
       type: datetime
       order:
@@ -48,6 +48,10 @@ tables:
       type: varchar
       order: 20
       precision:
+      values:
+        - "NotYet"
+        - "Doing"
+        - "Complete"
     - name: col_4
       type: blob
       order: 65535

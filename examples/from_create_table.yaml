@@ -16,7 +16,8 @@ tables:
       notNUll: true
       default:
       primary: true
-      increment: true
+      autoIncrement: true
+      values:
     - name: col_2
       type: varchar
       order: 50
@@ -25,7 +26,8 @@ tables:
       notNUll: false
       default:
       primary: false
-      increment: false
+      autoIncrement: false
+      values:
     - name: col_3
       type: boolean
       order:
@@ -34,7 +36,8 @@ tables:
       notNUll: false
       default:
       primary: false
-      increment: false
+      autoIncrement: false
+      values:
     - name: col_4
       type: float
       order: 5
@@ -43,7 +46,8 @@ tables:
       notNUll: true
       default:
       primary: false
-      increment: false
+      autoIncrement: false
+      values:
     - name: col_5
       type: decimal
       order: 5
@@ -52,7 +56,8 @@ tables:
       notNUll: true
       default:
       primary: false
-      increment: false
+      autoIncrement: false
+      values:
   indexes:
     - name: index_1_on_table_a
       uniq: true
@@ -75,7 +80,8 @@ tables:
       notNUll: true
       default:
       primary: true
-      increment: true
+      autoIncrement: true
+      values:
     - name: col_2
       type: datetime
       order:
@@ -84,7 +90,8 @@ tables:
       notNUll: false
       default:
       primary: false
-      increment: false
+      autoIncrement: false
+      values:
     - name: col_3
       type: varchar
       order: 20
@@ -93,7 +100,11 @@ tables:
       notNUll: true
       default: ""
       primary: false
-      increment: false
+      autoIncrement: false
+      values:
+        - "NotYet"
+        - "Doing"
+        - "Complete"
     - name: col_4
       type: blob
       order: 65535
@@ -102,7 +113,8 @@ tables:
       notNUll: false
       default:
       primary: false
-      increment: false
+      autoIncrement: false
+      values:
   indexes:
     - name: index_1_on_table_b
       uniq: true
