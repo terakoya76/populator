@@ -15,7 +15,6 @@ tables:
       autoIncrement: true
     - name: col_2
       type: varchar
-      order: 50
       notNull: true
     - name: col_3
       type: boolean
@@ -23,8 +22,6 @@ tables:
       notNull: true
     - name: col_4
       type: float
-      order: 5
-      precision: 3
       notNull: true
     - name: col_5
       type: decimal
@@ -50,7 +47,6 @@ tables:
       notNull: true
     - name: col_3
       type: varchar
-      order: 20
       default: ""
       values:
         - "NotYet"

@@ -30,12 +30,23 @@ type config struct {
 	Tables   []*Table
 }
 
-func (c *config) IsValid() error {
-	if err := c.Driver.isValid(); err != nil {
+// CompleteWithDefault complete config value which is not required but configurable
+func (c *config) CompleteWithDefault() {
+	c.Driver.CompleteWithDefault()
+	c.Database.CompleteWithDefault()
+	for _, table := range c.Tables {
+		table.CompleteWithDefault()
+	}
+
+}
+
+// Validate validates config
+func (c *config) Validate() error {
+	if err := c.Driver.Validate(); err != nil {
 		return err
 	}
 
-	if err := c.Database.isValid(); err != nil {
+	if err := c.Database.Validate(); err != nil {
 		return err
 	}
 
@@ -43,7 +54,7 @@ func (c *config) IsValid() error {
 		return errors.New("tables definition is required")
 	}
 	for _, table := range c.Tables {
-		if err := table.isValid(); err != nil {
+		if err := table.Validate(); err != nil {
 			return err
 		}
 	}
@@ -51,15 +62,15 @@ func (c *config) IsValid() error {
 	return nil
 }
 
-// CompleteWithDefault complete config value which is not required but configurable
-func (c *config) CompleteWithDefault() {
-	c.Database.completeWithDefault()
-}
-
 // Driver represents database driver
 type Driver string
 
-func (d Driver) isValid() error {
+// CompleteWithDefault complete config value which is not required but configurable
+func (d *Driver) CompleteWithDefault() {
+}
+
+// Validate validates database driver config
+func (d Driver) Validate() error {
 	// TODO: adopt more
 	switch d {
 	case "mysql":
@@ -78,7 +89,8 @@ type Database struct {
 	Name     string
 }
 
-func (db *Database) isValid() error {
+// Validate validates database config
+func (db *Database) Validate() error {
 	if db == nil {
 		return errors.New("database connection information is required")
 	}
@@ -94,51 +106,12 @@ func (db *Database) isValid() error {
 	return nil
 }
 
-func (db *Database) completeWithDefault() {
+// CompleteWithDefault complete config value which is not required but configurable
+func (db *Database) CompleteWithDefault() {
 	if db.Host == "" {
 		db.Host = "127.0.0.1"
 	}
 	if db.Port == 0 {
 		db.Port = 3306
 	}
-}
-
-// Table represents a single table schema
-type Table struct {
-	Name    string
-	Columns []*Column
-	Indexes []*Index
-	Charset string
-	Record  int
-}
-
-func (t *Table) isValid() error {
-	if t == nil {
-		return errors.New("table definition is invalid")
-	}
-	if t.Name == "" {
-		return errors.New("table name is required")
-	}
-	return nil
-}
-
-// Column represents a single column schema
-type Column struct {
-	Name          string
-	Type          string
-	Order         int
-	Precision     int
-	Unsigned      bool
-	NotNull       bool
-	Default       interface{}
-	Primary       bool
-	AutoIncrement bool
-	Values        []interface{}
-}
-
-// Index represents a single index schema
-type Index struct {
-	Name    string
-	Uniq    bool
-	Columns []string
 }

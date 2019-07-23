@@ -151,11 +151,11 @@ func (db *MySQLClient) buildCreateTableStmtColumn(cfg *config.Column) string {
 	)
 
 	if utils.Contains(OrderRequiredDataTypes, cfg.Type) {
-		sb.WriteString(db.BuildOrderDesc(cfg))
+		sb.WriteString(fmt.Sprintf("(%d)", cfg.Order))
 	}
 
 	if utils.Contains(PrecisionRequiredDataTypes, cfg.Type) {
-		sb.WriteString(db.BuildPrecisionDesc(cfg))
+		sb.WriteString(fmt.Sprintf("(%d, %d)", cfg.Order, cfg.Precision))
 	}
 
 	if utils.Contains(UnsignedableDataType, cfg.Type) && cfg.Unsigned {
@@ -179,42 +179,6 @@ func (db *MySQLClient) buildCreateTableStmtColumn(cfg *config.Column) string {
 	}
 
 	return sb.String()
-}
-
-// BuildOrderDesc generate a order desc part of sql for MySQL
-func (db *MySQLClient) BuildOrderDesc(cfg *config.Column) string {
-	if cfg.Order > 0 {
-		return fmt.Sprintf("(%d)", cfg.Order)
-	}
-	switch cfg.Type {
-	case "tinyint":
-		return fmt.Sprintf("(%d)", 4)
-	case "smallint":
-		return fmt.Sprintf("(%d)", 6)
-	case "mediumint":
-		return fmt.Sprintf("(%d)", 9)
-	case "int":
-		return fmt.Sprintf("(%d)", 11)
-	case "bigint":
-		return fmt.Sprintf("(%d)", 20)
-	case "bit":
-		return fmt.Sprintf("(%d)", 1)
-	default:
-		return fmt.Sprintf("(%d)", cfg.Order)
-	}
-}
-
-// BuildPrecisionDesc generate a order/precision desc part of sql for MySQL
-func (db *MySQLClient) BuildPrecisionDesc(cfg *config.Column) string {
-	if cfg.Order > 0 && cfg.Precision > 0 {
-		return fmt.Sprintf("(%d, %d)", cfg.Order, cfg.Precision)
-	}
-	switch cfg.Type {
-	case "decimal":
-		return fmt.Sprintf("(%d, %d)", 10, 0)
-	default:
-		return fmt.Sprintf("(%d, %d)", cfg.Order, cfg.Precision)
-	}
 }
 
 // BuildDefaultDesc generate a default desc part of sql for MySQL

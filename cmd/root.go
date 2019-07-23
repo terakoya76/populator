@@ -129,5 +129,5 @@ func LoadConfig() error {
 		return err
 	}
 
-	return config.Instance.IsValid()
+	return config.Instance.Validate()
 }
