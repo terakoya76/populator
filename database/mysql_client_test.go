@@ -93,7 +93,7 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
 					{
 						Name:          "col_1",
 						Type:          "tinyint",
-						Order:         0,
+						Order:         2,
 						Precision:     0,
 						Unsigned:      false,
 						NotNull:       false,
@@ -107,19 +107,19 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
 				Charset: "utf8mb4",
 				Record:  100000,
 			},
-			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 tinyint(4)\n) DEFAULT CHARSET=utf8mb4",
+			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 tinyint(2)\n) DEFAULT CHARSET=utf8mb4",
 			err: nil,
 		},
 
 		{
-			name: "smallint(6)",
+			name: "smallint",
 			cfg: &config.Table{
 				Name: "table_a",
 				Columns: []*config.Column{
 					{
 						Name:          "col_1",
 						Type:          "smallint",
-						Order:         0,
+						Order:         4,
 						Precision:     0,
 						Unsigned:      false,
 						NotNull:       false,
@@ -133,19 +133,19 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
 				Charset: "utf8mb4",
 				Record:  100000,
 			},
-			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 smallint(6)\n) DEFAULT CHARSET=utf8mb4",
+			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 smallint(4)\n) DEFAULT CHARSET=utf8mb4",
 			err: nil,
 		},
 
 		{
-			name: "mediumint(9)",
+			name: "mediumint",
 			cfg: &config.Table{
 				Name: "table_a",
 				Columns: []*config.Column{
 					{
 						Name:          "col_1",
 						Type:          "mediumint",
-						Order:         0,
+						Order:         6,
 						Precision:     0,
 						Unsigned:      false,
 						NotNull:       false,
@@ -159,19 +159,19 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
 				Charset: "utf8mb4",
 				Record:  100000,
 			},
-			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 mediumint(9)\n) DEFAULT CHARSET=utf8mb4",
+			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 mediumint(6)\n) DEFAULT CHARSET=utf8mb4",
 			err: nil,
 		},
 
 		{
-			name: "int(11)",
+			name: "int",
 			cfg: &config.Table{
 				Name: "table_a",
 				Columns: []*config.Column{
 					{
 						Name:          "col_1",
 						Type:          "int",
-						Order:         0,
+						Order:         9,
 						Precision:     0,
 						Unsigned:      false,
 						NotNull:       false,
@@ -185,19 +185,19 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
 				Charset: "utf8mb4",
 				Record:  100000,
 			},
-			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 int(11)\n) DEFAULT CHARSET=utf8mb4",
+			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 int(9)\n) DEFAULT CHARSET=utf8mb4",
 			err: nil,
 		},
 
 		{
-			name: "bigint(20)",
+			name: "bigint",
 			cfg: &config.Table{
 				Name: "table_a",
 				Columns: []*config.Column{
 					{
 						Name:          "col_1",
 						Type:          "bigint",
-						Order:         0,
+						Order:         11,
 						Precision:     0,
 						Unsigned:      false,
 						NotNull:       false,
@@ -211,7 +211,7 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
 				Charset: "utf8mb4",
 				Record:  100000,
 			},
-			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 bigint(20)\n) DEFAULT CHARSET=utf8mb4",
+			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 bigint(11)\n) DEFAULT CHARSET=utf8mb4",
 			err: nil,
 		},
 
@@ -223,7 +223,7 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
 					{
 						Name:          "col_1",
 						Type:          "bigint",
-						Order:         0,
+						Order:         20,
 						Precision:     0,
 						Unsigned:      true,
 						NotNull:       true,
@@ -244,39 +244,13 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
 		},
 
 		{
-			name: "decimal(10,0)",
+			name: "decimal",
 			cfg: &config.Table{
 				Name: "table_a",
 				Columns: []*config.Column{
 					{
 						Name:          "col_1",
 						Type:          "decimal",
-						Order:         0,
-						Precision:     0,
-						Unsigned:      false,
-						NotNull:       false,
-						Default:       nil,
-						Primary:       false,
-						AutoIncrement: false,
-						Values:        nilValues,
-					},
-				},
-				Indexes: []*config.Index{},
-				Charset: "utf8mb4",
-				Record:  100000,
-			},
-			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 decimal(10, 0)\n) DEFAULT CHARSET=utf8mb4",
-			err: nil,
-		},
-
-		{
-			name: "float(5,2)",
-			cfg: &config.Table{
-				Name: "table_a",
-				Columns: []*config.Column{
-					{
-						Name:          "col_1",
-						Type:          "float",
 						Order:         5,
 						Precision:     2,
 						Unsigned:      false,
@@ -291,12 +265,38 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
 				Charset: "utf8mb4",
 				Record:  100000,
 			},
-			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 float(5, 2)\n) DEFAULT CHARSET=utf8mb4",
+			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 decimal(5, 2)\n) DEFAULT CHARSET=utf8mb4",
 			err: nil,
 		},
 
 		{
-			name: "real(5,2)",
+			name: "float",
+			cfg: &config.Table{
+				Name: "table_a",
+				Columns: []*config.Column{
+					{
+						Name:          "col_1",
+						Type:          "float",
+						Order:         10,
+						Precision:     0,
+						Unsigned:      false,
+						NotNull:       false,
+						Default:       nil,
+						Primary:       false,
+						AutoIncrement: false,
+						Values:        nilValues,
+					},
+				},
+				Indexes: []*config.Index{},
+				Charset: "utf8mb4",
+				Record:  100000,
+			},
+			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 float(10, 0)\n) DEFAULT CHARSET=utf8mb4",
+			err: nil,
+		},
+
+		{
+			name: "real",
 			cfg: &config.Table{
 				Name: "table_a",
 				Columns: []*config.Column{
@@ -322,7 +322,7 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
 		},
 
 		{
-			name: "double(5,2)",
+			name: "double",
 			cfg: &config.Table{
 				Name: "table_a",
 				Columns: []*config.Column{
@@ -376,14 +376,14 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
 		},
 
 		{
-			name: "bit(1)",
+			name: "bit",
 			cfg: &config.Table{
 				Name: "table_a",
 				Columns: []*config.Column{
 					{
 						Name:          "col_1",
 						Type:          "bit",
-						Order:         0,
+						Order:         8,
 						Precision:     0,
 						Unsigned:      false,
 						NotNull:       false,
@@ -397,7 +397,7 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
 				Charset: "utf8mb4",
 				Record:  100000,
 			},
-			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 bit(1)\n) DEFAULT CHARSET=utf8mb4",
+			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 bit(8)\n) DEFAULT CHARSET=utf8mb4",
 			err: nil,
 		},
 
@@ -409,7 +409,7 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
 					{
 						Name:          "col_1",
 						Type:          "bit",
-						Order:         0,
+						Order:         1,
 						Precision:     0,
 						Unsigned:      true,
 						NotNull:       true,
@@ -751,7 +751,7 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
 					{
 						Name:          "col_1",
 						Type:          "blob",
-						Order:         65535,
+						Order:         100,
 						Precision:     0,
 						Unsigned:      false,
 						NotNull:       false,
@@ -765,7 +765,7 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
 				Charset: "utf8mb4",
 				Record:  100000,
 			},
-			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 blob(65535)\n) DEFAULT CHARSET=utf8mb4",
+			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 blob(100)\n) DEFAULT CHARSET=utf8mb4",
 			err: nil,
 		},
 
@@ -777,7 +777,7 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
 					{
 						Name:          "col_1",
 						Type:          "text",
-						Order:         65535,
+						Order:         100,
 						Precision:     0,
 						Unsigned:      false,
 						NotNull:       false,
@@ -791,7 +791,7 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
 				Charset: "utf8mb4",
 				Record:  100000,
 			},
-			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 text(65535)\n) DEFAULT CHARSET=utf8mb4",
+			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 text(100)\n) DEFAULT CHARSET=utf8mb4",
 			err: nil,
 		},
 
@@ -933,346 +933,6 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
 		sql := client.BuildCreateTableStmt(c.cfg)
 		if !assert.Equal(t, c.sql, sql) {
 			t.Errorf("case: %s is failed, expected: %+v, actual: %+v\n", c.name, c.sql, sql)
-		}
-	}
-}
-
-func Test_BuildOrderDesc(t *testing.T) {
-	cases := []struct {
-		name   string
-		cfg    *config.Column
-		result string
-		err    error
-	}{
-		{
-			name: "tinyint default",
-			cfg: &config.Column{
-				Name:          "col_1",
-				Type:          "tinyint",
-				Order:         0,
-				Precision:     0,
-				Unsigned:      false,
-				NotNull:       false,
-				Default:       nil,
-				Primary:       false,
-				AutoIncrement: false,
-			},
-			result: "(4)",
-			err:    nil,
-		},
-
-		{
-			name: "tinyint",
-			cfg: &config.Column{
-				Name:          "col_1",
-				Type:          "tinyint",
-				Order:         2,
-				Precision:     0,
-				Unsigned:      false,
-				NotNull:       false,
-				Default:       nil,
-				Primary:       false,
-				AutoIncrement: false,
-			},
-			result: "(2)",
-			err:    nil,
-		},
-
-		{
-			name: "smallint default",
-			cfg: &config.Column{
-				Name:          "col_1",
-				Type:          "smallint",
-				Order:         0,
-				Precision:     0,
-				Unsigned:      false,
-				NotNull:       false,
-				Default:       nil,
-				Primary:       false,
-				AutoIncrement: false,
-			},
-			result: "(6)",
-			err:    nil,
-		},
-
-		{
-			name: "smallint",
-			cfg: &config.Column{
-				Name:          "col_1",
-				Type:          "smallint",
-				Order:         4,
-				Precision:     0,
-				Unsigned:      false,
-				NotNull:       false,
-				Default:       nil,
-				Primary:       false,
-				AutoIncrement: false,
-			},
-			result: "(4)",
-			err:    nil,
-		},
-
-		{
-			name: "mediumint default",
-			cfg: &config.Column{
-				Name:          "col_1",
-				Type:          "mediumint",
-				Order:         0,
-				Precision:     0,
-				Unsigned:      false,
-				NotNull:       false,
-				Default:       nil,
-				Primary:       false,
-				AutoIncrement: false,
-			},
-			result: "(9)",
-			err:    nil,
-		},
-
-		{
-			name: "mediumint",
-			cfg: &config.Column{
-				Name:          "col_1",
-				Type:          "mediumint",
-				Order:         6,
-				Precision:     0,
-				Unsigned:      false,
-				NotNull:       false,
-				Default:       nil,
-				Primary:       false,
-				AutoIncrement: false,
-			},
-			result: "(6)",
-			err:    nil,
-		},
-
-		{
-			name: "int default",
-			cfg: &config.Column{
-				Name:          "col_1",
-				Type:          "int",
-				Order:         0,
-				Precision:     0,
-				Unsigned:      false,
-				NotNull:       false,
-				Default:       nil,
-				Primary:       false,
-				AutoIncrement: false,
-			},
-			result: "(11)",
-			err:    nil,
-		},
-
-		{
-			name: "int",
-			cfg: &config.Column{
-				Name:          "col_1",
-				Type:          "int",
-				Order:         9,
-				Precision:     0,
-				Unsigned:      false,
-				NotNull:       false,
-				Default:       nil,
-				Primary:       false,
-				AutoIncrement: false,
-			},
-			result: "(9)",
-			err:    nil,
-		},
-
-		{
-			name: "bigint default",
-			cfg: &config.Column{
-				Name:          "col_1",
-				Type:          "bigint",
-				Order:         0,
-				Precision:     0,
-				Unsigned:      false,
-				NotNull:       false,
-				Default:       nil,
-				Primary:       false,
-				AutoIncrement: false,
-			},
-			result: "(20)",
-			err:    nil,
-		},
-
-		{
-			name: "bigint",
-			cfg: &config.Column{
-				Name:          "col_1",
-				Type:          "bigint",
-				Order:         11,
-				Precision:     0,
-				Unsigned:      false,
-				NotNull:       false,
-				Default:       nil,
-				Primary:       false,
-				AutoIncrement: false,
-			},
-			result: "(11)",
-			err:    nil,
-		},
-
-		{
-			name: "bit default",
-			cfg: &config.Column{
-				Name:          "col_1",
-				Type:          "bit",
-				Order:         0,
-				Precision:     0,
-				Unsigned:      false,
-				NotNull:       false,
-				Default:       nil,
-				Primary:       false,
-				AutoIncrement: false,
-			},
-			result: "(1)",
-			err:    nil,
-		},
-
-		{
-			name: "bit",
-			cfg: &config.Column{
-				Name:          "col_1",
-				Type:          "bit",
-				Order:         8,
-				Precision:     0,
-				Unsigned:      false,
-				NotNull:       false,
-				Default:       nil,
-				Primary:       false,
-				AutoIncrement: false,
-			},
-			result: "(8)",
-			err:    nil,
-		},
-
-		{
-			name: "other default",
-			cfg: &config.Column{
-				Name:          "col_1",
-				Type:          "varchar",
-				Order:         0,
-				Precision:     0,
-				Unsigned:      false,
-				NotNull:       false,
-				Default:       nil,
-				Primary:       false,
-				AutoIncrement: false,
-			},
-			result: "(0)",
-			err:    nil,
-		},
-
-		{
-			name: "other",
-			cfg: &config.Column{
-				Name:          "col_1",
-				Type:          "varchar",
-				Order:         8,
-				Precision:     0,
-				Unsigned:      false,
-				NotNull:       false,
-				Default:       nil,
-				Primary:       false,
-				AutoIncrement: false,
-			},
-			result: "(8)",
-			err:    nil,
-		},
-	}
-
-	for _, c := range cases {
-		client := database.MySQLClient{}
-		result := client.BuildOrderDesc(c.cfg)
-		if !assert.Equal(t, c.result, result) {
-			t.Errorf("case: %s is failed, expected: %+v, actual: %+v\n", c.name, c.result, result)
-		}
-	}
-}
-
-func Test_BuildPrecisionDesc(t *testing.T) {
-	cases := []struct {
-		name   string
-		cfg    *config.Column
-		result string
-		err    error
-	}{
-		{
-			name: "decimal default",
-			cfg: &config.Column{
-				Name:          "col_1",
-				Type:          "decimal",
-				Order:         0,
-				Precision:     0,
-				Unsigned:      false,
-				NotNull:       false,
-				Default:       nil,
-				Primary:       false,
-				AutoIncrement: false,
-			},
-			result: "(10, 0)",
-			err:    nil,
-		},
-
-		{
-			name: "decimal",
-			cfg: &config.Column{
-				Name:          "col_1",
-				Type:          "decimal",
-				Order:         6,
-				Precision:     3,
-				Unsigned:      false,
-				NotNull:       false,
-				Default:       nil,
-				Primary:       false,
-				AutoIncrement: false,
-			},
-			result: "(6, 3)",
-			err:    nil,
-		},
-
-		{
-			name: "other default",
-			cfg: &config.Column{
-				Name:          "col_1",
-				Type:          "float",
-				Order:         0,
-				Precision:     0,
-				Unsigned:      false,
-				NotNull:       false,
-				Default:       nil,
-				Primary:       false,
-				AutoIncrement: false,
-			},
-			result: "(0, 0)",
-			err:    nil,
-		},
-
-		{
-			name: "other",
-			cfg: &config.Column{
-				Name:          "col_1",
-				Type:          "float",
-				Order:         6,
-				Precision:     3,
-				Unsigned:      false,
-				NotNull:       false,
-				Default:       nil,
-				Primary:       false,
-				AutoIncrement: false,
-			},
-			result: "(6, 3)",
-			err:    nil,
-		},
-	}
-
-	for _, c := range cases {
-		client := database.MySQLClient{}
-		result := client.BuildPrecisionDesc(c.cfg)
-		if !assert.Equal(t, c.result, result) {
-			t.Errorf("case: %s is failed, expected: %+v, actual: %+v\n", c.name, c.result, result)
 		}
 	}
 }
