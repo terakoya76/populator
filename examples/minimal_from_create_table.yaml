@@ -12,7 +12,7 @@ tables:
       type: bigint
       unsigned: true
       primary: true
-      increment: true
+      autoIncrement: true
     - name: col_2
       type: varchar
       order: 50
@@ -44,7 +44,7 @@ tables:
       type: int
       unsigned: true
       primary: true
-      increment: true
+      autoIncrement: true
     - name: col_2
       type: datetime
       notNull: true
@@ -53,7 +53,7 @@ tables:
       order: 20
       default: ""
       primary: false
-      increment: false
+      autoIncrement: false
     - name: col_4
       type: blob
       order: 65535
