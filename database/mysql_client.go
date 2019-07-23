@@ -348,6 +348,12 @@ func (db *MySQLClient) generateValue(cfg *config.Column) interface{} {
 		return 0
 	}
 
+	length := int64(len(cfg.Values))
+	if length > 0 {
+		idx := rand.GenInt(0, length-1)
+		return cfg.Values[idx]
+	}
+
 	switch cfg.Type {
 	case "boolean":
 		return rand.Boolean()
@@ -464,6 +470,6 @@ func (db *MySQLClient) generateValue(cfg *config.Column) interface{} {
 		return rand.LongText(5000)
 
 	default:
-		return rand.Boolean()
+		return 0
 	}
 }

@@ -438,6 +438,9 @@ func Test_LoadConfig_Tables(t *testing.T) {
                       default: 123.45
                       primary: true
                       autoIncrement: true
+                      values:
+                        - 123.45
+                        - 678.90
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -460,6 +463,10 @@ func Test_LoadConfig_Tables(t *testing.T) {
 							Default:       123.45,
 							Primary:       true,
 							AutoIncrement: true,
+							Values: []interface{}{
+								123.45,
+								678.90,
+							},
 						},
 					},
 					Indexes: []*config.Index{
@@ -514,6 +521,9 @@ func Test_LoadConfig_Tables(t *testing.T) {
                       default: 123.45
                       primary: true
                       autoIncrement: true
+                      values:
+                        - 123.45
+                        - 678.90
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -536,6 +546,10 @@ func Test_LoadConfig_Tables(t *testing.T) {
 							Default:       123.45,
 							Primary:       true,
 							AutoIncrement: true,
+							Values: []interface{}{
+								123.45,
+								678.90,
+							},
 						},
 					},
 					Indexes: []*config.Index{
@@ -616,6 +630,9 @@ func Test_LoadConfig_Tables(t *testing.T) {
                       default: 123.45
                       primary: true
                       autoIncrement: true
+                      values:
+                        - 123.45
+                        - 678.90
                   charset: utf8mb4
                   record: 100000
             `),
@@ -633,6 +650,10 @@ func Test_LoadConfig_Tables(t *testing.T) {
 							Default:       123.45,
 							Primary:       true,
 							AutoIncrement: true,
+							Values: []interface{}{
+								123.45,
+								678.90,
+							},
 						},
 					},
 					Indexes: nilIndexes,
@@ -665,6 +686,9 @@ func Test_LoadConfig_Tables(t *testing.T) {
                       default: 123.45
                       primary: true
                       autoIncrement: true
+                      values:
+                        - 123.45
+                        - 678.90
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -686,6 +710,10 @@ func Test_LoadConfig_Tables(t *testing.T) {
 							Default:       123.45,
 							Primary:       true,
 							AutoIncrement: true,
+							Values: []interface{}{
+								123.45,
+								678.90,
+							},
 						},
 					},
 					Indexes: []*config.Index{
@@ -726,6 +754,9 @@ func Test_LoadConfig_Tables(t *testing.T) {
                       default: 123.45
                       primary: true
                       autoIncrement: true
+                      values:
+                        - 123.45
+                        - 678.90
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -747,6 +778,10 @@ func Test_LoadConfig_Tables(t *testing.T) {
 							Default:       123.45,
 							Primary:       true,
 							AutoIncrement: true,
+							Values: []interface{}{
+								123.45,
+								678.90,
+							},
 						},
 					},
 					Indexes: []*config.Index{
@@ -789,6 +824,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
 func Test_LoadConfig_Columns(t *testing.T) {
 	viper.SetConfigType("yaml")
 
+	var nilValues []interface{}
 	cases := []struct {
 		name   string
 		yaml   []byte
@@ -816,6 +852,9 @@ func Test_LoadConfig_Columns(t *testing.T) {
                       default: 123.45
                       primary: true
                       autoIncrement: true
+                      values:
+                        - 123.45
+                        - 678.90
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -838,6 +877,10 @@ func Test_LoadConfig_Columns(t *testing.T) {
 							Default:       123.45,
 							Primary:       true,
 							AutoIncrement: true,
+							Values: []interface{}{
+								123.45,
+								678.90,
+							},
 						},
 					},
 					Indexes: []*config.Index{
@@ -877,6 +920,9 @@ func Test_LoadConfig_Columns(t *testing.T) {
                       default: 123.45
                       primary: true
                       autoIncrement: true
+                      values:
+                        - 123.45
+                        - 678.90
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -899,6 +945,10 @@ func Test_LoadConfig_Columns(t *testing.T) {
 							Default:       123.45,
 							Primary:       true,
 							AutoIncrement: true,
+							Values: []interface{}{
+								123.45,
+								678.90,
+							},
 						},
 					},
 					Indexes: []*config.Index{
@@ -938,6 +988,9 @@ func Test_LoadConfig_Columns(t *testing.T) {
                       default: 123.45
                       primary: true
                       autoIncrement: true
+                      values:
+                        - 123.45
+                        - 678.90
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -960,6 +1013,10 @@ func Test_LoadConfig_Columns(t *testing.T) {
 							Default:       123.45,
 							Primary:       true,
 							AutoIncrement: true,
+							Values: []interface{}{
+								123.45,
+								678.90,
+							},
 						},
 					},
 					Indexes: []*config.Index{
@@ -999,6 +1056,9 @@ func Test_LoadConfig_Columns(t *testing.T) {
                       default: 123.45
                       primary: true
                       autoIncrement: true
+                      values:
+                        - 123.45
+                        - 678.90
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -1021,6 +1081,10 @@ func Test_LoadConfig_Columns(t *testing.T) {
 							Default:       123.45,
 							Primary:       true,
 							AutoIncrement: true,
+							Values: []interface{}{
+								123.45,
+								678.90,
+							},
 						},
 					},
 					Indexes: []*config.Index{
@@ -1060,6 +1124,9 @@ func Test_LoadConfig_Columns(t *testing.T) {
                       default: 123.45
                       primary: true
                       autoIncrement: true
+                      values:
+                        - 123.45
+                        - 678.90
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -1082,6 +1149,10 @@ func Test_LoadConfig_Columns(t *testing.T) {
 							Default:       123.45,
 							Primary:       true,
 							AutoIncrement: true,
+							Values: []interface{}{
+								123.45,
+								678.90,
+							},
 						},
 					},
 					Indexes: []*config.Index{
@@ -1121,6 +1192,9 @@ func Test_LoadConfig_Columns(t *testing.T) {
                       default: 123.45
                       primary: true
                       autoIncrement: true
+                      values:
+                        - 123.45
+                        - 678.90
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -1143,6 +1217,10 @@ func Test_LoadConfig_Columns(t *testing.T) {
 							Default:       123.45,
 							Primary:       true,
 							AutoIncrement: true,
+							Values: []interface{}{
+								123.45,
+								678.90,
+							},
 						},
 					},
 					Indexes: []*config.Index{
@@ -1182,6 +1260,9 @@ func Test_LoadConfig_Columns(t *testing.T) {
                       notNull: true
                       primary: true
                       autoIncrement: true
+                      values:
+                        - 123.45
+                        - 678.90
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -1204,6 +1285,10 @@ func Test_LoadConfig_Columns(t *testing.T) {
 							Default:       nil,
 							Primary:       true,
 							AutoIncrement: true,
+							Values: []interface{}{
+								123.45,
+								678.90,
+							},
 						},
 					},
 					Indexes: []*config.Index{
@@ -1243,6 +1328,9 @@ func Test_LoadConfig_Columns(t *testing.T) {
                       notNull: true
                       default: 123.45
                       autoIncrement: true
+                      values:
+                        - 123.45
+                        - 678.90
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -1265,6 +1353,10 @@ func Test_LoadConfig_Columns(t *testing.T) {
 							Default:       123.45,
 							Primary:       false,
 							AutoIncrement: true,
+							Values: []interface{}{
+								123.45,
+								678.90,
+							},
 						},
 					},
 					Indexes: []*config.Index{
@@ -1304,6 +1396,9 @@ func Test_LoadConfig_Columns(t *testing.T) {
                       notNull: true
                       default: 123.45
                       primary: true
+                      values:
+                        - 123.45
+                        - 678.90
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -1326,6 +1421,73 @@ func Test_LoadConfig_Columns(t *testing.T) {
 							Default:       123.45,
 							Primary:       true,
 							AutoIncrement: false,
+							Values: []interface{}{
+								123.45,
+								678.90,
+							},
+						},
+					},
+					Indexes: []*config.Index{
+						{
+							Name: "index_1_on_table_a",
+							Uniq: true,
+							Columns: []string{
+								"col_1",
+							},
+						},
+					},
+					Charset: "utf8mb4",
+					Record:  100000,
+				},
+			},
+			err: nil,
+		},
+
+		{
+			name: "missing a values of column in columns part",
+			yaml: []byte(`
+                driver: mysql
+                database:
+                  host: 127.0.0.1
+                  port: 3306
+                  user: root
+                  password: root
+                  name: testdb
+                tables:
+                - name: table_a
+                  columns:
+                    - name: col_1
+                      type: float
+                      order: 5
+                      precision: 2
+                      unsigned: true
+                      notNull: true
+                      default: 123.45
+                      primary: true
+                      autoIncrement: true
+                  indexes:
+                    - name: index_1_on_table_a
+                      uniq: true
+                      columns:
+                        - col_1
+                  charset: utf8mb4
+                  record: 100000
+            `),
+			config: []*config.Table{
+				{
+					Name: "table_a",
+					Columns: []*config.Column{
+						{
+							Name:          "col_1",
+							Type:          "float",
+							Order:         5,
+							Precision:     2,
+							Unsigned:      true,
+							NotNull:       true,
+							Default:       123.45,
+							Primary:       true,
+							AutoIncrement: true,
+							Values:        nilValues,
 						},
 					},
 					Indexes: []*config.Index{
@@ -1397,6 +1559,9 @@ func Test_LoadConfig_Indexes(t *testing.T) {
                       default: 123.45
                       primary: true
                       autoIncrement: true
+                      values:
+                        - 123.45
+                        - 678.90
                   indexes:
                     - uniq: true
                       columns:
@@ -1418,6 +1583,10 @@ func Test_LoadConfig_Indexes(t *testing.T) {
 							Default:       123.45,
 							Primary:       true,
 							AutoIncrement: true,
+							Values: []interface{}{
+								123.45,
+								678.90,
+							},
 						},
 					},
 					Indexes: []*config.Index{
@@ -1458,6 +1627,9 @@ func Test_LoadConfig_Indexes(t *testing.T) {
                       default: 123.45
                       primary: true
                       autoIncrement: true
+                      values:
+                        - 123.45
+                        - 678.90
                   indexes:
                     - name: index_1_on_table_a
                       columns:
@@ -1479,6 +1651,10 @@ func Test_LoadConfig_Indexes(t *testing.T) {
 							Default:       123.45,
 							Primary:       true,
 							AutoIncrement: true,
+							Values: []interface{}{
+								123.45,
+								678.90,
+							},
 						},
 					},
 					Indexes: []*config.Index{
@@ -1519,6 +1695,9 @@ func Test_LoadConfig_Indexes(t *testing.T) {
                       default: 123.45
                       primary: true
                       autoIncrement: true
+                      values:
+                        - 123.45
+                        - 678.90
                   indexes:
                     - name: index_1_on_table_a
                       uniq: true
@@ -1539,6 +1718,10 @@ func Test_LoadConfig_Indexes(t *testing.T) {
 							Default:       123.45,
 							Primary:       true,
 							AutoIncrement: true,
+							Values: []interface{}{
+								123.45,
+								678.90,
+							},
 						},
 					},
 					Indexes: []*config.Index{

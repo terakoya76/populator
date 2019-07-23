@@ -133,6 +133,7 @@ type Column struct {
 	Default       interface{}
 	Primary       bool
 	AutoIncrement bool
+	Values        []interface{}
 }
 
 // Index represents a single index schema

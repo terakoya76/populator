@@ -52,8 +52,10 @@ tables:
       type: varchar
       order: 20
       default: ""
-      primary: false
-      autoIncrement: false
+      values:
+        - "NotYet"
+        - "Doing"
+        - "Complete"
     - name: col_4
       type: blob
       order: 65535

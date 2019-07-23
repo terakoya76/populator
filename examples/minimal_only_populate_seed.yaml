@@ -36,6 +36,10 @@ tables:
     - name: col_3
       type: varchar
       order: 20
+      values:
+        - "NotYet"
+        - "Doing"
+        - "Complete"
     - name: col_4
       type: blob
       order: 65535
