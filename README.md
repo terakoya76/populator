@@ -16,13 +16,82 @@ $ go get github.com/terakoya76/populator
 ```
 
 ## How to use
-You need to prepare config file, then run below command.
+You need to prepare config file, config file is like below.
+
+```yaml
+driver: mysql
+database:
+  host: 127.0.0.1
+  user: root
+  password: root
+  name: testdb
+  port: 3306
+tables:
+- name: table_a
+  columns:
+    - name: col_1
+      type: bigint
+    - name: col_2
+      type: varchar
+  charset: utf8mb4
+  record: 100000
+```
+
+Then, run this command.
 
 ```shell
 $ populator -c ./path/to/configfile.yaml
 ```
 
-### Config
+Everything is done.
+
+```shell
+mysql> use testdb;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++------------------+
+| Tables_in_testdb |
++------------------+
+| table_a          |
++------------------+
+1 rows in set (0.01 sec)
+
+mysql> show create table table_a;
++---------+-----------------------------------------------------------------------------------------------------------------------------------------+
+| Table   | Create Table                                                                                                                            |
++---------+-----------------------------------------------------------------------------------------------------------------------------------------+
+| table_a | CREATE TABLE `table_a` (
+  `col_1` bigint(20) DEFAULT NULL,
+  `col_2` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 |
++---------+-----------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select count(*) from table_a;
++----------+
+| count(*) |
++----------+
+|   100000 |
++----------+
+1 row in set (0.03 sec)
+
+mysql> select * from table_a limit 5;
++----------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| col_1                | col_2                                                                                                                                                                                                                                                           |
++----------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|  7889812248084406655 | RmYktDtHZczbJeuxpKcHCwVfLnrTHgKcOrJVOwmVwLwwlTFVKGxOQvcBbPKQplHnUJtWzxYphwWxydtBQzRdUhbEJxyurXQCCgzmEWKdRLbWqLsZXapbfiugWMCbXzXwkIKciRASZSEmRUccIeUGOHoFRcMZDIDtFSNnqyWxuCxgYjpFkVwxGDQnqiXZeArHNDfPmgzcbXDjqzTvpfFtXtDJZYludhfmoaEYliAafbEKNXKltmqEVZwaBfrECuk |
+|  7149465096876260652 | YThJJGJhZroiXcGOsxTMDKQFnJWOaLDwiYDQuhmQXvpvKHFPoAOFIFRFAIGvIivwoGJIvSvHdipBoPhRyegrvxGfGQeJqIpZScoiKDsBTLnbvjjytQvaPwqCiMRcekKJrkjdbrELhCnPpzcwUOWgMLfVHhElLpOfzPeEJGDbiuAHkuVJNwdUILSMaMFXBzJKFTDjixkhpkBTSaPYjrbypAEVfZWqXJrUVBJzptjjFUbTWRjDJlwqCGQTbzGziwP |
+|  2666746673038440181 | IiHvgrTezldsYKTLJOObfVhTMosVUJpTOlvgyoxOjnilJOxaRiUbHylMZABduWEBOfausQRxqjFnsJvYuGWoRiHDkCuwvytHIpJKcoAEHridFPZbrwKdPoFKMslDxPAZgwRmKSTYEXCzZMqYXawXustnPJyoulDPInlebKtJWxHEmffOuBlxfharCDxxMObaZaRELuvFWUihAoBZGQDvglOBihSQgkpIlrKYZrwrrQIkZjnOBhqFUcdNEpJopwb |
+|  2153189013947154756 | tUmRasqhpHGFyKQWoLpAorIdvLuRDnQsVMnVYSCccNdqjGUeLEQHpmIamunxXOTQUqmTMzPwMxdoNiUfJWomLNaTKDHgkzgfVhCPQhYRszoUjQIsmSlAHtjsvrTybXXwZQJhxdaRZcKiedaNDWwdhkBwZFCUnaWHFvosbnBCiXfvdJzNZIAKYqbNFNhTdPhcClGPySDEvYyGcZJvRPnMfChoQYsRbFLiJJUZRsiGPojKCWdwrdvVMQvVuBXQWAc |
+| -6885074001682187751 | QOiVkxndzVbQbxtITxWvSWNWQYppdvlfoirzvBbWnLjPMwRQceJQdJqsRoucehDvaPRIUYBLilwayRpgoWcMFYnNMLSAmQcEWUFXPelWctrZNiMLWmxWJTmbftXjUETNsizPnCwAySzNTOfiSxhkjcAkcwGMFJXFPgeMEsCbmPlhduuDLewZwxdWwkDGCjOoBCGkuXsNAkWKWYDMxaMmaEVHYnnYbXfmdrXFdYWQhPeZZuLEydesWZRWdAmfjEq |
++----------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+5 rows in set (0.01 sec)
+```
+
+## Config
 This is full type of config file. You can add tables, columns, indexes as many as you want.
 
 ```yaml
@@ -65,7 +134,7 @@ tables:
   record: 100000
 ```
 
-#### Driver
+### Driver
 Choose rdb driver for database you want to populate.
 
 ```
@@ -76,7 +145,7 @@ Currently only supports below RDBMS
 
 - MySQL
 
-#### Database
+### Database
 ```yaml
 database:
   host: 127.0.0.1
@@ -86,7 +155,7 @@ database:
   port: 3306
 ```
 
-#### Tables
+### Tables
 If the table w/ designated name is not existed, this tool create table firstly. This is executed by `CREATE TABLE IF NOT EXIST` statment, so charset is required.
 
 Record is a number that how many records you want to insert to this table.
@@ -124,7 +193,7 @@ tables:
   record: 100000
 ```
 
-#### Columns
+### Columns
 Column represents what kind of columns should be held by the table. This only works when table is not existed.
 
 If you want to enable option like unsigned, notNull and so on, you need to set true flag. If non-support option is set to true like varchar w/ unsigned, that option is just ignored.
@@ -164,7 +233,7 @@ Also we support concrete value constraint by values. From below declaration, col
         - "NO"
 ```
 
-#### Indexes
+### Indexes
 Index represents what kind of indexes should be held by the table. This only works when table is not existed.
 
 ```yaml

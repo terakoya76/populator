@@ -121,7 +121,6 @@ tables:
       columns:
         - col_2
     - name: index_2_on_table_b
-      uniq: true
       columns:
         - col_3
   charset: utf8mb4
