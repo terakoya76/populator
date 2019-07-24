@@ -60,8 +60,7 @@ tables:
     - uniq: true
       columns:
         - col_2
-    - uniq: true
-      columns:
+    - columns:
         - col_3
   charset: utf8mb4
   record: 50000
