@@ -117,6 +117,7 @@ tables:
       values:
   indexes:
     - name: index_1_on_table_a
+      primary: false
       uniq: true
       columns:
         - col_2
@@ -170,6 +171,7 @@ Index represents what kind of indexes should be held by the table. This only wor
 ```yaml
   indexes:
     - name: index_1_on_table_a
+      primary: false
       uniq: true
       columns:
         - col_2

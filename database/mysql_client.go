@@ -125,7 +125,7 @@ func (db *MySQLClient) BuildCreateTableStmt(cfg *config.Table) string {
 
 	var regIdx []string
 	for _, index := range cfg.Indexes {
-		regIdx = append(regIdx, db.buildCreateTableStmtIndex(index))
+		regIdx = append(regIdx, db.BuildIndexDesc(index))
 	}
 	sb.WriteString(strings.Join(regIdx, ",\n"))
 
@@ -191,9 +191,12 @@ func (db *MySQLClient) BuildDefaultDesc(cfg *config.Column) string {
 	}
 }
 
-func (db *MySQLClient) buildCreateTableStmtIndex(cfg *config.Index) string {
+// BuildIndexDesc generate an index desc part of sql for MySQL
+func (db *MySQLClient) BuildIndexDesc(cfg *config.Index) string {
 	var sb strings.Builder
-	if cfg.Uniq {
+	if cfg.Primary {
+		sb.WriteString("    PRIMARY KEY ")
+	} else if cfg.Uniq {
 		sb.WriteString("    UNIQUE ")
 	} else {
 		sb.WriteString("    INDEX ")

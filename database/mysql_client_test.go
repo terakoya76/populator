@@ -988,6 +988,110 @@ func Test_BuildDefaultDesc(t *testing.T) {
 	}
 }
 
+func Test_BuildIndexDesc(t *testing.T) {
+	cases := []struct {
+		name   string
+		cfg    *config.Index
+		result string
+		err    error
+	}{
+		{
+			name: "normal",
+			cfg: &config.Index{
+				Name:    "idx_1",
+				Primary: false,
+				Uniq:    false,
+				Columns: []string{
+					"col_1",
+				},
+			},
+			result: "    INDEX idx_1 (col_1)",
+			err:    nil,
+		},
+
+		{
+			name: "covering",
+			cfg: &config.Index{
+				Name:    "idx_1",
+				Primary: false,
+				Uniq:    false,
+				Columns: []string{
+					"col_1",
+					"col_2",
+				},
+			},
+			result: "    INDEX idx_1 (col_1, col_2)",
+			err:    nil,
+		},
+
+		{
+			name: "primary key",
+			cfg: &config.Index{
+				Name:    "",
+				Primary: true,
+				Uniq:    false,
+				Columns: []string{
+					"col_1",
+				},
+			},
+			result: "    PRIMARY KEY  (col_1)",
+			err:    nil,
+		},
+
+		{
+			name: "covering primary key",
+			cfg: &config.Index{
+				Name:    "",
+				Primary: true,
+				Uniq:    false,
+				Columns: []string{
+					"col_1",
+					"col_2",
+				},
+			},
+			result: "    PRIMARY KEY  (col_1, col_2)",
+			err:    nil,
+		},
+
+		{
+			name: "uniq key",
+			cfg: &config.Index{
+				Name:    "idx_1",
+				Primary: false,
+				Uniq:    true,
+				Columns: []string{
+					"col_1",
+				},
+			},
+			result: "    UNIQUE idx_1 (col_1)",
+			err:    nil,
+		},
+
+		{
+			name: "covering uniq key",
+			cfg: &config.Index{
+				Name:    "idx_1",
+				Primary: false,
+				Uniq:    true,
+				Columns: []string{
+					"col_1",
+					"col_2",
+				},
+			},
+			result: "    UNIQUE idx_1 (col_1, col_2)",
+			err:    nil,
+		},
+	}
+
+	for _, c := range cases {
+		client := database.MySQLClient{}
+		result := client.BuildIndexDesc(c.cfg)
+		if !assert.Equal(t, c.result, result) {
+			t.Errorf("case: %s is failed, expected: %+v, actual: %+v\n", c.name, c.result, result)
+		}
+	}
+}
+
 func Test_BuildDropTableStmt(t *testing.T) {
 	cases := []struct {
 		name string

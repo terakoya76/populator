@@ -48,6 +48,16 @@ func (t *Table) Validate() error {
 	if t.Name == "" {
 		return errors.New("table name is required")
 	}
+	for _, column := range t.Columns {
+		if err := column.Validate(); err != nil {
+			return err
+		}
+	}
+	for _, index := range t.Indexes {
+		if err := index.Validate(); err != nil {
+			return err
+		}
+	}
 	return nil
 }
 
@@ -136,6 +146,7 @@ func (c *Column) Validate() error {
 // Index represents a single index schema
 type Index struct {
 	Name    string
+	Primary bool
 	Uniq    bool
 	Columns []string
 }
@@ -146,5 +157,14 @@ func (i *Index) CompleteWithDefault() {
 
 // Validate validates index config
 func (i *Index) Validate() error {
+	if i.Primary {
+		if i.Name != "" {
+			return errors.New("primary key index cannot be named")
+		}
+		if i.Uniq {
+			return errors.New("both of primary key and unique key cannot be enabled")
+
+		}
+	}
 	return nil
 }
