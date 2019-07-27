@@ -84,6 +84,8 @@ func init() {
 
 	rootCmd.PersistentFlags().BoolVarP(&reCreate, "recreate", "r", false, "drop tables then create them from scratch")
 
+	rootCmd.PersistentFlags().BoolVarP(&database.Verbose, "verbose", "v", false, "show executed sql")
+
 	rootCmd.DisableSuggestions = true
 }
 

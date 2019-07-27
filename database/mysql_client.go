@@ -30,6 +30,9 @@ import (
 	"github.com/terakoya76/populator/utils"
 )
 
+// Verbose displays sql from cobra
+var Verbose bool
+
 // UnsignedableDataType accepts unsigned options
 var UnsignedableDataType = []interface{}{
 	"tinyint",
@@ -97,6 +100,10 @@ type MySQLClient struct {
 // CreateTable does CreateTable statement for MySQL
 func (db *MySQLClient) CreateTable(cfg *config.Table) error {
 	sql := db.BuildCreateTableStmt(cfg)
+	if Verbose {
+		fmt.Println(sql)
+	}
+
 	if _, err := db.Exec(sql); err != nil {
 		return err
 	}
@@ -136,7 +143,6 @@ func (db *MySQLClient) BuildCreateTableStmt(cfg *config.Table) string {
 		),
 	)
 
-	fmt.Println(sb.String())
 	return sb.String()
 }
 
@@ -221,7 +227,9 @@ func (db *MySQLClient) BuildIndexDesc(cfg *config.Index) string {
 // DropTable does DropTable statement for MySQL
 func (db *MySQLClient) DropTable(cfg *config.Table) error {
 	sql := db.BuildDropTableStmt(cfg)
-	fmt.Println(sql)
+	if Verbose {
+		fmt.Println(sql)
+	}
 
 	if _, err := db.Exec(sql); err != nil {
 		return err
@@ -239,29 +247,35 @@ func (db *MySQLClient) BuildDropTableStmt(cfg *config.Table) string {
 
 // Populate does Insert statement for MySQL
 func (db *MySQLClient) Populate(cfg *config.Table) error {
-	err := utils.BatchTimes(
-		db.buildInsertStmt(cfg),
-		db.generateInsertRow(cfg),
-		cfg.Record,
-		100,
-	)
-	if err != nil {
-		return err
+	batchSize := 100
+
+	i := 0
+	for i < cfg.Record {
+		rows := make([]string, batchSize)
+		for j := 0; j < batchSize; j++ {
+			rows[j] = db.generateInsertRow(cfg)
+		}
+
+		if err := db.execInsertStmt(cfg, rows); err != nil {
+			return err
+		}
+
+		i += batchSize
 	}
 
 	return nil
 }
 
-func (db *MySQLClient) buildInsertStmt(cfg *config.Table) func([]string) error {
-	return func(values []string) error {
-		sql := db.BuildInsertStmt(cfg, values)
+func (db *MySQLClient) execInsertStmt(cfg *config.Table, values []string) error {
+	sql := db.BuildInsertStmt(cfg, values)
+	if Verbose {
 		fmt.Println(sql)
-
-		if _, err := db.Exec(sql); err != nil {
-			return err
-		}
-		return nil
 	}
+
+	if _, err := db.Exec(sql); err != nil {
+		return err
+	}
+	return nil
 }
 
 // BuildInsertStmt generate insert_stmt sql for MySQL
@@ -287,27 +301,25 @@ func (db *MySQLClient) BuildInsertStmt(cfg *config.Table, values []string) strin
 	return sb.String()
 }
 
-func (db *MySQLClient) generateInsertRow(cfg *config.Table) func() string {
-	return func() string {
-		// generate insert values
-		var reg []string
-		for _, column := range cfg.Columns {
-			value := db.generateValue(column)
-			switch value := value.(type) {
-			case string:
-				reg = append(reg, fmt.Sprintf("   '%v'", value))
-			case float32, float64:
-				var sb strings.Builder
-				sb.WriteString("   %.")
-				sb.WriteString(fmt.Sprintf("%d", column.Precision))
-				sb.WriteString("f")
-				reg = append(reg, fmt.Sprintf(sb.String(), value))
-			default:
-				reg = append(reg, fmt.Sprintf("   %v", value))
-			}
+func (db *MySQLClient) generateInsertRow(cfg *config.Table) string {
+	// generate insert values
+	var reg []string
+	for _, column := range cfg.Columns {
+		value := db.generateValue(column)
+		switch value := value.(type) {
+		case string:
+			reg = append(reg, fmt.Sprintf("   '%v'", value))
+		case float32, float64:
+			var sb strings.Builder
+			sb.WriteString("   %.")
+			sb.WriteString(fmt.Sprintf("%d", column.Precision))
+			sb.WriteString("f")
+			reg = append(reg, fmt.Sprintf(sb.String(), value))
+		default:
+			reg = append(reg, fmt.Sprintf("   %v", value))
 		}
-		return strings.Join(reg, ",\n")
 	}
+	return strings.Join(reg, ",\n")
 }
 
 func (db *MySQLClient) generateValue(cfg *config.Column) interface{} {
