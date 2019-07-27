@@ -20,6 +20,7 @@ package database
 import (
 	"fmt"
 	"strings"
+	"sync"
 
 	// MySQL driver
 	_ "github.com/go-sql-driver/mysql"
@@ -247,22 +248,36 @@ func (db *MySQLClient) BuildDropTableStmt(cfg *config.Table) string {
 
 // Populate does Insert statement for MySQL
 func (db *MySQLClient) Populate(cfg *config.Table) error {
-	batchSize := 100
+	var wg sync.WaitGroup
+	batchSize := 200
+	otherConnections := 10
 
 	i := 0
 	for i < cfg.Record {
-		rows := make([]string, batchSize)
-		for j := 0; j < batchSize; j++ {
-			rows[j] = db.generateInsertRow(cfg)
-		}
+		// Not try to exec query
+		// it would return "Error 1040: Too many connections"
+		stats := db.Stats()
+		fmt.Printf("%+v\n", stats)
+		for stats.OpenConnections+otherConnections < MaxConnections {
+			wg.Add(1)
 
-		if err := db.execInsertStmt(cfg, rows); err != nil {
-			return err
-		}
+			rows := make([]string, batchSize)
+			for j := 0; j < batchSize; j++ {
+				rows[j] = db.generateInsertRow(cfg)
+			}
 
-		i += batchSize
+			go func() {
+				if err := db.execInsertStmt(cfg, rows); err != nil {
+					fmt.Println(err)
+				}
+				wg.Done()
+			}()
+
+			i += batchSize
+		}
 	}
 
+	wg.Wait()
 	return nil
 }
 
