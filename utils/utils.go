@@ -26,20 +26,3 @@ func Contains(s []interface{}, e interface{}) bool {
 	}
 	return false
 }
-
-// BatchTimes executes a given func w/ batch iteration until reaching the given times
-func BatchTimes(batchFn func([]string) error, valueFn func() string, times int, batchSize int) error {
-	slice := make([]string, times)
-
-	for i := 0; i < times; i += batchSize {
-		for j := 0; j < batchSize; j++ {
-			row := valueFn()
-			slice[i+j] = row
-		}
-		if err := batchFn(slice[i : i+batchSize]); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}

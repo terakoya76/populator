@@ -267,16 +267,82 @@ When you want to use covering index, you can describe like below.
 There're sample config files, you can try it.
 
 when you haven't setup the database or tables yet
+
 ```shell
 $ populator -c ./examples/from_create_table.yaml
 ```
 
 when you've already setup the database and tables
+
 ```shell
 $ populator -c ./examples/only_populate_seed.yaml
 ```
 
 when you want to re-create table schema w/ given declarations
+
 ```shell
 $ populator -rc ./examples/from_create_table.yaml
+```
+
+## Tips
+For populating Database w/ a large amount of seed data, you can change some parameters. Here's some examples.
+
+### Error 1040: Too many connections
+When populator returns below log, you might improve situation by changing max_connections.
+
+```sql
+-- current config
+mysql> show variables like "%max_connections%";
++-----------------+-------+
+| Variable_name   | Value |
++-----------------+-------+
+| max_connections | 151   |
++-----------------+-------+
+1 row in set (5.39 sec)
+
+-- actual conenction
+mysql> select count(*) from information_schema.PROCESSLIST;
++----------+
+| count(*) |
++----------+
+|      152 |
++----------+
+1 row in set (0.12 sec)
+
+-- change config
+mysql> set global max_connections = 700;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select count(*) from information_schema.PROCESSLIST;
++----------+
+| count(*) |
++----------+
+|      697 |
++----------+
+1 row in set (0.02 sec)
+```
+
+### dial tcp 127.0.0.1:3306: socket: too many open files
+When populator returns below log, you might improve situation by changing ulimit.
+
+For MacOS
+```shell
+$ ulimit -n
+256
+
+$ ulimit -n 4800
+$ ulimit -n
+4800
+```
+
+For Linux
+```shell
+$ vi /etc/security/limits.conf
+* soft nofile 4800
+* hard nofile 4800
+
+<reboot>
+
+$ sudo ulimit -n
+4800
 ```

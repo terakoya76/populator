@@ -27,6 +27,9 @@ import (
 	"github.com/terakoya76/populator/config"
 )
 
+// MaxConnections holds max_connections var for memory use control
+var MaxConnections int
+
 // MySQLConnector is an implementation of DBConnector for MySQL
 type MySQLConnector struct{}
 
@@ -53,6 +56,12 @@ func (c *MySQLConnector) Connect(cfg *config.Database) (DBClient, error) {
 	db, err = sqlx.Connect("mysql", ci+cfg.Name)
 	if err != nil {
 		return nil, fmt.Errorf("failed to setup database %s on mysql: %+v", cfg.Name, err)
+	}
+
+	var _name string
+	err = db.QueryRow("show variables like \"%max_connections%\"").Scan(&_name, &MaxConnections)
+	if err != nil {
+		fmt.Println(err)
 	}
 
 	return &MySQLClient{db}, nil
