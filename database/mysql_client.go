@@ -257,7 +257,6 @@ func (db *MySQLClient) Populate(cfg *config.Table) error {
 		// Not try to exec query
 		// it would return "Error 1040: Too many connections"
 		stats := db.Stats()
-		fmt.Printf("%+v\n", stats)
 		for stats.OpenConnections+otherConnections < MaxConnections {
 			wg.Add(1)
 
