@@ -308,7 +308,7 @@ func Test_LoadConfig_Database(t *testing.T) {
 		},
 
 		{
-			name: "missing a password of database part in yaml",
+			name: "an empty password of database part in yaml is allowed",
 			yaml: []byte(`
                 driver: mysql
                 database:
@@ -337,7 +337,7 @@ func Test_LoadConfig_Database(t *testing.T) {
 				Password: "",
 				Name:     "testdb",
 			},
-			err: errors.New("database password is required"),
+			err: nil,
 		},
 
 		{
