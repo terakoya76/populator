@@ -97,3 +97,151 @@ func (db *Database) CompleteWithDefault() {
 		db.Port = 3306
 	}
 }
+
+// Table represents a single table schema
+type Table struct {
+	Name    string
+	Columns []*Column
+	Indexes []*Index
+	Charset string
+	Record  int
+}
+
+// CompleteWithDefault complete config value which is not required but configurable
+func (t *Table) CompleteWithDefault() {
+	for _, column := range t.Columns {
+		column.CompleteWithDefault()
+	}
+	for _, index := range t.Indexes {
+		index.CompleteWithDefault()
+	}
+}
+
+// Validate validates table config
+func (t *Table) Validate() error {
+	if t == nil {
+		return errors.New("table definition is invalid")
+	}
+	if t.Name == "" {
+		return errors.New("table name is required")
+	}
+	for _, column := range t.Columns {
+		if err := column.Validate(); err != nil {
+			return err
+		}
+	}
+	for _, index := range t.Indexes {
+		if err := index.Validate(); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// Column represents a single column schema
+type Column struct {
+	Name          string
+	Type          string
+	Order         int
+	Precision     int
+	Unsigned      bool
+	NotNull       bool
+	Default       interface{}
+	Primary       bool
+	AutoIncrement bool
+	Values        []interface{}
+}
+
+// CompleteWithDefault complete config value which is not required but configurable
+func (c *Column) CompleteWithDefault() {
+	if c.Order == 0 {
+		switch c.Type {
+		case "tinyint":
+			c.Order = 4
+		case "smallint":
+			c.Order = 6
+		case "mediumint":
+			c.Order = 9
+		case "int":
+			c.Order = 11
+		case "bigint":
+			c.Order = 20
+		case "bit":
+			c.Order = 1
+		case "blob":
+			// Unofficial Value
+			c.Order = 65535
+		case "text":
+			// Unofficial Value
+			c.Order = 65535
+		case "year":
+			// Unofficial Value
+			c.Order = 4
+		case "char":
+			// Unofficial Value
+			c.Order = 255
+		case "varchar":
+			// Unofficial Value
+			c.Order = 255
+		case "binary":
+			// Unofficial Value
+			c.Order = 255
+		case "varbinary":
+			// Unofficial Value
+			c.Order = 255
+		default:
+		}
+	}
+
+	if c.Order == 0 && c.Precision == 0 {
+		switch c.Type {
+		case "decimal":
+			c.Order = 10
+			c.Precision = 0
+		case "float":
+			// Unofficial Value
+			c.Order = 5
+			c.Precision = 2
+		case "real":
+			// Unofficial Value
+			c.Order = 5
+			c.Precision = 10
+		case "double":
+			// Unofficial Value
+			c.Order = 5
+			c.Precision = 10
+		default:
+		}
+	}
+}
+
+// Validate validates column config
+func (c *Column) Validate() error {
+	return nil
+}
+
+// Index represents a single index schema
+type Index struct {
+	Name    string
+	Primary bool
+	Uniq    bool
+	Columns []string
+}
+
+// CompleteWithDefault complete config value which is not required but configurable
+func (i *Index) CompleteWithDefault() {
+}
+
+// Validate validates index config
+func (i *Index) Validate() error {
+	if i.Primary {
+		if i.Name != "" {
+			return errors.New("primary key index cannot be named")
+		}
+		if i.Uniq {
+			return errors.New("both of primary key and unique key cannot be enabled")
+
+		}
+	}
+	return nil
+}
