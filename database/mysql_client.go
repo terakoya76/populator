@@ -249,15 +249,25 @@ func (db *MySQLClient) BuildDropTableStmt(cfg *config.Table) string {
 // Populate does Insert statement for MySQL
 func (db *MySQLClient) Populate(cfg *config.Table) error {
 	var wg sync.WaitGroup
+	otherConnections := 100
+
 	batchSize := 200
-	otherConnections := 10
+	if cfg.Record < batchSize {
+		batchSize = cfg.Record
+	}
 
 	i := 0
 	for i < cfg.Record {
 		// Not try to exec query
 		// it would return "Error 1040: Too many connections"
-		stats := db.Stats()
-		for stats.OpenConnections+otherConnections < MaxConnections {
+		var currentConnections int
+		err := db.QueryRow("select count(*) from information_schema.PROCESSLIST").Scan(&currentConnections)
+		if err != nil {
+			fmt.Println(err)
+			currentConnections = MaxConnections
+		}
+
+		if currentConnections+otherConnections < MaxConnections {
 			wg.Add(1)
 
 			rows := make([]string, batchSize)
