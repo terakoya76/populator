@@ -31,6 +31,52 @@ import (
 	"github.com/terakoya76/populator/utils"
 )
 
+// MaxConnections holds max_connections var for memory use control
+var MaxConnections int
+
+// MySQLClient is an implementation of DBClient for MySQL
+type MySQLClient struct {
+	*sqlx.DB
+}
+
+// SetupMySQLDB find_or_create database w/ given database name, then connect it
+func SetupMySQLDB(cfg *config.Database) error {
+	ci := buildConnectInfo(cfg)
+	db, err := sqlx.Open("mysql", ci)
+	if err != nil {
+		return fmt.Errorf("failed to setup database %s on mysql: %+v", cfg.Name, err)
+	}
+	defer db.Close()
+
+	_, err = db.Exec("CREATE DATABASE IF NOT EXISTS " + cfg.Name)
+	if err != nil {
+		return fmt.Errorf("failed to setup database %s on mysql: %+v", cfg.Name, err)
+	}
+	db.Close()
+	return nil
+}
+
+// BuildMySQLClient returns MySQLClient
+func BuildMySQLClient(cfg *config.Database) (*MySQLClient, error) {
+	ci := buildConnectInfo(cfg)
+	db, err := sqlx.Connect("mysql", ci+cfg.Name)
+	if err != nil {
+		return nil, fmt.Errorf("failed to setup database %s on mysql: %+v", cfg.Name, err)
+	}
+
+	var _name string
+	err = db.QueryRow("show variables like \"%max_connections%\"").Scan(&_name, &MaxConnections)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	return &MySQLClient{db}, nil
+}
+
+func buildConnectInfo(cfg *config.Database) string {
+	return cfg.User + ":" + cfg.Password + "@tcp(" + cfg.Host + ":" + fmt.Sprint(cfg.Port) + ")/"
+}
+
 // Verbose displays sql from cobra
 var Verbose bool
 
@@ -91,11 +137,6 @@ var ProhibitDefaultDataTypes = []interface{}{
 	"mediumtext",
 	"longblob",
 	"longtext",
-}
-
-// MySQLClient is an implementation of DBClient for MySQL
-type MySQLClient struct {
-	*sqlx.DB
 }
 
 // CreateTable does CreateTable statement for MySQL

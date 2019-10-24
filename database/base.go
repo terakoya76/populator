@@ -18,10 +18,9 @@ limitations under the License.
 package database
 
 import (
+	"errors"
 	"fmt"
 	"sync"
-
-	"github.com/spf13/viper"
 
 	"github.com/terakoya76/populator/config"
 )
@@ -53,15 +52,34 @@ func DB() DBClient {
 }
 
 func initialize() {
-	var c DBConnector
-	if viper.GetString("driver") == "mysql" {
-		c = NewMySQLConnector()
-	}
-
-	var err error
 	cfg := config.Instance
-	client, err = c.Connect(cfg.Database)
+	err := SetupDB(cfg.Database)
 	if err != nil {
 		fmt.Println(err)
+	}
+
+	client, err = BuildClient(cfg.Database)
+	if err != nil {
+		fmt.Println(err)
+	}
+}
+
+// SetupDB find_or_create database w/ given database name
+func SetupDB(cfg *config.Database) error {
+	switch cfg.Driver {
+	case "mysql":
+		return SetupMySQLDB(cfg)
+	default:
+		return errors.New("not supported database driver")
+	}
+}
+
+// BuildClient builds DBClient for abstraction
+func BuildClient(cfg *config.Database) (DBClient, error) {
+	switch cfg.Driver {
+	case "mysql":
+		return BuildMySQLClient(cfg)
+	default:
+		return nil, errors.New("not supported database driver")
 	}
 }
