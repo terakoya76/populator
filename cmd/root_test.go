@@ -29,119 +29,6 @@ import (
 	"github.com/terakoya76/populator/config"
 )
 
-func Test_LoadConfig_Driver(t *testing.T) {
-	viper.SetConfigType("yaml")
-
-	cases := []struct {
-		name   string
-		yaml   []byte
-		config interface{}
-		err    error
-	}{
-		{
-			name: "normal case",
-			yaml: []byte(`
-                driver: mysql
-                database:
-                  host: 127.0.0.1
-                  port: 3306
-                  user: root
-                  password: root
-                  name: testdb
-                tables:
-                - name: table_a
-                  columns:
-                    - name: col_1
-                      type: float
-                      order: 5
-                      precision: 2
-                  indexes:
-                    - name: index_1_on_table_a
-                      columns:
-                        - col_1
-                  charset: utf8mb4
-                  record: 100000
-            `),
-			config: config.Driver("mysql"),
-			err:    nil,
-		},
-
-		{
-			name: "non-supported driver",
-			yaml: []byte(`
-                driver: postgres
-                database:
-                  host: 127.0.0.1
-                  port: 3306
-                  user: root
-                  password: root
-                  name: testdb
-                tables:
-                - name: table_a
-                  columns:
-                    - name: col_1
-                      type: float
-                      order: 5
-                      precision: 2
-                  indexes:
-                    - name: index_1_on_table_a
-                      columns:
-                        - col_1
-                  charset: utf8mb4
-                  record: 100000
-            `),
-			config: config.Driver("postgres"),
-			err:    errors.New("database driver is invalid or non-supported"),
-		},
-
-		{
-			name: "missing driver in yaml",
-			yaml: []byte(`
-                database:
-                  host: 127.0.0.1
-                  port: 3306
-                  user: root
-                  password: root
-                  name: testdb
-                tables:
-                - name: table_a
-                  columns:
-                    - name: col_1
-                      type: float
-                      order: 5
-                      precision: 2
-                  indexes:
-                    - name: index_1_on_table_a
-                      columns:
-                        - col_1
-                  charset: utf8mb4
-                  record: 100000
-            `),
-			config: config.Driver(""),
-			err:    errors.New("database driver is invalid or non-supported"),
-		},
-	}
-
-	for _, c := range cases {
-		if err := viper.ReadConfig(bytes.NewBuffer(c.yaml)); err != nil {
-			t.Errorf("case: %s is failed, err: %s\n", c.name, err)
-		}
-
-		err := cmd.LoadConfig()
-		if !assert.Equal(t, c.err, err) {
-			t.Errorf("case: %s is failed, expected: %s, actual: %s\n", c.name, c.err, err)
-		}
-
-		cfg := config.Instance
-		if !assert.Equal(t, c.config, cfg.Driver) {
-			t.Errorf("case: %s is failed, expected: %+v, actual: %+v\n", c.name, c.config, cfg.Driver)
-		}
-
-		// reset global variable
-		config.Instance = nil
-	}
-}
-
 func Test_LoadConfig_Database(t *testing.T) {
 	viper.SetConfigType("yaml")
 
@@ -155,8 +42,8 @@ func Test_LoadConfig_Database(t *testing.T) {
 		{
 			name: "normal case",
 			yaml: []byte(`
-                driver: mysql
                 database:
+                  driver: mysql
                   host: 127.0.0.1
                   port: 3306
                   user: root
@@ -177,6 +64,7 @@ func Test_LoadConfig_Database(t *testing.T) {
                   record: 100000
             `),
 			config: &config.Database{
+				Driver:   "mysql",
 				Host:     "127.0.0.1",
 				Port:     3306,
 				User:     "root",
@@ -189,7 +77,6 @@ func Test_LoadConfig_Database(t *testing.T) {
 		{
 			name: "missing a whole database part in yaml",
 			yaml: []byte(`
-                driver: mysql
                 tables:
                 - name: table_a
                   columns:
@@ -209,10 +96,11 @@ func Test_LoadConfig_Database(t *testing.T) {
 		},
 
 		{
-			name: "missing a host of database part in yaml",
+			name: "missing a driver of database part in yaml",
 			yaml: []byte(`
                 driver: mysql
                 database:
+                  host: "127.0.0.1"
                   port: 3306
                   user: root
                   password: root
@@ -232,6 +120,76 @@ func Test_LoadConfig_Database(t *testing.T) {
                   record: 100000
             `),
 			config: &config.Database{
+				Driver:   "",
+				Host:     "127.0.0.1",
+				Port:     3306,
+				User:     "root",
+				Password: "root",
+				Name:     "testdb",
+			},
+			err: errors.New("database driver is invalid or non-supported"),
+		},
+
+		{
+			name: "an unsupported driver of database part in yaml",
+			yaml: []byte(`
+                database:
+                  driver: hoge
+                  host: "127.0.0.1"
+                  port: 3306
+                  user: root
+                  password: root
+                  name: testdb
+                tables:
+                - name: table_a
+                  columns:
+                    - name: col_1
+                      type: float
+                      order: 5
+                      precision: 2
+                  indexes:
+                    - name: index_1_on_table_a
+                      columns:
+                        - col_1
+                  charset: utf8mb4
+                  record: 100000
+            `),
+			config: &config.Database{
+				Driver:   "hoge",
+				Host:     "127.0.0.1",
+				Port:     3306,
+				User:     "root",
+				Password: "root",
+				Name:     "testdb",
+			},
+			err: errors.New("database driver is invalid or non-supported"),
+		},
+
+		{
+			name: "missing a host of database part in yaml",
+			yaml: []byte(`
+                database:
+                  driver: mysql
+                  port: 3306
+                  user: root
+                  password: root
+                  name: testdb
+                tables:
+                - name: table_a
+                  columns:
+                    - name: col_1
+                      type: float
+                      order: 5
+                      precision: 2
+                  indexes:
+                    - name: index_1_on_table_a
+                      columns:
+                        - col_1
+                  charset: utf8mb4
+                  record: 100000
+            `),
+			config: &config.Database{
+				Driver:   "mysql",
 				Host:     "",
 				Port:     3306,
 				User:     "root",
@@ -244,8 +202,8 @@ func Test_LoadConfig_Database(t *testing.T) {
 		{
 			name: "missing a port of database part in yaml",
 			yaml: []byte(`
-                driver: mysql
                 database:
+                  driver: mysql
                   host: "127.0.0.1"
                   user: root
                   password: root
@@ -265,6 +223,7 @@ func Test_LoadConfig_Database(t *testing.T) {
                   record: 100000
             `),
 			config: &config.Database{
+				Driver:   "mysql",
 				Host:     "127.0.0.1",
 				Port:     0,
 				User:     "root",
@@ -277,8 +236,8 @@ func Test_LoadConfig_Database(t *testing.T) {
 		{
 			name: "missing a user of database part in yaml",
 			yaml: []byte(`
-                driver: mysql
                 database:
+                  driver: mysql
                   host: 127.0.0.1
                   port: 3306
                   password: root
@@ -298,6 +257,7 @@ func Test_LoadConfig_Database(t *testing.T) {
                   record: 100000
             `),
 			config: &config.Database{
+				Driver:   "mysql",
 				Host:     "127.0.0.1",
 				Port:     3306,
 				User:     "",
@@ -310,8 +270,8 @@ func Test_LoadConfig_Database(t *testing.T) {
 		{
 			name: "an empty password of database part in yaml is allowed",
 			yaml: []byte(`
-                driver: mysql
                 database:
+                  driver: mysql
                   host: 127.0.0.1
                   port: 3306
                   user: root
@@ -331,6 +291,7 @@ func Test_LoadConfig_Database(t *testing.T) {
                   record: 100000
             `),
 			config: &config.Database{
+				Driver:   "mysql",
 				Host:     "127.0.0.1",
 				Port:     3306,
 				User:     "root",
@@ -343,8 +304,8 @@ func Test_LoadConfig_Database(t *testing.T) {
 		{
 			name: "missing a name of database part in yaml",
 			yaml: []byte(`
-                driver: mysql
                 database:
+                  driver: mysql
                   host: 127.0.0.1
                   port: 3306
                   user: root
@@ -364,6 +325,7 @@ func Test_LoadConfig_Database(t *testing.T) {
                   record: 100000
             `),
 			config: &config.Database{
+				Driver:   "mysql",
 				Host:     "127.0.0.1",
 				Port:     3306,
 				User:     "root",
@@ -409,8 +371,8 @@ func Test_LoadConfig_Tables(t *testing.T) {
 		{
 			name: "normal case",
 			yaml: []byte(`
-                driver: mysql
                 database:
+                  driver: mysql
                   host: 127.0.0.1
                   port: 3306
                   user: root
@@ -478,8 +440,8 @@ func Test_LoadConfig_Tables(t *testing.T) {
 		{
 			name: "missing a whole tables part in yaml",
 			yaml: []byte(`
-                driver: mysql
                 database:
+                  driver: mysql
                   host: 127.0.0.1
                   port: 3306
                   user: root
@@ -493,8 +455,8 @@ func Test_LoadConfig_Tables(t *testing.T) {
 		{
 			name: "missing a name of table part in yaml",
 			yaml: []byte(`
-                driver: mysql
                 database:
+                  driver: mysql
                   host: 127.0.0.1
                   port: 3306
                   user: root
@@ -561,8 +523,8 @@ func Test_LoadConfig_Tables(t *testing.T) {
 		{
 			name: "missing a columns of table part in yaml",
 			yaml: []byte(`
-                driver: mysql
                 database:
+                  driver: mysql
                   host: 127.0.0.1
                   port: 3306
                   user: root
@@ -601,8 +563,8 @@ func Test_LoadConfig_Tables(t *testing.T) {
 		{
 			name: "missing a indexes of table part in yaml",
 			yaml: []byte(`
-                driver: mysql
                 database:
+                  driver: mysql
                   host: 127.0.0.1
                   port: 3306
                   user: root
@@ -657,8 +619,8 @@ func Test_LoadConfig_Tables(t *testing.T) {
 		{
 			name: "missing a charset of table part in yaml",
 			yaml: []byte(`
-                driver: mysql
                 database:
+                  driver: mysql
                   host: 127.0.0.1
                   port: 3306
                   user: root
@@ -725,8 +687,8 @@ func Test_LoadConfig_Tables(t *testing.T) {
 		{
 			name: "missing a record of table part in yaml",
 			yaml: []byte(`
-                driver: mysql
                 database:
+                  driver: mysql
                   host: 127.0.0.1
                   port: 3306
                   user: root
@@ -824,8 +786,8 @@ func Test_LoadConfig_Columns(t *testing.T) {
 		{
 			name: "missing a name of column in Columns part",
 			yaml: []byte(`
-                driver: mysql
                 database:
+                  driver: mysql
                   host: 127.0.0.1
                   port: 3306
                   user: root
@@ -892,8 +854,8 @@ func Test_LoadConfig_Columns(t *testing.T) {
 		{
 			name: "missing a type of column in columns part",
 			yaml: []byte(`
-                driver: mysql
                 database:
+                  driver: mysql
                   host: 127.0.0.1
                   port: 3306
                   user: root
@@ -960,8 +922,8 @@ func Test_LoadConfig_Columns(t *testing.T) {
 		{
 			name: "missing a order of column in columns part",
 			yaml: []byte(`
-                driver: mysql
                 database:
+                  driver: mysql
                   host: 127.0.0.1
                   port: 3306
                   user: root
@@ -1028,8 +990,8 @@ func Test_LoadConfig_Columns(t *testing.T) {
 		{
 			name: "missing a precision of column in columns part",
 			yaml: []byte(`
-                driver: mysql
                 database:
+                  driver: mysql
                   host: 127.0.0.1
                   port: 3306
                   user: root
@@ -1096,8 +1058,8 @@ func Test_LoadConfig_Columns(t *testing.T) {
 		{
 			name: "missing a unsigned of column in columns part",
 			yaml: []byte(`
-                driver: mysql
                 database:
+                  driver: mysql
                   host: 127.0.0.1
                   port: 3306
                   user: root
@@ -1164,8 +1126,8 @@ func Test_LoadConfig_Columns(t *testing.T) {
 		{
 			name: "missing a notNull of column in columns part",
 			yaml: []byte(`
-                driver: mysql
                 database:
+                  driver: mysql
                   host: 127.0.0.1
                   port: 3306
                   user: root
@@ -1232,8 +1194,8 @@ func Test_LoadConfig_Columns(t *testing.T) {
 		{
 			name: "missing a default of column in columns part",
 			yaml: []byte(`
-                driver: mysql
                 database:
+                  driver: mysql
                   host: 127.0.0.1
                   port: 3306
                   user: root
@@ -1300,8 +1262,8 @@ func Test_LoadConfig_Columns(t *testing.T) {
 		{
 			name: "missing a primary of column in columns part",
 			yaml: []byte(`
-                driver: mysql
                 database:
+                  driver: mysql
                   host: 127.0.0.1
                   port: 3306
                   user: root
@@ -1368,8 +1330,8 @@ func Test_LoadConfig_Columns(t *testing.T) {
 		{
 			name: "missing a autoIncrement of column in columns part",
 			yaml: []byte(`
-                driver: mysql
                 database:
+                  driver: mysql
                   host: 127.0.0.1
                   port: 3306
                   user: root
@@ -1436,8 +1398,8 @@ func Test_LoadConfig_Columns(t *testing.T) {
 		{
 			name: "missing a values of column in columns part",
 			yaml: []byte(`
-                driver: mysql
                 database:
+                  driver: mysql
                   host: 127.0.0.1
                   port: 3306
                   user: root
@@ -1531,8 +1493,8 @@ func Test_LoadConfig_Indexes(t *testing.T) {
 		{
 			name: "missing a name of index in indexes part",
 			yaml: []byte(`
-                driver: mysql
                 database:
+                  driver: mysql
                   host: 127.0.0.1
                   port: 3306
                   user: root
@@ -1590,8 +1552,8 @@ func Test_LoadConfig_Indexes(t *testing.T) {
 		{
 			name: "missing a uniq of index in indexes part",
 			yaml: []byte(`
-                driver: mysql
                 database:
+                  driver: mysql
                   host: 127.0.0.1
                   port: 3306
                   user: root
@@ -1648,8 +1610,8 @@ func Test_LoadConfig_Indexes(t *testing.T) {
 		{
 			name: "missing a primary of index in indexes part",
 			yaml: []byte(`
-                driver: mysql
                 database:
+                  driver: mysql
                   host: 127.0.0.1
                   port: 3306
                   user: root
@@ -1707,8 +1669,8 @@ func Test_LoadConfig_Indexes(t *testing.T) {
 		{
 			name: "missing a columns of index in indexes part",
 			yaml: []byte(`
-                driver: mysql
                 database:
+                  driver: mysql
                   host: 127.0.0.1
                   port: 3306
                   user: root
@@ -1763,8 +1725,8 @@ func Test_LoadConfig_Indexes(t *testing.T) {
 		{
 			name: "primary key w/ name",
 			yaml: []byte(`
-                driver: mysql
                 database:
+                  driver: mysql
                   host: 127.0.0.1
                   port: 3306
                   user: root
@@ -1823,8 +1785,8 @@ func Test_LoadConfig_Indexes(t *testing.T) {
 		{
 			name: "primary key w/ unique key",
 			yaml: []byte(`
-                driver: mysql
                 database:
+                  driver: mysql
                   host: 127.0.0.1
                   port: 3306
                   user: root

@@ -1,8 +1,8 @@
-driver: mysql
 database:
+  driver: mysql
   host: 127.0.0.1
   user: root
-  password: root
+  password:
   name: testdb
   port: 3306
 tables:

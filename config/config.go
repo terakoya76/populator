@@ -25,14 +25,12 @@ import (
 var Instance *config
 
 type config struct {
-	Driver   Driver
 	Database *Database
 	Tables   []*Table
 }
 
 // CompleteWithDefault complete config value which is not required but configurable
 func (c *config) CompleteWithDefault() {
-	c.Driver.CompleteWithDefault()
 	c.Database.CompleteWithDefault()
 	for _, table := range c.Tables {
 		table.CompleteWithDefault()
@@ -42,10 +40,6 @@ func (c *config) CompleteWithDefault() {
 
 // Validate validates config
 func (c *config) Validate() error {
-	if err := c.Driver.Validate(); err != nil {
-		return err
-	}
-
 	if err := c.Database.Validate(); err != nil {
 		return err
 	}
@@ -62,26 +56,9 @@ func (c *config) Validate() error {
 	return nil
 }
 
-// Driver represents database driver
-type Driver string
-
-// CompleteWithDefault complete config value which is not required but configurable
-func (d *Driver) CompleteWithDefault() {
-}
-
-// Validate validates database driver config
-func (d Driver) Validate() error {
-	// TODO: adopt more
-	switch d {
-	case "mysql":
-		return nil
-	default:
-		return errors.New("database driver is invalid or non-supported")
-	}
-}
-
 // Database represents information for connecting DB
 type Database struct {
+	Driver   string
 	Host     string
 	Port     int
 	User     string
@@ -94,6 +71,14 @@ func (db *Database) Validate() error {
 	if db == nil {
 		return errors.New("database connection information is required")
 	}
+
+	// TODO: adopt more
+	switch db.Driver {
+	case "mysql":
+	default:
+		return errors.New("database driver is invalid or non-supported")
+	}
+
 	if db.User == "" {
 		return errors.New("database user is required")
 	}
