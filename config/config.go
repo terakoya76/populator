@@ -97,9 +97,6 @@ func (db *Database) Validate() error {
 	if db.User == "" {
 		return errors.New("database user is required")
 	}
-	if db.Password == "" {
-		return errors.New("database password is required")
-	}
 	if db.Name == "" {
 		return errors.New("database name is required")
 	}
