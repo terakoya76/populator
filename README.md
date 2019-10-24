@@ -19,8 +19,8 @@ $ go get github.com/terakoya76/populator
 You need to prepare config file, config file is like below.
 
 ```yaml
-driver: mysql
 database:
+  driver: mysql
   host: 127.0.0.1
   user: root
   password: root
@@ -95,8 +95,8 @@ mysql> select * from table_a limit 5;
 This is full type of config file. You can add tables, columns, indexes as many as you want.
 
 ```yaml
-driver: mysql
 database:
+  driver: mysql
   host: 127.0.0.1
   user: root
   password: root
@@ -134,26 +134,20 @@ tables:
   record: 100000
 ```
 
-### Driver
-Choose rdb driver for database you want to populate.
-
-```
-driver: mysql
-```
-
-Currently only supports below RDBMS
-
-- MySQL
-
 ### Database
 ```yaml
 database:
+  driver: mysql
   host: 127.0.0.1
   user: root
   password: root
   name: testdb
   port: 3306
 ```
+
+Currently only supports below RDBMS
+
+- MySQL
 
 ### Tables
 If the table w/ designated name is not existed, this tool create table firstly. This is executed by `CREATE TABLE IF NOT EXIST` statment, so charset is required.
@@ -269,80 +263,17 @@ There're sample config files, you can try it.
 when you haven't setup the database or tables yet
 
 ```shell
-$ populator -c ./examples/from_create_table.yaml
+$ populator -c ./examples/from_table_creation/normal.yaml
 ```
 
 when you've already setup the database and tables
 
 ```shell
-$ populator -c ./examples/only_populate_seed.yaml
+$ populator -c ./examples/only_populate_records/normal.yaml
 ```
 
 when you want to re-create table schema w/ given declarations
 
 ```shell
-$ populator -rc ./examples/from_create_table.yaml
-```
-
-## Tips
-For populating Database w/ a large amount of seed data, you can change some parameters. Here's some examples.
-
-### Error 1040: Too many connections
-When populator returns below log, you might improve situation by changing max_connections.
-
-```sql
--- current config
-mysql> show variables like "%max_connections%";
-+-----------------+-------+
-| Variable_name   | Value |
-+-----------------+-------+
-| max_connections | 151   |
-+-----------------+-------+
-1 row in set (5.39 sec)
-
--- actual conenction
-mysql> select count(*) from information_schema.PROCESSLIST;
-+----------+
-| count(*) |
-+----------+
-|      152 |
-+----------+
-1 row in set (0.12 sec)
-
--- change config
-mysql> set global max_connections = 700;
-Query OK, 0 rows affected (0.02 sec)
-
-mysql> select count(*) from information_schema.PROCESSLIST;
-+----------+
-| count(*) |
-+----------+
-|      697 |
-+----------+
-1 row in set (0.02 sec)
-```
-
-### dial tcp 127.0.0.1:3306: socket: too many open files
-When populator returns below log, you might improve situation by changing ulimit.
-
-For MacOS
-```shell
-$ ulimit -n
-256
-
-$ ulimit -n 4800
-$ ulimit -n
-4800
-```
-
-For Linux
-```shell
-$ vi /etc/security/limits.conf
-* soft nofile 4800
-* hard nofile 4800
-
-<reboot>
-
-$ sudo ulimit -n
-4800
+$ populator -rc ./examples/from_table_creation/normal.yaml
 ```
