@@ -17,6 +17,10 @@ limitations under the License.
 */
 package utils
 
+import (
+	"math/rand"
+)
+
 // Contains assert an array includes an element or not
 func Contains(s []interface{}, e interface{}) bool {
 	for _, v := range s {
@@ -25,4 +29,11 @@ func Contains(s []interface{}, e interface{}) bool {
 		}
 	}
 	return false
+}
+
+// Shuffle extracts elements from slice by random indexing
+func Shuffle(s []interface{}) interface{} {
+	l := len(s)
+	idx := rand.Intn(l)
+	return s[idx]
 }

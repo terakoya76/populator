@@ -123,10 +123,5 @@ tables:
       uniq: true
       columns:
         - col_2
-    - name: index_2_on_table_b
-      primary: false
-      uniq: true
-      columns:
-        - col_3
   charset: utf8mb4
   record: 50000

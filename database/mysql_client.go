@@ -392,10 +392,8 @@ func (db *MySQLClient) generateValue(cfg *config.Column) interface{} {
 		return 0
 	}
 
-	length := int64(len(cfg.Values))
-	if length > 0 {
-		idx := rand.GenInt(0, length-1)
-		return cfg.Values[idx]
+	if len(cfg.Values) > 0 {
+		return utils.Shuffle(cfg.Values)
 	}
 
 	switch cfg.Type {
