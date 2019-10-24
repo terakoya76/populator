@@ -32,12 +32,6 @@ type DBClient interface {
 	Populate(cfg *config.Table) error
 }
 
-// DBConnector is an interface for DB adapter
-type DBConnector interface {
-	Connect(cfg *config.Database) (DBClient, error)
-	connectInfo(cfg *config.Database) string
-}
-
 var client DBClient
 
 // onceDB is used for Mutex Lock when initializing an instance
