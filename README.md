@@ -1,6 +1,5 @@
 # popuolator
-
-[![CircleCI](https://circleci.com/gh/terakoya76/populator/tree/master.svg?style=svg)](https://circleci.com/gh/terakoya76/populator/tree/master)
+![test](https://github.com/terakoya76/populator/workflows/test/badge.svg)
 
 The populator is a tool making your database populated via yaml config inputs.
 
