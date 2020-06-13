@@ -352,6 +352,10 @@ func (db *MySQLClient) BuildInsertStmt(cfg *config.Table, values []string) strin
 		reg = append(reg, column.Name)
 	}
 
+	/*
+	 * #nosec
+	 * G201: SQL string formatting (gosec)
+	 */
 	sb.WriteString(
 		fmt.Sprintf(
 			"INSERT INTO %s (%s) VALUES (\n",
