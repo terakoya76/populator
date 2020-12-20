@@ -35,7 +35,6 @@ func (c *config) CompleteWithDefault() {
 	for _, table := range c.Tables {
 		table.CompleteWithDefault()
 	}
-
 }
 
 // Validate validates config
@@ -155,63 +154,70 @@ type Column struct {
 // CompleteWithDefault complete config value which is not required but configurable
 func (c *Column) CompleteWithDefault() {
 	if c.Order == 0 {
-		switch c.Type {
-		case "tinyint":
-			c.Order = 4
-		case "smallint":
-			c.Order = 6
-		case "mediumint":
-			c.Order = 9
-		case "int":
-			c.Order = 11
-		case "bigint":
-			c.Order = 20
-		case "bit":
-			c.Order = 1
-		case "blob":
-			// Unofficial Value
-			c.Order = 65535
-		case "text":
-			// Unofficial Value
-			c.Order = 65535
-		case "year":
-			// Unofficial Value
-			c.Order = 4
-		case "char":
-			// Unofficial Value
-			c.Order = 255
-		case "varchar":
-			// Unofficial Value
-			c.Order = 255
-		case "binary":
-			// Unofficial Value
-			c.Order = 255
-		case "varbinary":
-			// Unofficial Value
-			c.Order = 255
-		default:
+		c.completeOrderWithDefault()
+		if c.Precision == 0 {
+			c.completePrecisionWithDefault()
 		}
 	}
+}
 
-	if c.Order == 0 && c.Precision == 0 {
-		switch c.Type {
-		case "decimal":
-			c.Order = 10
-			c.Precision = 0
-		case "float":
-			// Unofficial Value
-			c.Order = 5
-			c.Precision = 2
-		case "real":
-			// Unofficial Value
-			c.Order = 5
-			c.Precision = 10
-		case "double":
-			// Unofficial Value
-			c.Order = 5
-			c.Precision = 10
-		default:
-		}
+func (c *Column) completeOrderWithDefault() {
+	switch c.Type {
+	case "tinyint":
+		c.Order = 4
+	case "smallint":
+		c.Order = 6
+	case "mediumint":
+		c.Order = 9
+	case "int":
+		c.Order = 11
+	case "bigint":
+		c.Order = 20
+	case "bit":
+		c.Order = 1
+	case "blob":
+		// Unofficial Value
+		c.Order = 65535
+	case "text":
+		// Unofficial Value
+		c.Order = 65535
+	case "year":
+		// Unofficial Value
+		c.Order = 4
+	case "char":
+		// Unofficial Value
+		c.Order = 255
+	case "varchar":
+		// Unofficial Value
+		c.Order = 255
+	case "binary":
+		// Unofficial Value
+		c.Order = 255
+	case "varbinary":
+		// Unofficial Value
+		c.Order = 255
+	default:
+	}
+}
+
+func (c *Column) completePrecisionWithDefault() {
+	switch c.Type {
+	case "decimal":
+		c.Order = 10
+		c.Precision = 0
+	case "float":
+		// Unofficial Value
+		c.Order = 5
+		c.Precision = 2
+	case "real":
+		// Unofficial Value
+		c.Order = 5
+		c.Precision = 10
+	case "double":
+		// Unofficial Value
+		c.Order = 5
+		c.Precision = 10
+	default:
 	}
 }
 
@@ -238,10 +244,11 @@ func (i *Index) Validate() error {
 		if i.Name != "" {
 			return errors.New("primary key index cannot be named")
 		}
+
 		if i.Uniq {
 			return errors.New("both of primary key and unique key cannot be enabled")
-
 		}
 	}
+
 	return nil
 }

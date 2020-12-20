@@ -336,6 +336,7 @@ func Test_LoadConfig_Database(t *testing.T) {
 		},
 	}
 
+	// nolint:dupl
 	for _, c := range cases {
 		if err := viper.ReadConfig(bytes.NewBuffer(c.yaml)); err != nil {
 			t.Errorf("case: %s is failed, err: %s\n", c.name, err)
@@ -753,6 +754,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
 		},
 	}
 
+	// nolint:dupl
 	for _, c := range cases {
 		if err := viper.ReadConfig(bytes.NewBuffer(c.yaml)); err != nil {
 			t.Errorf("case: %s is failed, err: %s\n", c.name, err)
@@ -1459,6 +1461,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
 		},
 	}
 
+	// nolint:dupl
 	for _, c := range cases {
 		if err := viper.ReadConfig(bytes.NewBuffer(c.yaml)); err != nil {
 			t.Errorf("case: %s is failed, err: %s\n", c.name, err)
@@ -1843,6 +1846,7 @@ func Test_LoadConfig_Indexes(t *testing.T) {
 		},
 	}
 
+	// nolint:dupl
 	for _, c := range cases {
 		if err := viper.ReadConfig(bytes.NewBuffer(c.yaml)); err != nil {
 			t.Errorf("case: %s is failed, err: %s\n", c.name, err)

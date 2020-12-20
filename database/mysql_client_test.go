@@ -239,6 +239,7 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
 				Charset: "utf8mb4",
 				Record:  100000,
 			},
+			// nolint:lll
 			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 bigint(20) UNSIGNED AUTO_INCREMENT NOT NULL DEFAULT(1000) PRIMARY KEY\n) DEFAULT CHARSET=utf8mb4",
 			err: nil,
 		},
@@ -371,6 +372,7 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
 				Charset: "utf8mb4",
 				Record:  100000,
 			},
+			// nolint:lll
 			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 float(5, 2) UNSIGNED NOT NULL DEFAULT(123.45) PRIMARY KEY\n) DEFAULT CHARSET=utf8mb4",
 			err: nil,
 		},

@@ -46,25 +46,12 @@ func DB() DBClient {
 }
 
 func initialize() {
-	cfg := config.Instance
-	err := SetupDB(cfg.Database)
-	if err != nil {
-		fmt.Println(err)
-	}
+	var err error
 
+	cfg := config.Instance
 	client, err = BuildClient(cfg.Database)
 	if err != nil {
 		fmt.Println(err)
-	}
-}
-
-// SetupDB find_or_create database w/ given database name
-func SetupDB(cfg *config.Database) error {
-	switch cfg.Driver {
-	case "mysql":
-		return SetupMySQLDB(cfg)
-	default:
-		return errors.New("not supported database driver")
 	}
 }
 
@@ -72,6 +59,10 @@ func SetupDB(cfg *config.Database) error {
 func BuildClient(cfg *config.Database) (DBClient, error) {
 	switch cfg.Driver {
 	case "mysql":
+		if err := SetupMySQLDB(cfg); err != nil {
+			return nil, err
+		}
+
 		return BuildMySQLClient(cfg)
 	default:
 		return nil, errors.New("not supported database driver")

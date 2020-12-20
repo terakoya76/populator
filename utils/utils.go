@@ -33,7 +33,7 @@ func Contains(s []interface{}, e interface{}) bool {
 
 // Shuffle extracts elements from slice by random indexing
 func Shuffle(s []interface{}) interface{} {
-	l := len(s)
-	idx := rand.Intn(l)
+	// nolint:gosec
+	idx := rand.Intn(len(s))
 	return s[idx]
 }
