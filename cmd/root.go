@@ -28,11 +28,11 @@ import (
 	"github.com/terakoya76/populator/database"
 )
 
-var cfgFile string
-var reCreate bool
+var CfgFile string
+var ReCreate bool
 
-// rootCmd represents the base command when called without any subcommands
-var rootCmd = &cobra.Command{
+// RootCmd represents the base command when called without any subcommands
+var RootCmd = &cobra.Command{
 	Use:   "populator",
 	Short: "Populate given tables' w/ seed data",
 	Long:  "Populate given tables' w/ seed data",
@@ -47,7 +47,7 @@ func populate() error {
 	db := database.DB()
 	cfg := config.Instance
 	for _, table := range cfg.Tables {
-		if reCreate {
+		if ReCreate {
 			if err := db.DropTable(table); err != nil {
 				return err
 			}
@@ -66,34 +66,19 @@ func populate() error {
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
-// This is called by main.main(). It only needs to happen once to the rootCmd.
+// This is called by main.main(). It only needs to happen once to the RootCmd.
 func Execute() {
-	if err := rootCmd.Execute(); err != nil {
+	if err := RootCmd.Execute(); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 }
 
-func init() {
-	cobra.OnInitialize(initConfig)
-
-	// Here you will define your flags and configuration settings.
-	// Cobra supports persistent flags, which, if defined here,
-	// will be global for your application.
-	rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "c", "", "config file (default is ./populator.yaml)")
-
-	rootCmd.PersistentFlags().BoolVarP(&reCreate, "recreate", "r", false, "drop tables then create them from scratch")
-
-	rootCmd.PersistentFlags().BoolVarP(&database.Verbose, "verbose", "v", false, "show executed sql")
-
-	rootCmd.DisableSuggestions = true
-}
-
-// initConfig reads in config file and ENV variables if set.
-func initConfig() {
-	if cfgFile != "" {
+// InitConfig reads in config file and ENV variables if set.
+func InitConfig() {
+	if CfgFile != "" {
 		// Use config file from the flag.
-		viper.SetConfigFile(cfgFile)
+		viper.SetConfigFile(CfgFile)
 	} else {
 		// find current working directory.
 		dir, err := os.Getwd()

@@ -391,6 +391,7 @@ func (db *MySQLClient) generateInsertRow(cfg *config.Table) string {
 	return strings.Join(reg, ",\n")
 }
 
+// nolint:gocyclo
 func (db *MySQLClient) generateValue(cfg *config.Column) interface{} {
 	if cfg.AutoIncrement {
 		return 0
@@ -474,6 +475,7 @@ func (db *MySQLClient) generateValue(cfg *config.Column) interface{} {
 		return rand.Time()
 
 	case "year":
+		// nolint:gomnd
 		if cfg.Order == 4 {
 			return rand.Year4()
 		}
@@ -492,27 +494,35 @@ func (db *MySQLClient) generateValue(cfg *config.Column) interface{} {
 		return rand.VarBinary(cfg.Order)
 
 	case "tinyblob":
+		// nolint:gomnd
 		return rand.TinyBlob(255)
 
 	case "tinytext":
+		// nolint:gomnd
 		return rand.TinyText(255)
 
 	case "blob":
+		// nolint:gomnd
 		return rand.Blob(1000)
 
 	case "text":
+		// nolint:gomnd
 		return rand.Text(1000)
 
 	case "mediumblob":
+		// nolint:gomnd
 		return rand.MediumBlob(3000)
 
 	case "mediumtext":
+		// nolint:gomnd
 		return rand.MediumText(3000)
 
 	case "longblob":
+		// nolint:gomnd
 		return rand.LongBlob(5000)
 
 	case "longtext":
+		// nolint:gomnd
 		return rand.LongText(5000)
 
 	default:

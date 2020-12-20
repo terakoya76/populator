@@ -15,8 +15,23 @@ limitations under the License.
 */
 package main
 
-import "github.com/terakoya76/populator/cmd"
+import (
+	"github.com/spf13/cobra"
+
+	"github.com/terakoya76/populator/cmd"
+	"github.com/terakoya76/populator/database"
+)
 
 func main() {
+	cobra.OnInitialize(cmd.InitConfig)
+
+	// Here you will define your flags and configuration settings.
+	// Cobra supports persistent flags, which, if defined here,
+	// will be global for your application.
+	cmd.RootCmd.PersistentFlags().StringVarP(&cmd.CfgFile, "config", "c", "", "config file (default is ./populator.yaml)")
+	cmd.RootCmd.PersistentFlags().BoolVarP(&cmd.ReCreate, "recreate", "r", false, "drop tables then create them from scratch")
+	cmd.RootCmd.PersistentFlags().BoolVarP(&database.Verbose, "verbose", "v", false, "show executed sql")
+	cmd.RootCmd.DisableSuggestions = true
+
 	cmd.Execute()
 }

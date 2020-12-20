@@ -27,8 +27,13 @@ import (
 	"time"
 )
 
-const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+const (
+	letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
+	minFloat = 0.0
+)
+
+// nolint:gochecknoinits
 func init() {
 	seed, err := crand.Int(crand.Reader, big.NewInt(math.MaxInt64))
 	if err != nil {
@@ -40,27 +45,31 @@ func init() {
 
 // GenInt generates int64 between given range
 func GenInt(min, max int64) int64 {
+	// nolint:gosec
 	return rand.Int63n(max-min) + min
 }
 
 func genString(n int) string {
 	b := make([]byte, n)
 	for i := range b {
+		// nolint:gosec
 		b[i] = letterBytes[rand.Int63()%int64(len(letterBytes))]
 	}
 	return string(b)
 }
 
-func genTime(min time.Time, max time.Time) time.Time {
+func genTime(min, max time.Time) time.Time {
 	minI := min.Unix()
 	maxI := max.Unix()
 	delta := maxI - minI
+	// nolint:gosec
 	sec := rand.Int63n(delta) + minI
 	return time.Unix(sec, 0)
 }
 
 // Boolean returns random boolean
 func Boolean() bool {
+	// nolint:gosec
 	return rand.Float32() < 0.5
 }
 
@@ -101,6 +110,7 @@ func Int() int32 {
 
 // UnsignedInt returns random unsigned int
 func UnsignedInt() uint32 {
+	// nolint:gosec
 	return rand.Uint32()
 }
 
@@ -114,11 +124,12 @@ func BigInt() int64 {
 
 // UnsignedBigInt returns random unsigned bigint
 func UnsignedBigInt() uint64 {
+	// nolint:gosec
 	return uint64(rand.Uint32())<<32 + uint64(rand.Uint32())
 }
 
 // Decimal returns random decimal within the given range
-func Decimal(order int, precision int) string {
+func Decimal(order, precision int) string {
 	double := Double(order, precision)
 	if double == 0 {
 		return "0"
@@ -127,7 +138,7 @@ func Decimal(order int, precision int) string {
 }
 
 // UnsignedDecimal returns random decimal within the given range
-func UnsignedDecimal(order int, precision int) string {
+func UnsignedDecimal(order, precision int) string {
 	double := UnsignedDouble(order, precision)
 	if double == 0 {
 		return "0"
@@ -136,17 +147,20 @@ func UnsignedDecimal(order int, precision int) string {
 }
 
 // Float returns random float within the given range
-func Float(order int, precision int) float32 {
+func Float(order, precision int) float32 {
 	unsigned := Boolean()
-	min := float32(0.0)
+	min := float32(minFloat)
 	var max float32
 
 	if unsigned {
+		// nolint:gomnd
 		max = float32(math.Pow(10, float64(order-precision)) - 1)
 	} else {
+		// nolint:gomnd
 		max = float32(math.Pow(10, float64(order-precision-1)) - 1)
 	}
 
+	// nolint:gosec
 	float := min + rand.Float32()*(max-min)
 	if unsigned {
 		return float
@@ -155,26 +169,30 @@ func Float(order int, precision int) float32 {
 }
 
 // UnsignedFloat returns random unsigned float within the given range
-func UnsignedFloat(order int, precision int) float32 {
-	min := float32(0.0)
+func UnsignedFloat(order, precision int) float32 {
+	min := float32(minFloat)
+	// nolint:gomnd
 	max := float32(math.Pow(10, float64(order-precision)) - 1)
+	// nolint:gosec
 	return min + rand.Float32()*(max-min)
 }
 
 // Double returns random double within the given range
-func Double(order int, precision int) float64 {
+func Double(order, precision int) float64 {
 	unsigned := Boolean()
 
-	min := 0.0
 	var max float64
 
 	if unsigned {
+		// nolint:gomnd
 		max = math.Pow(10, float64(order-precision)) - 1
 	} else {
+		// nolint:gomnd
 		max = math.Pow(10, float64(order-precision-1)) - 1
 	}
 
-	double := min + rand.Float64()*(max-min)
+	// nolint:gosec
+	double := minFloat + rand.Float64()*(max-minFloat)
 	if unsigned {
 		return double
 	}
@@ -182,19 +200,20 @@ func Double(order int, precision int) float64 {
 }
 
 // UnsignedDouble returns random unsigned double within the given range
-func UnsignedDouble(order int, precision int) float64 {
-	min := 0.0
+func UnsignedDouble(order, precision int) float64 {
+	// nolint:gomnd
 	max := math.Pow(10, float64(order-precision)) - 1
-	return min + rand.Float64()*(max-min)
+	// nolint:gosec
+	return minFloat + rand.Float64()*(max-minFloat)
 }
 
 // Real returns random double within the given range
-func Real(order int, precision int) float64 {
+func Real(order, precision int) float64 {
 	return Double(order, precision)
 }
 
 // UnsignedReal returns random unsigned double within the given range
-func UnsignedReal(order int, precision int) float64 {
+func UnsignedReal(order, precision int) float64 {
 	return UnsignedDouble(order, precision)
 }
 
@@ -260,6 +279,7 @@ func Time() string {
 
 // Year4 returns random year(4)
 func Year4() string {
+	// nolint:gomnd
 	return fmt.Sprint(GenInt(1901, 2155))
 }
 
