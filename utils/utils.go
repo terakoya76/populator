@@ -21,17 +21,18 @@ import (
 	"math/rand"
 )
 
-// Contains assert an array includes an element or not
+// Contains assert an array includes an element or not.
 func Contains(s []interface{}, e interface{}) bool {
 	for _, v := range s {
 		if e == v {
 			return true
 		}
 	}
+
 	return false
 }
 
-// Shuffle extracts elements from slice by random indexing
+// Shuffle extracts elements from slice by random indexing.
 func Shuffle(s []interface{}) interface{} {
 	// nolint:gosec
 	idx := rand.Intn(len(s))

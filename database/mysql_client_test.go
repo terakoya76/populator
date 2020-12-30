@@ -22,9 +22,11 @@ import (
 	"github.com/terakoya76/populator/database"
 )
 
-func Test_BuildCreateTableStmt_Columns(t *testing.T) {
-	var nilValues []interface{}
+var (
+	nilValues []interface{}
+)
 
+func Test_BuildCreateTableStmt_Columns(t *testing.T) {
 	cases := []struct {
 		name string
 		cfg  *config.Table
@@ -933,6 +935,7 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
 	for _, c := range cases {
 		client := database.MySQLClient{}
 		sql := client.BuildCreateTableStmt(c.cfg)
+
 		if !assert.Equal(t, c.sql, sql) {
 			t.Errorf("case: %s is failed, expected: %+v, actual: %+v\n", c.name, c.sql, sql)
 		}
@@ -984,6 +987,7 @@ func Test_BuildDefaultDesc(t *testing.T) {
 	for _, c := range cases {
 		client := database.MySQLClient{}
 		result := client.BuildDefaultDesc(c.cfg)
+
 		if !assert.Equal(t, c.result, result) {
 			t.Errorf("case: %s is failed, expected: %+v, actual: %+v\n", c.name, c.result, result)
 		}
@@ -1088,6 +1092,7 @@ func Test_BuildIndexDesc(t *testing.T) {
 	for _, c := range cases {
 		client := database.MySQLClient{}
 		result := client.BuildIndexDesc(c.cfg)
+
 		if !assert.Equal(t, c.result, result) {
 			t.Errorf("case: %s is failed, expected: %+v, actual: %+v\n", c.name, c.result, result)
 		}
@@ -1130,6 +1135,7 @@ func Test_BuildDropTableStmt(t *testing.T) {
 	for _, c := range cases {
 		client := database.MySQLClient{}
 		sql := client.BuildDropTableStmt(c.cfg)
+
 		if !assert.Equal(t, c.sql, sql) {
 			t.Errorf("case: %s is failed, expected: %+v, actual: %+v\n", c.name, c.sql, sql)
 		}

@@ -29,10 +29,17 @@ import (
 	"github.com/terakoya76/populator/config"
 )
 
+var (
+	nilDatabase *config.Database
+	nilTables   []*config.Table
+	nilColumns  []*config.Column
+	nilIndexes  []*config.Index
+	nilValues   []interface{}
+)
+
 func Test_LoadConfig_Database(t *testing.T) {
 	viper.SetConfigType("yaml")
 
-	var nilDatabase *config.Database
 	cases := []struct {
 		name   string
 		yaml   []byte
@@ -360,9 +367,6 @@ func Test_LoadConfig_Database(t *testing.T) {
 func Test_LoadConfig_Tables(t *testing.T) {
 	viper.SetConfigType("yaml")
 
-	var nilTables []*config.Table
-	var nilColumns []*config.Column
-	var nilIndexes []*config.Index
 	cases := []struct {
 		name   string
 		yaml   []byte
@@ -778,7 +782,6 @@ func Test_LoadConfig_Tables(t *testing.T) {
 func Test_LoadConfig_Columns(t *testing.T) {
 	viper.SetConfigType("yaml")
 
-	var nilValues []interface{}
 	cases := []struct {
 		name   string
 		yaml   []byte
@@ -1485,8 +1488,6 @@ func Test_LoadConfig_Columns(t *testing.T) {
 func Test_LoadConfig_Indexes(t *testing.T) {
 	viper.SetConfigType("yaml")
 
-	var nilColumns []string
-	var nilValues []interface{}
 	cases := []struct {
 		name   string
 		yaml   []byte
@@ -1715,7 +1716,7 @@ func Test_LoadConfig_Indexes(t *testing.T) {
 							Name:    "index_1_on_table_a",
 							Primary: false,
 							Uniq:    false,
-							Columns: nilColumns,
+							Columns: nil,
 						},
 					},
 					Charset: "utf8mb4",
