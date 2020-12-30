@@ -25,7 +25,7 @@ import (
 	"github.com/terakoya76/populator/config"
 )
 
-// DBClient is an interface for DB Querying
+// DBClient is an interface for DB Querying.
 type DBClient interface {
 	CreateTable(cfg *config.Table) error
 	DropTable(cfg *config.Table) error
@@ -34,14 +34,15 @@ type DBClient interface {
 
 var client DBClient
 
-// onceDB is used for Mutex Lock when initializing an instance
+// onceDB is used for Mutex Lock when initializing an instance.
 var onceDB sync.Once
 
-// DB provides instance of DB client
+// DB provides instance of DB client.
 func DB() DBClient {
 	onceDB.Do(func() {
 		initialize()
 	})
+
 	return client
 }
 
@@ -50,12 +51,13 @@ func initialize() {
 
 	cfg := config.Instance
 	client, err = BuildClient(cfg.Database)
+
 	if err != nil {
 		fmt.Println(err)
 	}
 }
 
-// BuildClient builds DBClient for abstraction
+// BuildClient builds DBClient for abstraction.
 func BuildClient(cfg *config.Database) (DBClient, error) {
 	switch cfg.Driver {
 	case "mysql":

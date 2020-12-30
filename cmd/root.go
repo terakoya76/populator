@@ -31,7 +31,7 @@ import (
 var CfgFile string
 var ReCreate bool
 
-// RootCmd represents the base command when called without any subcommands
+// RootCmd represents the base command when called without any subcommands.
 var RootCmd = &cobra.Command{
 	Use:   "populator",
 	Short: "Populate given tables' w/ seed data",
@@ -46,6 +46,7 @@ var RootCmd = &cobra.Command{
 func populate() error {
 	db := database.DB()
 	cfg := config.Instance
+
 	for _, table := range cfg.Tables {
 		if ReCreate {
 			if err := db.DropTable(table); err != nil {
@@ -109,7 +110,7 @@ func InitConfig() {
 	config.Instance.CompleteWithDefault()
 }
 
-// LoadConfig assigns the configuration input to config.Instance
+// LoadConfig assigns the configuration input to config.Instance.
 func LoadConfig() error {
 	err := viper.Unmarshal(&config.Instance)
 	if err != nil {

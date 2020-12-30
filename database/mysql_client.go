@@ -22,8 +22,9 @@ import (
 	"strings"
 	"sync"
 
-	// MySQL driver
+	// MySQL Driver.
 	_ "github.com/go-sql-driver/mysql"
+
 	"github.com/jmoiron/sqlx"
 
 	"github.com/terakoya76/populator/config"
@@ -31,18 +32,19 @@ import (
 	"github.com/terakoya76/populator/utils"
 )
 
-// MaxConnections holds max_connections var for memory use control
+// MaxConnections holds max_connections var for memory use control.
 var MaxConnections int
 
-// MySQLClient is an implementation of DBClient for MySQL
+// MySQLClient is an implementation of DBClient for MySQL.
 type MySQLClient struct {
 	*sqlx.DB
 }
 
-// SetupMySQLDB find_or_create database w/ given database name, then connect it
+// SetupMySQLDB find_or_create database w/ given database name, then connect it.
 func SetupMySQLDB(cfg *config.Database) error {
 	ci := buildConnectInfo(cfg)
 	db, err := sqlx.Open("mysql", ci)
+
 	if err != nil {
 		return fmt.Errorf("failed to setup database %s on mysql: %+v", cfg.Name, err)
 	}
@@ -52,20 +54,24 @@ func SetupMySQLDB(cfg *config.Database) error {
 	if err != nil {
 		return fmt.Errorf("failed to setup database %s on mysql: %+v", cfg.Name, err)
 	}
+
 	db.Close()
+
 	return nil
 }
 
-// BuildMySQLClient returns MySQLClient
+// BuildMySQLClient returns MySQLClient.
 func BuildMySQLClient(cfg *config.Database) (*MySQLClient, error) {
 	ci := buildConnectInfo(cfg)
 	db, err := sqlx.Connect("mysql", ci+cfg.Name)
+
 	if err != nil {
 		return nil, fmt.Errorf("failed to setup database %s on mysql: %+v", cfg.Name, err)
 	}
 
 	var _name string
 	err = db.QueryRow("show variables like \"%max_connections%\"").Scan(&_name, &MaxConnections)
+
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -77,10 +83,10 @@ func buildConnectInfo(cfg *config.Database) string {
 	return cfg.User + ":" + cfg.Password + "@tcp(" + cfg.Host + ":" + fmt.Sprint(cfg.Port) + ")/"
 }
 
-// Verbose displays sql from cobra
+// Verbose displays sql from cobra.
 var Verbose bool
 
-// UnsignedableDataType accepts unsigned options
+// UnsignedableDataType accepts unsigned options.
 var UnsignedableDataType = []interface{}{
 	"tinyint",
 	"smallint",
@@ -93,7 +99,7 @@ var UnsignedableDataType = []interface{}{
 	"double",
 }
 
-// IncrementableDataType accepts increment options
+// IncrementableDataType accepts increment options.
 var IncrementableDataType = []interface{}{
 	"tinyint",
 	"smallint",
@@ -102,7 +108,7 @@ var IncrementableDataType = []interface{}{
 	"bigint",
 }
 
-// OrderRequiredDataTypes require DataType(Order) like sql
+// OrderRequiredDataTypes require DataType(Order) like sql.
 var OrderRequiredDataTypes = []interface{}{
 	"tinyint",
 	"smallint",
@@ -119,7 +125,7 @@ var OrderRequiredDataTypes = []interface{}{
 	"varbinary",
 }
 
-// PrecisionRequiredDataTypes require DataType(Order, Precision) like sql
+// PrecisionRequiredDataTypes require DataType(Order, Precision) like sql.
 var PrecisionRequiredDataTypes = []interface{}{
 	"decimal",
 	"float",
@@ -127,7 +133,7 @@ var PrecisionRequiredDataTypes = []interface{}{
 	"double",
 }
 
-// ProhibitDefaultDataTypes must allow null value
+// ProhibitDefaultDataTypes must allow null value.
 var ProhibitDefaultDataTypes = []interface{}{
 	"tinyblob",
 	"tinytext",
@@ -139,9 +145,10 @@ var ProhibitDefaultDataTypes = []interface{}{
 	"longtext",
 }
 
-// CreateTable does CreateTable statement for MySQL
+// CreateTable does CreateTable statement for MySQL.
 func (db *MySQLClient) CreateTable(cfg *config.Table) error {
 	sql := db.BuildCreateTableStmt(cfg)
+
 	if Verbose {
 		fmt.Println(sql)
 	}
@@ -149,12 +156,14 @@ func (db *MySQLClient) CreateTable(cfg *config.Table) error {
 	if _, err := db.Exec(sql); err != nil {
 		return err
 	}
+
 	return nil
 }
 
-// BuildCreateTableStmt generate create_table_stmt sql for MySQL
+// BuildCreateTableStmt generate create_table_stmt sql for MySQL.
 func (db *MySQLClient) BuildCreateTableStmt(cfg *config.Table) string {
 	var sb strings.Builder
+
 	sb.WriteString(
 		fmt.Sprintf(
 			"CREATE TABLE IF NOT EXISTS %s (\n",
@@ -162,20 +171,22 @@ func (db *MySQLClient) BuildCreateTableStmt(cfg *config.Table) string {
 		),
 	)
 
-	var regCol []string
+	regCol := make([]string, 0, len(cfg.Columns))
 	for _, column := range cfg.Columns {
 		regCol = append(regCol, db.buildCreateTableStmtColumn(column))
 	}
+
 	sb.WriteString(strings.Join(regCol, ",\n"))
 
 	if len(cfg.Indexes) > 0 {
 		sb.WriteString(",\n")
 	}
 
-	var regIdx []string
+	regIdx := make([]string, 0, len(cfg.Indexes))
 	for _, index := range cfg.Indexes {
 		regIdx = append(regIdx, db.BuildIndexDesc(index))
 	}
+
 	sb.WriteString(strings.Join(regIdx, ",\n"))
 
 	sb.WriteString(
@@ -190,6 +201,7 @@ func (db *MySQLClient) BuildCreateTableStmt(cfg *config.Table) string {
 
 func (db *MySQLClient) buildCreateTableStmtColumn(cfg *config.Column) string {
 	var sb strings.Builder
+
 	sb.WriteString(
 		fmt.Sprintf(
 			"    %s %s",
@@ -229,7 +241,7 @@ func (db *MySQLClient) buildCreateTableStmtColumn(cfg *config.Column) string {
 	return sb.String()
 }
 
-// BuildDefaultDesc generate a default desc part of sql for MySQL
+// BuildDefaultDesc generate a default desc part of sql for MySQL.
 func (db *MySQLClient) BuildDefaultDesc(cfg *config.Column) string {
 	switch cfg.Default.(type) {
 	case string:
@@ -239,9 +251,10 @@ func (db *MySQLClient) BuildDefaultDesc(cfg *config.Column) string {
 	}
 }
 
-// BuildIndexDesc generate an index desc part of sql for MySQL
+// BuildIndexDesc generate an index desc part of sql for MySQL.
 func (db *MySQLClient) BuildIndexDesc(cfg *config.Index) string {
 	var sb strings.Builder
+
 	if cfg.Primary {
 		sb.WriteString("    PRIMARY KEY ")
 	} else if cfg.Uniq {
@@ -256,19 +269,21 @@ func (db *MySQLClient) BuildIndexDesc(cfg *config.Index) string {
 
 	sb.WriteString(" (")
 
-	var reg []string
+	reg := make([]string, 0, len(cfg.Columns))
 	for _, column := range cfg.Columns {
 		reg = append(reg, fmt.Sprint(column))
 	}
+
 	sb.WriteString(strings.Join(reg, ", "))
 	sb.WriteString(")")
 
 	return sb.String()
 }
 
-// DropTable does DropTable statement for MySQL
+// DropTable does DropTable statement for MySQL.
 func (db *MySQLClient) DropTable(cfg *config.Table) error {
 	sql := db.BuildDropTableStmt(cfg)
+
 	if Verbose {
 		fmt.Println(sql)
 	}
@@ -276,10 +291,11 @@ func (db *MySQLClient) DropTable(cfg *config.Table) error {
 	if _, err := db.Exec(sql); err != nil {
 		return err
 	}
+
 	return nil
 }
 
-// BuildDropTableStmt generate drop_table_stmt sql for MySQL
+// BuildDropTableStmt generate drop_table_stmt sql for MySQL.
 func (db *MySQLClient) BuildDropTableStmt(cfg *config.Table) string {
 	return fmt.Sprintf(
 		"DROP TABLE IF EXISTS %s",
@@ -287,12 +303,13 @@ func (db *MySQLClient) BuildDropTableStmt(cfg *config.Table) string {
 	)
 }
 
-// Populate does Insert statement for MySQL
+// Populate does Insert statement for MySQL.
 func (db *MySQLClient) Populate(cfg *config.Table) error {
 	var wg sync.WaitGroup
-	otherConnections := 100
 
+	otherConnections := 100
 	batchSize := 200
+
 	if cfg.Record < batchSize {
 		batchSize = cfg.Record
 	}
@@ -303,8 +320,10 @@ func (db *MySQLClient) Populate(cfg *config.Table) error {
 		// it would return "Error 1040: Too many connections"
 		var currentConnections int
 		err := db.QueryRow("select count(*) from information_schema.PROCESSLIST").Scan(&currentConnections)
+
 		if err != nil {
 			fmt.Println(err)
+
 			currentConnections = MaxConnections
 		}
 
@@ -320,6 +339,7 @@ func (db *MySQLClient) Populate(cfg *config.Table) error {
 				if err := db.execInsertStmt(cfg, rows); err != nil {
 					fmt.Println(err)
 				}
+
 				wg.Done()
 			}()
 
@@ -328,11 +348,13 @@ func (db *MySQLClient) Populate(cfg *config.Table) error {
 	}
 
 	wg.Wait()
+
 	return nil
 }
 
 func (db *MySQLClient) execInsertStmt(cfg *config.Table, values []string) error {
 	sql := db.BuildInsertStmt(cfg, values)
+
 	if Verbose {
 		fmt.Println(sql)
 	}
@@ -340,22 +362,19 @@ func (db *MySQLClient) execInsertStmt(cfg *config.Table, values []string) error 
 	if _, err := db.Exec(sql); err != nil {
 		return err
 	}
+
 	return nil
 }
 
-// BuildInsertStmt generate insert_stmt sql for MySQL
+// BuildInsertStmt generate insert_stmt sql for MySQL.
 func (db *MySQLClient) BuildInsertStmt(cfg *config.Table, values []string) string {
 	var sb strings.Builder
 
-	var reg []string
+	reg := make([]string, 0, len(cfg.Columns))
 	for _, column := range cfg.Columns {
 		reg = append(reg, column.Name)
 	}
 
-	/*
-	 * #nosec
-	 * G201: SQL string formatting (gosec)
-	 */
 	sb.WriteString(
 		fmt.Sprintf(
 			"INSERT INTO %s (%s) VALUES (\n",
@@ -372,7 +391,8 @@ func (db *MySQLClient) BuildInsertStmt(cfg *config.Table, values []string) strin
 
 func (db *MySQLClient) generateInsertRow(cfg *config.Table) string {
 	// generate insert values
-	var reg []string
+	reg := make([]string, 0, len(cfg.Columns))
+
 	for _, column := range cfg.Columns {
 		value := db.generateValue(column)
 		switch value := value.(type) {
@@ -380,6 +400,7 @@ func (db *MySQLClient) generateInsertRow(cfg *config.Table) string {
 			reg = append(reg, fmt.Sprintf("   '%v'", value))
 		case float32, float64:
 			var sb strings.Builder
+
 			sb.WriteString("   %.")
 			sb.WriteString(fmt.Sprintf("%d", column.Precision))
 			sb.WriteString("f")
@@ -388,6 +409,7 @@ func (db *MySQLClient) generateInsertRow(cfg *config.Table) string {
 			reg = append(reg, fmt.Sprintf("   %v", value))
 		}
 	}
+
 	return strings.Join(reg, ",\n")
 }
 
@@ -409,54 +431,63 @@ func (db *MySQLClient) generateValue(cfg *config.Column) interface{} {
 		if cfg.Unsigned {
 			return rand.UnsignedTinyInt()
 		}
+
 		return rand.TinyInt()
 
 	case "smallint":
 		if cfg.Unsigned {
 			return rand.UnsignedSmallInt()
 		}
+
 		return rand.SmallInt()
 
 	case "mediumint":
 		if cfg.Unsigned {
 			return rand.UnsignedMediumInt()
 		}
+
 		return rand.MediumInt()
 
 	case "int":
 		if cfg.Unsigned {
 			return rand.UnsignedInt()
 		}
+
 		return rand.Int()
 
 	case "bigint":
 		if cfg.Unsigned {
 			return rand.UnsignedBigInt()
 		}
+
 		return rand.BigInt()
 
 	case "decimal":
 		if cfg.Unsigned {
 			return rand.UnsignedDecimal(cfg.Order, cfg.Precision)
 		}
+
 		return rand.Decimal(cfg.Order, cfg.Precision)
 
 	case "float":
 		if cfg.Unsigned {
 			return rand.UnsignedFloat(cfg.Order, cfg.Precision)
 		}
+
 		return rand.Float(cfg.Order, cfg.Precision)
 
 	case "real":
 		if cfg.Unsigned {
 			return rand.UnsignedReal(cfg.Order, cfg.Precision)
 		}
+
 		return rand.Real(cfg.Order, cfg.Precision)
 
 	case "double":
 		if cfg.Unsigned {
 			return rand.UnsignedDouble(cfg.Order, cfg.Precision)
 		}
+
 		return rand.Double(cfg.Order, cfg.Precision)
 
 	case "bit":
@@ -479,6 +510,7 @@ func (db *MySQLClient) generateValue(cfg *config.Column) interface{} {
 		if cfg.Order == 4 {
 			return rand.Year4()
 		}
+
 		return rand.Year2()
 
 	case "char":

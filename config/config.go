@@ -21,7 +21,7 @@ import (
 	"errors"
 )
 
-// Instance represents the both information of the connecting database and the tables schema to be populated w/ seed data
+// Instance represents the both information of the connecting database and the tables schema to be populated w/ seed data.
 var Instance *config
 
 type config struct {
@@ -29,15 +29,16 @@ type config struct {
 	Tables   []*Table
 }
 
-// CompleteWithDefault complete config value which is not required but configurable
+// CompleteWithDefault complete config value which is not required but configurable.
 func (c *config) CompleteWithDefault() {
 	c.Database.CompleteWithDefault()
+
 	for _, table := range c.Tables {
 		table.CompleteWithDefault()
 	}
 }
 
-// Validate validates config
+// Validate validates config.
 func (c *config) Validate() error {
 	if err := c.Database.Validate(); err != nil {
 		return err
@@ -46,6 +47,7 @@ func (c *config) Validate() error {
 	if c.Tables == nil {
 		return errors.New("tables definition is required")
 	}
+
 	for _, table := range c.Tables {
 		if err := table.Validate(); err != nil {
 			return err
@@ -55,7 +57,7 @@ func (c *config) Validate() error {
 	return nil
 }
 
-// Database represents information for connecting DB
+// Database represents information for connecting DB.
 type Database struct {
 	Driver   string
 	Host     string
@@ -65,13 +67,13 @@ type Database struct {
 	Name     string
 }
 
-// Validate validates database config
+// Validate validates database config.
 func (db *Database) Validate() error {
 	if db == nil {
 		return errors.New("database connection information is required")
 	}
 
-	// TODO: adopt more
+	// NOTE: adapt more.
 	switch db.Driver {
 	case "mysql":
 	default:
@@ -81,23 +83,26 @@ func (db *Database) Validate() error {
 	if db.User == "" {
 		return errors.New("database user is required")
 	}
+
 	if db.Name == "" {
 		return errors.New("database name is required")
 	}
+
 	return nil
 }
 
-// CompleteWithDefault complete config value which is not required but configurable
+// CompleteWithDefault complete config value which is not required but configurable.
 func (db *Database) CompleteWithDefault() {
 	if db.Host == "" {
 		db.Host = "127.0.0.1"
 	}
+
 	if db.Port == 0 {
 		db.Port = 3306
 	}
 }
 
-// Table represents a single table schema
+// Table represents a single table schema.
 type Table struct {
 	Name    string
 	Columns []*Column
@@ -106,55 +111,61 @@ type Table struct {
 	Record  int
 }
 
-// CompleteWithDefault complete config value which is not required but configurable
+// CompleteWithDefault complete config value which is not required but configurable.
 func (t *Table) CompleteWithDefault() {
 	for _, column := range t.Columns {
 		column.CompleteWithDefault()
 	}
+
 	for _, index := range t.Indexes {
 		index.CompleteWithDefault()
 	}
 }
 
-// Validate validates table config
+// Validate validates table config.
 func (t *Table) Validate() error {
 	if t == nil {
 		return errors.New("table definition is invalid")
 	}
+
 	if t.Name == "" {
 		return errors.New("table name is required")
 	}
+
 	for _, column := range t.Columns {
 		if err := column.Validate(); err != nil {
 			return err
 		}
 	}
+
 	for _, index := range t.Indexes {
 		if err := index.Validate(); err != nil {
 			return err
 		}
 	}
+
 	return nil
 }
 
-// Column represents a single column schema
+// Column represents a single column schema.
 type Column struct {
-	Name          string
-	Type          string
-	Order         int
-	Precision     int
 	Unsigned      bool
 	NotNull       bool
-	Default       interface{}
 	Primary       bool
 	AutoIncrement bool
+	Order         int
+	Precision     int
+	Name          string
+	Type          string
+	Default       interface{}
 	Values        []interface{}
 }
 
-// CompleteWithDefault complete config value which is not required but configurable
+// CompleteWithDefault complete config value which is not required but configurable.
 func (c *Column) CompleteWithDefault() {
 	if c.Order == 0 {
 		c.completeOrderWithDefault()
+
 		if c.Precision == 0 {
 			c.completePrecisionWithDefault()
 		}
@@ -221,12 +232,12 @@ func (c *Column) completePrecisionWithDefault() {
 	}
 }
 
-// Validate validates column config
+// Validate validates column config.
 func (c *Column) Validate() error {
 	return nil
 }
 
-// Index represents a single index schema
+// Index represents a single index schema.
 type Index struct {
 	Name    string
 	Primary bool
@@ -234,11 +245,11 @@ type Index struct {
 	Columns []string
 }
 
-// CompleteWithDefault complete config value which is not required but configurable
+// CompleteWithDefault complete config value which is not required but configurable.
 func (i *Index) CompleteWithDefault() {
 }
 
-// Validate validates index config
+// Validate validates index config.
 func (i *Index) Validate() error {
 	if i.Primary {
 		if i.Name != "" {
