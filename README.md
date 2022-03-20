@@ -1,5 +1,6 @@
 # popuolator
 ![test](https://github.com/terakoya76/populator/workflows/test/badge.svg)
+[![Coverage Status](https://coveralls.io/repos/github/terakoya76/populator/badge.svg?branch=master)](https://coveralls.io/github/terakoya76/populator?branch=master)
 
 The populator is a tool making your database populated via yaml config inputs.
 
