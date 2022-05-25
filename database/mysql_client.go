@@ -268,13 +268,7 @@ func (db *MySQLClient) BuildIndexDesc(cfg *config.Index) string {
 	}
 
 	sb.WriteString(" (")
-
-	reg := make([]string, 0, len(cfg.Columns))
-	for _, column := range cfg.Columns {
-		reg = append(reg, fmt.Sprint(column))
-	}
-
-	sb.WriteString(strings.Join(reg, ", "))
+	sb.WriteString(strings.Join(cfg.Columns, ", "))
 	sb.WriteString(")")
 
 	return sb.String()
@@ -413,7 +407,7 @@ func (db *MySQLClient) generateInsertRow(cfg *config.Table) string {
 	return strings.Join(reg, ",\n")
 }
 
-// nolint:gocyclo
+// nolint:gocyclo,funlen
 func (db *MySQLClient) generateValue(cfg *config.Column) interface{} {
 	if cfg.AutoIncrement {
 		return 0
@@ -526,35 +520,27 @@ func (db *MySQLClient) generateValue(cfg *config.Column) interface{} {
 		return rand.VarBinary(cfg.Order)
 
 	case "tinyblob":
-		// nolint:gomnd
 		return rand.TinyBlob(255)
 
 	case "tinytext":
-		// nolint:gomnd
 		return rand.TinyText(255)
 
 	case "blob":
-		// nolint:gomnd
 		return rand.Blob(1000)
 
 	case "text":
-		// nolint:gomnd
 		return rand.Text(1000)
 
 	case "mediumblob":
-		// nolint:gomnd
 		return rand.MediumBlob(3000)
 
 	case "mediumtext":
-		// nolint:gomnd
 		return rand.MediumText(3000)
 
 	case "longblob":
-		// nolint:gomnd
 		return rand.LongBlob(5000)
 
 	case "longtext":
-		// nolint:gomnd
 		return rand.LongText(5000)
 
 	default:

@@ -37,6 +37,7 @@ var (
 	nilValues   []interface{}
 )
 
+// nolint:funlen
 func Test_LoadConfig_Database(t *testing.T) {
 	viper.SetConfigType("yaml")
 
@@ -364,6 +365,7 @@ func Test_LoadConfig_Database(t *testing.T) {
 	}
 }
 
+// nolint:funlen
 func Test_LoadConfig_Tables(t *testing.T) {
 	viper.SetConfigType("yaml")
 
@@ -779,6 +781,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
 	}
 }
 
+// nolint:funlen
 func Test_LoadConfig_Columns(t *testing.T) {
 	viper.SetConfigType("yaml")
 
@@ -1485,6 +1488,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
 	}
 }
 
+// nolint:funlen
 func Test_LoadConfig_Indexes(t *testing.T) {
 	viper.SetConfigType("yaml")
 

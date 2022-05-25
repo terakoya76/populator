@@ -26,6 +26,7 @@ var (
 	nilValues []interface{}
 )
 
+// nolint:funlen
 func Test_BuildCreateTableStmt_Columns(t *testing.T) {
 	cases := []struct {
 		name string
