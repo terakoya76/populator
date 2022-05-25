@@ -71,7 +71,7 @@ func genTime(min, max time.Time) time.Time {
 
 // Boolean returns random boolean.
 func Boolean() bool {
-	// nolint:gosec
+	// nolint:gosec,gomnd
 	return rand.Float32() < 0.5
 }
 
@@ -158,10 +158,8 @@ func Float(order, precision int) float32 {
 	max := float32(0)
 
 	if unsigned {
-		// nolint:gomnd
 		max = float32(math.Pow(10, float64(order-precision)) - 1)
 	} else {
-		// nolint:gomnd
 		max = float32(math.Pow(10, float64(order-precision-1)) - 1)
 	}
 
@@ -178,7 +176,6 @@ func Float(order, precision int) float32 {
 // UnsignedFloat returns random unsigned float within the given range.
 func UnsignedFloat(order, precision int) float32 {
 	min := float32(minFloat)
-	// nolint:gomnd
 	max := float32(math.Pow(10, float64(order-precision)) - 1)
 	// nolint:gosec
 	return min + rand.Float32()*(max-min)
@@ -191,10 +188,8 @@ func Double(order, precision int) float64 {
 	var max float64
 
 	if unsigned {
-		// nolint:gomnd
 		max = math.Pow(10, float64(order-precision)) - 1
 	} else {
-		// nolint:gomnd
 		max = math.Pow(10, float64(order-precision-1)) - 1
 	}
 
@@ -210,7 +205,6 @@ func Double(order, precision int) float64 {
 
 // UnsignedDouble returns random unsigned double within the given range.
 func UnsignedDouble(order, precision int) float64 {
-	// nolint:gomnd
 	max := math.Pow(10, float64(order-precision)) - 1
 	// nolint:gosec
 	return minFloat + rand.Float64()*(max-minFloat)
@@ -292,7 +286,6 @@ func Time() string {
 
 // Year4 returns random year(4).
 func Year4() string {
-	// nolint:gomnd
 	return fmt.Sprint(GenInt(1901, 2155))
 }
 
