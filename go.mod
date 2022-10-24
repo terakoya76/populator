@@ -9,5 +9,5 @@ require (
 	github.com/jmoiron/sqlx v1.3.5
 	github.com/spf13/cobra v1.6.0
 	github.com/spf13/viper v1.13.0
-	github.com/stretchr/testify v1.8.0
+	github.com/stretchr/testify v1.8.1
 )
