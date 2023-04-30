@@ -7,7 +7,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+	http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -37,7 +37,7 @@ var (
 	nilValues   []interface{}
 )
 
-// nolint:funlen
+//nolint:funlen
 func Test_LoadConfig_Database(t *testing.T) {
 	viper.SetConfigType("yaml")
 
@@ -344,7 +344,7 @@ func Test_LoadConfig_Database(t *testing.T) {
 		},
 	}
 
-	// nolint:dupl
+	//nolint:dupl
 	for _, c := range cases {
 		if err := viper.ReadConfig(bytes.NewBuffer(c.yaml)); err != nil {
 			t.Errorf("case: %s is failed, err: %s\n", c.name, err)
@@ -365,7 +365,7 @@ func Test_LoadConfig_Database(t *testing.T) {
 	}
 }
 
-// nolint:funlen
+//nolint:funlen
 func Test_LoadConfig_Tables(t *testing.T) {
 	viper.SetConfigType("yaml")
 
@@ -760,7 +760,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
 		},
 	}
 
-	// nolint:dupl
+	//nolint:dupl
 	for _, c := range cases {
 		if err := viper.ReadConfig(bytes.NewBuffer(c.yaml)); err != nil {
 			t.Errorf("case: %s is failed, err: %s\n", c.name, err)
@@ -781,7 +781,7 @@ func Test_LoadConfig_Tables(t *testing.T) {
 	}
 }
 
-// nolint:funlen
+//nolint:funlen
 func Test_LoadConfig_Columns(t *testing.T) {
 	viper.SetConfigType("yaml")
 
@@ -1467,7 +1467,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
 		},
 	}
 
-	// nolint:dupl
+	//nolint:dupl
 	for _, c := range cases {
 		if err := viper.ReadConfig(bytes.NewBuffer(c.yaml)); err != nil {
 			t.Errorf("case: %s is failed, err: %s\n", c.name, err)
@@ -1488,7 +1488,7 @@ func Test_LoadConfig_Columns(t *testing.T) {
 	}
 }
 
-// nolint:funlen
+//nolint:funlen
 func Test_LoadConfig_Indexes(t *testing.T) {
 	viper.SetConfigType("yaml")
 
@@ -1851,7 +1851,7 @@ func Test_LoadConfig_Indexes(t *testing.T) {
 		},
 	}
 
-	// nolint:dupl
+	//nolint:dupl
 	for _, c := range cases {
 		if err := viper.ReadConfig(bytes.NewBuffer(c.yaml)); err != nil {
 			t.Errorf("case: %s is failed, err: %s\n", c.name, err)

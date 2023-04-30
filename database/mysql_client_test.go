@@ -1,11 +1,15 @@
 /*
 Package cmd ...
- Copyright © 2019 hajime-terasawa <terako.studio@gmail.com>
- Licensed under the Apache License, Version 2.0 (the "License");
+
+	Copyright © 2019 hajime-terasawa <terako.studio@gmail.com>
+	Licensed under the Apache License, Version 2.0 (the "License");
+
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
-     http://www.apache.org/licenses/LICENSE-2.0
- Unless required by applicable law or agreed to in writing, software
+
+	    http://www.apache.org/licenses/LICENSE-2.0
+	Unless required by applicable law or agreed to in writing, software
+
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
@@ -26,7 +30,7 @@ var (
 	nilValues []interface{}
 )
 
-// nolint:funlen
+//nolint:funlen
 func Test_BuildCreateTableStmt_Columns(t *testing.T) {
 	cases := []struct {
 		name string
@@ -242,7 +246,7 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
 				Charset: "utf8mb4",
 				Record:  100000,
 			},
-			// nolint:lll
+			//nolint:lll
 			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 bigint(20) UNSIGNED AUTO_INCREMENT NOT NULL DEFAULT(1000) PRIMARY KEY\n) DEFAULT CHARSET=utf8mb4",
 			err: nil,
 		},
@@ -375,7 +379,7 @@ func Test_BuildCreateTableStmt_Columns(t *testing.T) {
 				Charset: "utf8mb4",
 				Record:  100000,
 			},
-			// nolint:lll
+			//nolint:lll
 			sql: "CREATE TABLE IF NOT EXISTS table_a (\n    col_1 float(5, 2) UNSIGNED NOT NULL DEFAULT(123.45) PRIMARY KEY\n) DEFAULT CHARSET=utf8mb4",
 			err: nil,
 		},
