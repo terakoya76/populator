@@ -7,7 +7,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+	http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -33,7 +33,7 @@ const (
 	minFloat = 0.0
 )
 
-// nolint:gochecknoinits
+//nolint:gochecknoinits
 func init() {
 	seed, err := crand.Int(crand.Reader, big.NewInt(math.MaxInt64))
 	if err != nil {
@@ -45,14 +45,14 @@ func init() {
 
 // GenInt generates int64 between given range.
 func GenInt(min, max int64) int64 {
-	// nolint:gosec
+	//nolint:gosec
 	return rand.Int63n(max-min) + min
 }
 
 func genString(n int) string {
 	b := make([]byte, n)
 	for i := range b {
-		// nolint:gosec
+		//nolint:gosec
 		b[i] = letterBytes[rand.Int63()%int64(len(letterBytes))]
 	}
 
@@ -63,7 +63,7 @@ func genTime(min, max time.Time) time.Time {
 	minI := min.Unix()
 	maxI := max.Unix()
 	delta := maxI - minI
-	// nolint:gosec
+	//nolint:gosec
 	sec := rand.Int63n(delta) + minI
 
 	return time.Unix(sec, 0)
@@ -71,7 +71,7 @@ func genTime(min, max time.Time) time.Time {
 
 // Boolean returns random boolean.
 func Boolean() bool {
-	// nolint:gosec,gomnd
+	//nolint:gosec,gomnd
 	return rand.Float32() < 0.5
 }
 
@@ -112,7 +112,7 @@ func Int() int32 {
 
 // UnsignedInt returns random unsigned int.
 func UnsignedInt() uint32 {
-	// nolint:gosec
+	//nolint:gosec
 	return rand.Uint32()
 }
 
@@ -127,7 +127,7 @@ func BigInt() int64 {
 
 // UnsignedBigInt returns random unsigned bigint.
 func UnsignedBigInt() uint64 {
-	// nolint:gosec
+	//nolint:gosec
 	return uint64(rand.Uint32())<<32 + uint64(rand.Uint32())
 }
 
@@ -163,7 +163,7 @@ func Float(order, precision int) float32 {
 		max = float32(math.Pow(10, float64(order-precision-1)) - 1)
 	}
 
-	// nolint:gosec
+	//nolint:gosec
 	float := min + rand.Float32()*(max-min)
 
 	if unsigned {
@@ -177,7 +177,7 @@ func Float(order, precision int) float32 {
 func UnsignedFloat(order, precision int) float32 {
 	min := float32(minFloat)
 	max := float32(math.Pow(10, float64(order-precision)) - 1)
-	// nolint:gosec
+	//nolint:gosec
 	return min + rand.Float32()*(max-min)
 }
 
@@ -193,7 +193,7 @@ func Double(order, precision int) float64 {
 		max = math.Pow(10, float64(order-precision-1)) - 1
 	}
 
-	// nolint:gosec
+	//nolint:gosec
 	double := minFloat + rand.Float64()*(max-minFloat)
 
 	if unsigned {
@@ -206,7 +206,7 @@ func Double(order, precision int) float64 {
 // UnsignedDouble returns random unsigned double within the given range.
 func UnsignedDouble(order, precision int) float64 {
 	max := math.Pow(10, float64(order-precision)) - 1
-	// nolint:gosec
+	//nolint:gosec
 	return minFloat + rand.Float64()*(max-minFloat)
 }
 

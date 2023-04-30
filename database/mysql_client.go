@@ -7,7 +7,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+	http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -407,7 +407,7 @@ func (db *MySQLClient) generateInsertRow(cfg *config.Table) string {
 	return strings.Join(reg, ",\n")
 }
 
-// nolint:gocyclo,funlen
+//nolint:gocyclo,funlen
 func (db *MySQLClient) generateValue(cfg *config.Column) interface{} {
 	if cfg.AutoIncrement {
 		return 0
@@ -500,7 +500,7 @@ func (db *MySQLClient) generateValue(cfg *config.Column) interface{} {
 		return rand.Time()
 
 	case "year":
-		// nolint:gomnd
+		//nolint:gomnd
 		if cfg.Order == 4 {
 			return rand.Year4()
 		}
