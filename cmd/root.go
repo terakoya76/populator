@@ -36,7 +36,7 @@ var RootCmd = &cobra.Command{
 	Use:   "populator",
 	Short: "Populate given tables' w/ seed data",
 	Long:  "Populate given tables' w/ seed data",
-	Run: func(cmd *cobra.Command, args []string) {
+	Run: func(_ *cobra.Command, _ []string) {
 		if err := populate(); err != nil {
 			fmt.Println(err)
 		}
