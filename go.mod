@@ -1,6 +1,7 @@
 module github.com/terakoya76/populator
 
-go 1.19
+go 1.21.0
+
 toolchain go1.24.1
 
 replace github.com/go-resty/resty => gopkg.in/resty.v1 v1.12.0
