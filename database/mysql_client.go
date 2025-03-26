@@ -32,6 +32,17 @@ import (
 	"github.com/terakoya76/populator/utils"
 )
 
+const (
+	tinyBlobSize   int = 255
+	tinyTextSize   int = 255
+	blobSize       int = 1000
+	textSize       int = 1000
+	mediumBlobSize int = 3000
+	mediumTextSize int = 3000
+	longBlobSize   int = 5000
+	longTextSize   int = 5000
+)
+
 // MaxConnections holds max_connections var for memory use control.
 var MaxConnections int
 
@@ -500,7 +511,7 @@ func (db *MySQLClient) generateValue(cfg *config.Column) interface{} {
 		return rand.Time()
 
 	case "year":
-		//nolint:gomnd
+		//nolint:mnd
 		if cfg.Order == 4 {
 			return rand.Year4()
 		}
@@ -520,28 +531,28 @@ func (db *MySQLClient) generateValue(cfg *config.Column) interface{} {
 		return rand.VarBinary(cfg.Order)
 
 	case "tinyblob":
-		return rand.TinyBlob(255)
+		return rand.TinyBlob(tinyBlobSize)
 
 	case "tinytext":
-		return rand.TinyText(255)
+		return rand.TinyText(tinyTextSize)
 
 	case "blob":
-		return rand.Blob(1000)
+		return rand.Blob(blobSize)
 
 	case "text":
-		return rand.Text(1000)
+		return rand.Text(textSize)
 
 	case "mediumblob":
-		return rand.MediumBlob(3000)
+		return rand.MediumBlob(mediumBlobSize)
 
 	case "mediumtext":
-		return rand.MediumText(3000)
+		return rand.MediumText(mediumTextSize)
 
 	case "longblob":
-		return rand.LongBlob(5000)
+		return rand.LongBlob(longBlobSize)
 
 	case "longtext":
-		return rand.LongText(5000)
+		return rand.LongText(longTextSize)
 
 	default:
 		return 0
