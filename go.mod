@@ -6,7 +6,7 @@ replace github.com/go-resty/resty => gopkg.in/resty.v1 v1.12.0
 
 require (
 	github.com/brianvoe/gofakeit/v7 v7.2.1
-	github.com/go-sql-driver/mysql v1.9.2
+	github.com/go-sql-driver/mysql v1.9.3
 	github.com/jmoiron/sqlx v1.4.0
 	github.com/spf13/cobra v1.9.1
 	github.com/spf13/viper v1.20.1
