@@ -1,11 +1,11 @@
 module github.com/terakoya76/populator
 
-go 1.23.0
+go 1.25
 
 replace github.com/go-resty/resty => gopkg.in/resty.v1 v1.12.0
 
 require (
-	github.com/brianvoe/gofakeit/v7 v7.9.0
+	github.com/brianvoe/gofakeit/v7 v7.11.0
 	github.com/go-sql-driver/mysql v1.9.3
 	github.com/jmoiron/sqlx v1.4.0
 	github.com/spf13/cobra v1.10.1
